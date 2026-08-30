@@ -1,0 +1,118 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+
+header {
+  width: 100%;
+
+  .topNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+
+    img{
+        height: 36px;
+
+    }
+    .menu-closed {
+      display: none;
+    }
+    
+    .menu-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      z-index: 20;
+      top: 100%;
+      right: 3px;
+      width: 200px;
+      background-color: $color-black;
+      padding: 16px;
+      gap: 16px;
+    }
+  }
+  
+  .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: $color-pink;
+    border-radius: 18px;
+    border-top: 1px solid $color-white;
+    padding-bottom: env(safe-area-inset-bottom);
+    margin-left: 10px;
+    margin-right: 10px;
+
+     ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      list-style: none;
+      margin: 0;
+      padding: 8px 0;
+     a {
+      
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        font-size: 11px;
+        color:$color-black;
+        text-decoration: none;
+
+    }
+    .btn{
+        color: $color-white;
+    }
+    }
+
+  }
+  
+}
+
+
+#burgerMenu {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+body {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+}
+
+
+@media (min-width: 768px) {
+  .bottomNav {
+    position: static;
+    border-top: none;
+    padding-bottom: 0;
+  }
+
+  .bottomNav ul {
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .bottomNav li a {
+    flex-direction: row;
+    font-size: 14px;
+  }
+
+  body {
+    padding-bottom: 0;
+  }
+
+  .topNav {
+    padding: 16px 32px;
+  }
+
+  /* Ici, comme tu utilises useMediaQuery côté React (BurgerM ne se monte
+     même plus en desktop), tu n'as en principe plus besoin de ces règles.
+     Mais si tu gardes le burger monté aussi en desktop, décommente : */
+  // #burgerMenu { display: none; }
+}

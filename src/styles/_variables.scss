@@ -1,0 +1,17 @@
+// couleurs
+$color-white: #FFFFFF;      // fond, texte sur boutons foncés
+$color-black: #000000;      // titres (h1, h2, etc.)
+$color-fond: #D9D9D9; // boutons secondaires 
+$color-btn: #741D2D;  
+$color-pink: rgba(#741D2D, 0.2);  
+$color-rec: rgba(#D9D9D9, 0.21);  // boutons d'appel à action (urgence, commencer, OK) 
+
+
+// typographie
+$font-main: "Inter", sans-serif;
+$font-text: "Manrope", sans-serif; // typo du logo
+$font-size-logo: 410px; // taille de référence du logo (Canva)
+
+// breakpoints responsive
+$breakpoint: 767px;
+$breakpointTablette: 1024px;

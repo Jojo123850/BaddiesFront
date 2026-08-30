@@ -1,0 +1,23 @@
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Collapse from "../components/Collapse";
+import "../styles/navbar.scss";
+import "../styles/home.scss";
+
+export function Home(){
+    return (
+        <>
+        <Navbar/>
+            <h1>Votre assistant de premier geste pour les douleurs menstruelles, utilisable même hors ligne.</h1>
+            <p>Parce que chaque femme et chaque cycle sont uniques,ce questionnaire rapide nous permet de comprendre précisément votre inconfort. 
+            En moins de deux minutes, découvrez  les gestes simples pour apaiser votre corps immédiatement et naturellement.</p>
+            <img className="homeImage" src="../src/IMG/f6582a18b6158c3bf409305bda0f8a88-Photoroom.png" alt="HomeImage" />
+            <Link to= "/Analyse" className="btn">Commencer à évaluer</Link>
+            <hr className="hr1" />
+        <Collapse/>
+
+            <h2>Vos dernières évaluations</h2>
+
+        </>
+    )
+}

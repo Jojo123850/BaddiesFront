@@ -1,0 +1,22 @@
+{
+  "name": "Baddies",
+  "short_name": "Baddies",
+  "description": "Votre  assistant du 1er geste pour les douleurs menstruelles!",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "A40149",
+  "theme_color": "#0096c7",
+  "icons": [
+    {
+      "src": "baddies_essai/src/IMG/icone.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "baddies_essai/src/IMG/icone.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

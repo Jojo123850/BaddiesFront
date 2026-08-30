@@ -1,0 +1,806 @@
+{
+  "app": {
+    "nom": "Baddies",
+    "objectif": "Assistant de premier geste pour les douleurs menstruelles, avec recommandations adaptées à l'intensité, la localisation, les symptômes et le contexte de l'utilisatrice.",
+    "perimetre_medical": {
+      "est_outil_diagnostic": false,
+      "est_prescripteur_traitement": false,
+      "note": "Les recommandations sont des informations générales et ne remplacent pas l'avis d'un professionnel de santé."
+    }
+  },
+
+  "evaluation_douleur": {
+    "echelle_intensite": {
+      "min": 0,
+      "max": 10,
+      "niveaux": [
+        {
+          "id": "aucune",
+          "min": 0,
+          "max": 0,
+          "label": "Aucune douleur"
+        },
+        {
+          "id": "legere",
+          "min": 1,
+          "max": 3,
+          "label": "Douleur légère"
+        },
+        {
+          "id": "moderee",
+          "min": 4,
+          "max": 6,
+          "label": "Douleur modérée"
+        },
+        {
+          "id": "intense",
+          "min": 7,
+          "max": 10,
+          "label": "Douleur intense"
+        }
+      ]
+    },
+
+    "localisations": [
+      {
+        "id": "pelvis",
+        "label": "Bas du ventre ou pelvis"
+      },
+      {
+        "id": "dos",
+        "label": "Dos"
+      },
+      {
+        "id": "cuisses",
+        "label": "Cuisses"
+      }
+    ],
+
+    "symptomes": [
+      {
+        "id": "crampes",
+        "label": "Crampes"
+      },
+      {
+        "id": "spasmes",
+        "label": "Spasmes"
+      },
+      {
+        "id": "nausees",
+        "label": "Nausées"
+      },
+      {
+        "id": "vomissements",
+        "label": "Vomissements"
+      },
+      {
+        "id": "diarrhee",
+        "label": "Diarrhée"
+      },
+      {
+        "id": "constipation",
+        "label": "Constipation"
+      },
+      {
+        "id": "envies_frequentes_uriner",
+        "label": "Envies fréquentes d'uriner"
+      },
+      {
+        "id": "malaise",
+        "label": "Sensation de malaise"
+      },
+      {
+        "id": "fatigue",
+        "label": "Fatigue"
+      },
+      {
+        "id": "ballonnements",
+        "label": "Ballonnements"
+      },
+      {
+        "id": "irritabilite",
+        "label": "Irritabilité"
+      },
+      {
+        "id": "nervosite",
+        "label": "Nervosité"
+      },
+      {
+        "id": "anxiete",
+        "label": "Anxiété"
+      },
+      {
+        "id": "humeur_depressive",
+        "label": "Humeur dépressive"
+      },
+      {
+        "id": "cephalees",
+        "label": "Maux de tête"
+      }
+    ],
+
+    "impact_quotidien": {
+      "question": "Quel est l'impact de ta douleur sur ta journée ?",
+      "options": [
+        {
+          "id": "aucun",
+          "label": "Aucun impact"
+        },
+        {
+          "id": "faible",
+          "label": "Un léger inconfort"
+        },
+        {
+          "id": "modere",
+          "label": "Je dois ralentir mes activités"
+        },
+        {
+          "id": "important",
+          "label": "J'ai du mal à travailler, étudier ou sortir"
+        },
+        {
+          "id": "bloquant",
+          "label": "Je ne peux pas faire mes activités normalement"
+        }
+      ]
+    },
+
+    "caractere_habituel": {
+      "question": "Cette douleur est-elle inhabituelle pour toi ?",
+      "options": [
+        {
+          "id": "habituelle",
+          "label": "Non, c'est ma douleur habituelle"
+        },
+        {
+          "id": "a_change",
+          "label": "Elle a changé récemment"
+        },
+        {
+          "id": "nouvelle_ou_bien_plus_forte",
+          "label": "Elle est nouvelle ou beaucoup plus forte"
+        }
+      ]
+    }
+  },
+
+  "profil_utilisatrice": {
+    "age": {
+      "requis": true,
+      "stockage_recommande": "dateNaissance ou age selon les besoins du projet",
+      "utilisation": [
+        "Adapter les informations générales au profil de l'utilisatrice",
+        "Identifier certains facteurs de risque",
+        "Orienter vers une consultation lorsque certains critères sont présents"
+      ],
+      "note": "Baddies ne prescrit pas de médicaments et ne recommande pas automatiquement de traitement médicamenteux."
+    },
+
+    "nature_douleur_menstruelle": {
+      "valeurs": [
+        {
+          "id": "dysmenorrhee_primaire",
+          "label": "Dysménorrhée primaire",
+          "definition": "Douleurs menstruelles sans cause pelvienne sous-jacente identifiée."
+        },
+        {
+          "id": "dysmenorrhee_secondaire",
+          "label": "Dysménorrhée secondaire",
+          "definition": "Douleurs menstruelles liées à une cause ou maladie sous-jacente."
+        },
+        {
+          "id": "inconnue",
+          "label": "Inconnue",
+          "note": "À ne pas déterminer automatiquement par l'application."
+        }
+      ],
+      "regle_app": "Ne pas demander à l'utilisatrice de diagnostiquer elle-même une dysménorrhée primaire ou secondaire. Cette information peut être renseignée uniquement si elle est déjà connue médicalement."
+    }
+  },
+
+  "contextes": [
+    {
+      "id": "maison",
+      "label": "Chez moi"
+    },
+    {
+      "id": "travail_ecole",
+      "label": "Travail / École"
+    },
+    {
+      "id": "transport",
+      "label": "Dans les transports"
+    },
+    {
+      "id": "exterieur",
+      "label": "À l'extérieur"
+    }
+  ],
+
+  "solutions": [
+    {
+      "id": "chaleur",
+      "label": "Source de chaleur",
+      "description": "Appliquer une source de chaleur sur le bas du ventre ou le dos si cela apporte du soulagement.",
+      "contextes": [
+        "maison",
+        "travail_ecole"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos"
+      ],
+      "intensites": [
+        "legere",
+        "moderee",
+        "intense"
+      ],
+      "source": "ameli"
+    },
+
+    {
+      "id": "bain_douche_chaude",
+      "label": "Bain ou douche chaude",
+      "description": "Prendre un bain ou une douche chaude à domicile pour favoriser la détente et diminuer l'inconfort.",
+      "contextes": [
+        "maison"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+
+    {
+      "id": "massage_doux",
+      "label": "Massage doux",
+      "description": "Masser doucement le ventre ou la zone douloureuse si cela apporte du confort.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+
+    {
+      "id": "exercice_doux",
+      "label": "Exercice doux",
+      "description": "Pratiquer une activité physique douce comme la marche ou la natation, selon ce qui est confortable et possible.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+
+    {
+      "id": "activite_physique_reguliere",
+      "label": "Activité physique régulière",
+      "description": "Maintenir une activité physique régulière peut contribuer à réduire les symptômes menstruels chez certaines personnes.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "exterieur"
+      ],
+      "source": "msd"
+    },
+
+    {
+      "id": "sommeil",
+      "label": "Favoriser un bon sommeil",
+      "description": "Dormir suffisamment et conserver autant que possible un rythme de sommeil régulier peut aider à mieux gérer les symptômes.",
+      "contextes": [
+        "maison"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "irritabilite",
+        "nervosite",
+        "anxiete"
+      ],
+      "source": "msd"
+    },
+
+    {
+      "id": "repos",
+      "label": "Repos et position confortable",
+      "description": "S'installer dans une position confortable et prendre un moment de repos lorsque la douleur ou la fatigue le nécessite.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "malaise"
+      ],
+      "source": "msd"
+    },
+
+    {
+      "id": "relaxation",
+      "label": "Relaxation et respiration",
+      "description": "Prendre quelques minutes pour respirer lentement, se détendre ou pratiquer une activité de relaxation peut aider à gérer le stress et l'anxiété associés.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "anxiete",
+        "nervosite",
+        "irritabilite"
+      ],
+      "source": "msd"
+    },
+
+    {
+      "id": "alimentation_equilibree",
+      "label": "Alimentation équilibrée",
+      "description": "Maintenir une alimentation variée et équilibrée peut contribuer au bien-être général pendant les règles.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "exterieur"
+      ],
+      "source": "soutien_general",
+      "note": "L'application ne doit pas présenter l'alimentation comme un traitement médical de la dysménorrhée."
+    },
+
+    {
+      "id": "alimentation_pauvre_en_graisses",
+      "label": "Alimentation pauvre en graisses",
+      "description": "Une alimentation globalement moins riche en graisses a été étudiée pour les douleurs menstruelles, mais les preuves de son efficacité restent limitées.",
+      "contextes": [
+        "maison"
+      ],
+      "source": "msd",
+      "note": "À présenter comme une piste de mode de vie et non comme un traitement garanti."
+    },
+
+    {
+      "id": "reduction_stress",
+      "label": "Réduire le stress",
+      "description": "Prendre des moments de pause et utiliser des techniques de relaxation peut aider lorsque le stress ou l'anxiété accompagnent les symptômes menstruels.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "anxiete",
+        "nervosite",
+        "irritabilite"
+      ],
+      "source": "msd"
+    },
+
+    {
+      "id": "hydratation",
+      "label": "Boire régulièrement",
+      "description": "Boire régulièrement de l'eau et rester correctement hydratée participe au bien-être général.",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "malaise"
+      ],
+      "source": "soutien_general",
+      "note": "Cette recommandation ne constitue pas un traitement spécifique de la dysménorrhée."
+    },
+
+    {
+      "id": "eviter_tabac",
+      "label": "Éviter le tabac",
+      "description": "Le tabagisme peut être un facteur aggravant des douleurs menstruelles. Réduire ou arrêter le tabac peut donc être bénéfique pour la santé générale.",
+      "contextes": [
+        "maison",
+        "exterieur"
+      ],
+      "source": "ameli"
+    }
+  ],
+
+  "correspondance_symptomes_solutions": {
+    "fatigue": [
+      "sommeil",
+      "repos",
+      "alimentation_equilibree"
+    ],
+    "irritabilite": [
+      "sommeil",
+      "relaxation",
+      "reduction_stress"
+    ],
+    "nervosite": [
+      "relaxation",
+      "reduction_stress",
+      "sommeil"
+    ],
+    "anxiete": [
+      "relaxation",
+      "reduction_stress",
+      "sommeil"
+    ],
+    "ballonnements": [
+      "alimentation_equilibree",
+      "activite_physique_reguliere"
+    ],
+    "constipation": [
+      "hydratation",
+      "activite_physique_reguliere",
+      "alimentation_equilibree"
+    ],
+    "malaise": [
+      "repos",
+      "hydratation"
+    ]
+  },
+
+  "signes_alerte": [
+    {
+      "id": "fievre",
+      "label": "Fièvre",
+      "action": "conseil_medical",
+      "message": "Une douleur menstruelle accompagnée de fièvre doit être évaluée par un professionnel de santé.",
+      "source": "ameli_msd"
+    },
+
+    {
+      "id": "pertes_vaginales_anormales",
+      "label": "Pertes vaginales anormales",
+      "action": "conseil_medical",
+      "message": "Des pertes vaginales inhabituelles associées aux douleurs nécessitent un avis médical.",
+      "source": "ameli_msd"
+    },
+
+    {
+      "id": "saignements_entre_regles",
+      "label": "Saignements entre les règles",
+      "action": "conseil_medical",
+      "message": "Des saignements entre les règles doivent être signalés à un professionnel de santé.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "regles_abondantes",
+      "label": "Règles anormalement abondantes",
+      "action": "conseil_medical",
+      "message": "Des règles anormalement abondantes associées à des douleurs nécessitent un avis médical.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_rapports",
+      "label": "Douleurs lors des rapports sexuels",
+      "action": "conseil_medical",
+      "message": "Des douleurs pendant les rapports associées aux douleurs menstruelles doivent être signalées à un professionnel de santé.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "syndrome_intestin_irritable",
+      "label": "Symptômes digestifs importants ou syndrome de l'intestin irritable",
+      "action": "conseil_medical",
+      "message": "Des symptômes digestifs importants associés aux douleurs menstruelles peuvent justifier une consultation.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_soudaine_severe",
+      "label": "Douleur très intense apparue soudainement",
+      "action": "consultation_rapide",
+      "message": "Une douleur pelvienne sévère apparue soudainement nécessite une évaluation médicale rapide.",
+      "source": "msd"
+    },
+
+    {
+      "id": "douleur_constante",
+      "label": "Douleur constante",
+      "action": "conseil_medical",
+      "message": "Une douleur constante ou nettement différente de la douleur habituelle doit être évaluée par un professionnel de santé.",
+      "source": "msd"
+    },
+
+    {
+      "id": "douleur_non_soulagee",
+      "label": "Douleur non soulagée",
+      "action": "conseil_medical",
+      "message": "Si les douleurs ne sont pas soulagées malgré les mesures habituelles, un avis médical est recommandé.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "retentissement_quotidien",
+      "label": "Retentissement important sur la vie quotidienne",
+      "action": "conseil_medical",
+      "message": "Si les douleurs empêchent régulièrement de travailler, d'étudier ou de mener les activités habituelles, une consultation est recommandée.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_aggravation",
+      "label": "Douleur qui s'aggrave",
+      "action": "conseil_medical",
+      "message": "Une aggravation inhabituelle des douleurs menstruelles doit être évaluée par un professionnel de santé.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_adulte",
+      "label": "Apparition de douleurs importantes à l'âge adulte",
+      "action": "conseil_medical",
+      "message": "L'apparition de douleurs menstruelles importantes à l'âge adulte mérite une évaluation médicale.",
+      "source": "ameli_msd"
+    },
+
+    {
+      "id": "douleur_avant_apres_regles",
+      "label": "Douleurs durant plusieurs jours avant et après les règles",
+      "action": "conseil_medical",
+      "message": "Des douleurs qui durent plusieurs jours avant et après les règles peuvent nécessiter un avis médical.",
+      "source": "ameli"
+    }
+  ],
+
+  "regles_securite": [
+    {
+      "id": "choc_toxique",
+      "declencheur": {
+        "protection_interne": true,
+        "symptomes_un_de": [
+          "fievre_elevee",
+          "vomissements",
+          "diarrhee",
+          "malaise",
+          "douleur_abdominale",
+          "douleur_musculaire"
+        ]
+      },
+      "action": "urgence_medicale",
+      "message": "Retirer le tampon ou la coupe et consulter en urgence en cas de symptômes évocateurs d'un syndrome de choc toxique.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_forte_ou_inhabituelle",
+      "declencheur": {
+        "intensite_min": 7,
+        "habituel": "non"
+      },
+      "action": "conseil_medical",
+      "message": "Une douleur importante ou inhabituelle mérite une évaluation médicale, notamment si elle s'aggrave ou retentit fortement sur la vie quotidienne.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "douleur_intense",
+      "declencheur": {
+        "intensite_min": 7
+      },
+      "action": "evaluation_symptomes_associes",
+      "message": "Une douleur intense nécessite de vérifier la présence éventuelle de signes d'alerte avant de proposer uniquement des mesures de confort.",
+      "source": "ameli_msd"
+    },
+
+    {
+      "id": "symptomes_inquietants",
+      "declencheur": {
+        "symptomes_un_de": [
+          "fievre",
+          "pertes_vaginales_anormales",
+          "saignements_entre_regles",
+          "regles_abondantes",
+          "douleur_rapports",
+          "vomissements_importants",
+          "malaise"
+        ]
+      },
+      "action": "conseil_medical",
+      "message": "La présence de ces symptômes associés aux douleurs menstruelles justifie un avis médical.",
+      "source": "ameli_msd"
+    },
+
+    {
+      "id": "douleur_bloquante_repetee",
+      "declencheur": {
+        "impact": "majeur"
+      },
+      "action": "conseil_medical",
+      "message": "Si une douleur empêche régulièrement de mener les activités quotidiennes, une consultation est recommandée.",
+      "source": "ameli"
+    },
+
+    {
+      "id": "tendance_en_hausse",
+      "declencheur": {
+        "cycles_avec_intensite_croissante_min": 3
+      },
+      "action": "conseil_medical",
+      "message": "Une augmentation progressive de l'intensité des douleurs sur plusieurs cycles mérite une évaluation par un professionnel de santé.",
+      "source": "a_valider_gynecologue"
+    },
+
+    {
+      "id": "toute_premiere_douleur_de_ce_type",
+      "declencheur": {
+        "habituel": "nouvelle_ou_bien_plus_forte",
+        "premiere_utilisation": true
+      },
+      "action": "conseil_medical",
+      "message": "Si les douleurs sont nouvelles ou beaucoup plus fortes que d'habitude, une consultation peut permettre de rechercher une éventuelle cause sous-jacente.",
+      "source": "ameli_msd"
+    }
+  ],
+
+  "facteurs_risque": [
+    {
+      "id": "premieres_regles_precoces",
+      "label": "Premières règles à un âge précoce"
+    },
+    {
+      "id": "regles_longues_abondantes",
+      "label": "Règles longues ou abondantes"
+    },
+    {
+      "id": "jamais_enceinte",
+      "label": "Ne jamais avoir été enceinte"
+    },
+    {
+      "id": "age_moins_30",
+      "label": "Âge inférieur à 30 ans"
+    },
+    {
+      "id": "stress_anxiete_depression",
+      "label": "Stress important, anxiété ou symptômes dépressifs"
+    },
+    {
+      "id": "tabagisme",
+      "label": "Tabagisme"
+    },
+    {
+      "id": "alcool_excessif",
+      "label": "Consommation excessive d'alcool"
+    },
+    {
+      "id": "antecedents_familiaux",
+      "label": "Antécédents familiaux de dysménorrhée"
+    }
+  ],
+
+  "causes_possibles_dysmenorrhee_secondaire": [
+    {
+      "id": "endometriose",
+      "label": "Endométriose",
+      "note": "Cause possible de dysménorrhée secondaire. Ne peut pas être diagnostiquée par l'application."
+    },
+    {
+      "id": "adenomyose",
+      "label": "Adénomyose",
+      "note": "Cause possible de douleurs menstruelles secondaires."
+    },
+    {
+      "id": "fibromes",
+      "label": "Fibromes utérins",
+      "note": "Cause possible de douleurs et de règles abondantes."
+    },
+    {
+      "id": "stenose_cervicale",
+      "label": "Sténose cervicale",
+      "note": "Rétrécissement du canal cervical pouvant être associé aux douleurs menstruelles."
+    },
+    {
+      "id": "kystes_ovaires",
+      "label": "Kystes ou tumeurs ovariennes",
+      "note": "Causes moins fréquentes."
+    },
+    {
+      "id": "dispositif_intra_uterin",
+      "label": "Dispositif intra-utérin",
+      "note": "Certains DIU, notamment au cuivre, peuvent être associés à des règles plus douloureuses."
+    },
+    {
+      "id": "maladie_pelvienne_inflammatoire",
+      "label": "Maladie pelvienne inflammatoire",
+      "note": "Cause possible de douleurs pelviennes."
+    },
+    {
+      "id": "tissu_cicatriciel",
+      "label": "Tissu cicatriciel dans l'utérus",
+      "note": "Cause moins fréquente."
+    },
+    {
+      "id": "malformation_congenitale",
+      "label": "Malformation congénitale de l'appareil reproducteur",
+      "note": "Cause rare."
+    }
+  ],
+
+  "informations_medicales": {
+    "medicaments": {
+      "active": false,
+      "raison": "Le traitement médicamenteux dépend notamment de l'âge, des symptômes, des antécédents et des contre-indications. Le projet ne doit pas prescrire automatiquement un médicament.",
+      "note": "Si des informations sur les AINS sont ajoutées ultérieurement, elles devront être encadrées par des règles de sécurité et un contrôle de l'âge.",
+      "source": "ameli"
+    },
+
+    "alimentation_et_complements": {
+      "note": "Certaines approches alimentaires et certains compléments ont été étudiés, mais les preuves sont limitées. Baddies ne doit pas présenter ces éléments comme des traitements garantis.",
+      "exemples": [
+        "régime pauvre en graisses",
+        "oméga-3",
+        "graines de lin",
+        "magnésium",
+        "vitamine B1",
+        "vitamine E",
+        "zinc"
+      ],
+      "source": "msd"
+    },
+
+    "depistage_cancer_col": {
+      "separe_du_parcours_douleur": true,
+      "note": "Ne pas présenter le dépistage du cancer du col comme une réponse à une douleur menstruelle.",
+      "eligibilite": "Le dépistage organisé concerne les femmes de 25 à 65 ans, selon les modalités liées à l'âge.",
+      "source": "ameli"
+    }
+  },
+
+  "sources": [
+    {
+      "nom": "Ameli - Douleurs pendant les règles : que faire pour être soulagée ?",
+      "url": "https://www.ameli.fr/assure/sante/themes/regles-douloureuses/que-faire-quand-consulter"
+    },
+    {
+      "nom": "Ameli - Douleurs pendant les règles ou dysménorrhée : quelles sont les causes ?",
+      "url": "https://www.ameli.fr/assure/sante/themes/regles-douloureuses/douleurs-regles"
+    },
+    {
+      "nom": "Ameli - Règles douloureuses : consultation et traitement",
+      "url": "https://www.ameli.fr/assure/sante/themes/regles-douloureuses/consultation-traitement"
+    },
+    {
+      "nom": "Ameli - Protections intimes et risque de choc toxique",
+      "url": "https://www.ameli.fr/assure/sante/themes/regles-et-protections-intimes/protections-intimes-et-risque-de-choc-toxique-lors-des-regles"
+    },
+    {
+      "nom": "Ameli - Dépistage organisé du cancer du col de l'utérus",
+      "url": "https://www.ameli.fr/assure/sante/themes/cancer-col-uterus/depistage-organise-cancer-col-uterus"
+    },
+    {
+      "nom": "ANSM - Douleurs menstruelles (dysménorrhées)",
+      "url": "https://ansm.sante.fr/dossiers-thematiques/types-de-douleurs/douleurs-menstruelles-dysmenorrhees"
+    },
+    {
+      "nom": "Manuel MSD - Crampes menstruelles",
+      "url": "https://www.msdmanuals.com/fr/accueil/probl%C3%A8mes-de-sant%C3%A9-de-la-femme/troubles-menstruels-et-saignements-ut%C3%A9rins-anormaux/crampes-menstruelles"
+    },
+    {
+      "nom": "ELSAN - Dysménorrhée : symptômes et traitements",
+      "url": "https://www.elsan.care/fr/pathologie-et-traitement/maladies-gynecologiques/dysmenorrhee-definition-causes-traitement"
+    }
+  ]
+}

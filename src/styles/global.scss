@@ -1,0 +1,51 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+
+
+// styles qui peuvent etre utilisé dans tout le projet
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li{
+    list-style: none;
+   
+}
+a{
+  text-decoration: none;
+}
+
+h1, h2{
+  font-family: "Manrope", sans-serif;
+}
+
+h1{
+  font-size: 30px;
+  padding: 10px;
+
+}
+h2{
+  font-size: 26px;
+  padding: 10px;
+}
+
+p, span{
+  
+  font-family: "inter", sans-serif;
+  font-size: 16px;
+}
+
+a{
+  font-family: "Inter", sans-serif;
+  font-size: 22px;
+
+}
+
+.btn{
+      background: $color-btn;
+      color: $color-white;
+      padding: 8px 14px;
+      border-radius: 14px;
+}
