@@ -1,6 +1,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
-
+@import './global.scss';
 
 .hand-circle {
   position: relative;
@@ -9,7 +9,7 @@
   aspect-ratio: 1 / 1;
   margin: 0 auto;
   border-radius: 96px;
-  border: 2px solid $color-btn;
+  border: 2px solid var(--color-btn);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@
 
 .hand-icon {
   font-size: 2rem;
-  color: $color-btn;
+  color: var(--color-btn);
   padding-top: 20px;
 }
 

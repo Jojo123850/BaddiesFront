@@ -1,6 +1,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
-
+@import './global.scss';
 header {
   width: 100%;
 
@@ -26,7 +26,7 @@ header {
       top: 100%;
       right: 3px;
       width: 200px;
-      background-color: $color-black;
+      background-color:var(--color-black);
       padding: 16px;
       gap: 16px;
     }
@@ -38,9 +38,9 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: $color-pink;
+    background-color: var(--color-pink);
     border-radius: 18px;
-    border-top: 1px solid $color-white;
+    border-top: 1px solid var(--color-white);
     padding-bottom: env(safe-area-inset-bottom);
     margin-left: 10px;
     margin-right: 10px;
@@ -59,12 +59,12 @@ header {
         align-items: center;
         gap: 2px;
         font-size: 11px;
-        color:$color-black;
+        color:var(--color-black);
         text-decoration: none;
 
     }
     .btn{
-        color: $color-white;
+        color:var(--color-white);
     }
     }
 

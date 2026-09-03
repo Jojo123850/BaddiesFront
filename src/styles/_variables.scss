@@ -1,17 +1,18 @@
-// couleurs
-$color-white: #FFFFFF;      // fond, texte sur boutons foncés
-$color-black: #000000;      // titres (h1, h2, etc.)
-$color-fond: #D9D9D9; // boutons secondaires 
-$color-btn: #741D2D;  
-$color-pink: rgba(#741D2D, 0.2);  
-$color-rec: rgba(#D9D9D9, 0.21);  // boutons d'appel à action (urgence, commencer, OK) 
+:root {
+  // couleurs
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-fond: #D9D9D9;
+  --color-btn: #741D2D;
+  --color-pink: rgba(116, 29, 45, 0.2);
+  --color-rec: rgba(217, 217, 217, 0.21);
 
+  // typographie
+  --font-heading: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
 
-// typographie
-$font-main: "Inter", sans-serif;
-$font-text: "Manrope", sans-serif; // typo du logo
-$font-size-logo: 410px; // taille de référence du logo (Canva)
-
-// breakpoints responsive
+// valeurs qui n'ont pas besoin de changer dynamiquement restent en SCSS
+$font-size-logo: 410px;
 $breakpoint: 767px;
-$breakpointTablette: 1024px;
+$breakpoint-tablette: 1024px;

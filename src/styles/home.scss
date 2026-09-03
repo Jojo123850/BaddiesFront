@@ -24,14 +24,14 @@ p{
     padding: 10px;
 
     .btn1 {
-        background-color: $color-black;
+        background-color: var(--color-black);
         padding:8px  14px;
         border: none;
         border-radius: 7px;
-        color: $color-white;
+        color: var(--color-white);
         &:hover {
-        background-color: $color-btn;
-        color: $color-white;
+        background-color: var(--color-btn);
+        color: var(--color-white);
     }
     }
 }
