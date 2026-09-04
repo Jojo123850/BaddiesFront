@@ -6,7 +6,7 @@ export default function Navbar (){
     <header>
       <div className="topNav">
         <Link to="/">
-            <img src="../src/IMG/logo.jpeg" alt="logo" />
+            <img className="logo" src="../src/assets/images/logo.webp" alt="logo" />
         </Link>
         <BurgerM/>
       </div>

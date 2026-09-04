@@ -1,6 +1,7 @@
 @import './_variables.scss';
 @import './_mixins.scss';
 @import './global.scss';
+
 header {
   width: 100%;
 
@@ -10,10 +11,14 @@ header {
     justify-content: space-between;
     padding: 12px 16px;
 
-    img{
-        height: 36px;
-
+    .logo {
+      width: 100%;
+      max-width: 160px; 
+      height: 36px;    
+      object-fit: cover;
+      transition: max-width 0.3s ease;
     }
+
     .menu-closed {
       display: none;
     }
@@ -26,12 +31,12 @@ header {
       top: 100%;
       right: 3px;
       width: 200px;
-      background-color:var(--color-black);
+      background-color: var(--color-black);
       padding: 16px;
       gap: 16px;
     }
   }
-  
+
   .bottomNav {
     position: fixed;
     bottom: 0;
@@ -45,33 +50,30 @@ header {
     margin-left: 10px;
     margin-right: 10px;
 
-     ul {
+    ul {
       display: flex;
       align-items: center;
       justify-content: space-around;
       list-style: none;
       margin: 0;
       padding: 8px 0;
-     a {
-      
+
+      a {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 2px;
         font-size: 11px;
-        color:var(--color-black);
+        color: var(--color-black);
         text-decoration: none;
+      }
 
+      .btn {
+        color: var(--color-white);
+      }
     }
-    .btn{
-        color:var(--color-white);
-    }
-    }
-
   }
-  
 }
-
 
 #burgerMenu {
   background: none;
@@ -85,34 +87,34 @@ body {
   padding-bottom: calc(64px + env(safe-area-inset-bottom));
 }
 
-
 @media (min-width: 768px) {
+  .topNav {
+    padding: 16px 32px;
+
+    /* Agrandissement fluide du logo sur écran d'ordinateur */
+    .logo {
+      max-width: 210px;
+      height: 44px;
+    }
+  }
+
   .bottomNav {
     position: static;
     border-top: none;
     padding-bottom: 0;
-  }
 
-  .bottomNav ul {
-    justify-content: flex-end;
-    gap: 24px;
-  }
+    ul {
+      justify-content: flex-end;
+      gap: 24px;
 
-  .bottomNav li a {
-    flex-direction: row;
-    font-size: 14px;
+      li a {
+        flex-direction: row;
+        font-size: 14px;
+      }
+    }
   }
 
   body {
     padding-bottom: 0;
   }
-
-  .topNav {
-    padding: 16px 32px;
-  }
-
-  /* Ici, comme tu utilises useMediaQuery côté React (BurgerM ne se monte
-     même plus en desktop), tu n'as en principe plus besoin de ces règles.
-     Mais si tu gardes le burger monté aussi en desktop, décommente : */
-  // #burgerMenu { display: none; }
 }
