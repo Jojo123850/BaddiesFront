@@ -14,6 +14,7 @@ export function ZoneP(){
             </Link>
             <h2 className="analyse">Zone de douleur</h2>
             <p  className="analyse">Où avez-vous mal ?</p>
+
             
             <AnteriorPain/>
            

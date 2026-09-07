@@ -51,7 +51,7 @@ const IntensityPain = () => {
     <>
         <h2 className="analyse">Intensité de la douleur</h2>
         <p className="analyse">Quelle est l’intensité de votre douleur ?</p>
-        <p className="analyse">{niveau?.label }</p>
+        <p className="answer">{niveau?.label }</p>
              <div className="hand-circle"  
                 onPointerDown={startIncrementing}
                 onPointerUp={stopIncrementing}

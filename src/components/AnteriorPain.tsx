@@ -3,67 +3,67 @@ import db from "../data/db.json";
 import { useNavigate } from "react-router-dom";
 
 type Localisation = {
-    id: string,
-    label: string
-}
+    id: string;
+    label: string;
+};
 
-
-// const positions = {
-//   pelvis: {
-//     top: "47%",
-//     left: "40%",
-//     width: "25%",
-//     height: "12%"
-//   },
-
-//   dos: {
-//     top: "69%",
-//     left: "41%",
-//     width: "35%",
-//     height: "15%"
-//   },
-
-//   cuisse: {
-//     top: "90%",
-//     left: "21%",
-//     width: "25%",
-//     height: "20%"
-//   }
-// };
-
-const   AnteriorPain  = () =>{
-    const [isSelectedZone, setIsSelectedZone] = useState<string | null >(null);
+const AnteriorPain = () => {
+    const [selectedZones, setSelectedZones] = useState<string[]>([]);
     const navigate = useNavigate();
+    const [activeIndex, setActiveIndex] = useState(null)
+    const button = ["btn1", "btn2", "btn3"]
+
+    const localisations: Localisation[] =
+        db.evaluation_douleur.localisations;
+
+    const handleZoneClick = (zoneId: string) => {
+        setSelectedZones((prev) => {
+            if (prev.includes(zoneId)) {
+                return prev.filter((id) => id !== zoneId);
+            }
+
+            return [...prev, zoneId];
+        });
+    };
+
     const handleContinue = () => {
-        if(!isSelectedZone) return;
-            navigate("/Analyse")
+        if (selectedZones.length === 0) return;
 
-    }
+        navigate("/Analyse");
+    };
 
-  const localisations: Localisation[] = db.evaluation_douleur.localisations;
-return(
-    <>
-            <img src="../src/assets/images/silohouette-Photoroom.webp" className="silhouette" alt="silhouette face" /> 
-        {localisations.map((localisation) => {
-            return( 
-            <>
-            <button
-                key={localisation.id} 
-                onClick={() => setIsSelectedZone(localisation.id)}
-                className="btn"
+    return (
+        <>
+            {selectedZones.length === 0 && (
+                    <p className="answer">Vous devez sélectionner au moins une zone</p>
+            )}
+         
+            <img
+                src="../src/assets/images/silohouette-Photoroom.webp"
+                className="silhouette"
+                alt="silhouette face"
+            />
+
+     {localisations.map((localisation) => (
+                <button
+                    key={localisation.id}
+                    onClick={() => handleZoneClick(localisation.id)}
+                    className={`btn ${
+                        selectedZones.includes(localisation.id)
+                            ? "selected"
+                            : ""
+                    }`}
                 >
-                {localisation.label}
-            </button>   
-                </> 
-            )
-        }) 
-    }
+                    {localisation.label}
+                </button>
+                
+               
+            ))}
 
-    {isSelectedZone=== null && <p>Vous devez cliquer avant de continuer</p>}
-    <button disabled = {isSelectedZone === null} onClick={handleContinue} className="btn">Continuer à analyser</button> 
-    </>
-)
-} 
-
+            <button disabled={selectedZones.length === 0} onClick={handleContinue}className="btn">  Continuer à analyser </button>
+            
+        </>
+    );
+};
 
 export default AnteriorPain;
