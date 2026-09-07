@@ -26,9 +26,9 @@ export default function Collapse() {
       {isOpen && (
         <>
           <div className="btnCollapse">
-            <button className="btn1" onClick={(e) => handleClick(e, "ios")}>IOS</button>
-            <button className="btn1" onClick={(e) => handleClick(e, "android")}>Android</button>
-            <button className="btn1" onClick={(e) => handleClick(e, "ordinateur")}>Ordinateur</button>
+            <button className="btnChoice" onClick={(e) => handleClick(e, "ios")}>IOS</button>
+            <button className="btnChoice" onClick={(e) => handleClick(e, "android")}>Android</button>
+            <button className="btnChoice" onClick={(e) => handleClick(e, "ordinateur")}>Ordinateur</button>
           </div>
 
           {content && (

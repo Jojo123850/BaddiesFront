@@ -1,13 +1,66 @@
 @import './_variables.scss';
 @import './_mixins.scss';
 @import './navbar.scss';
-
-.silhouette{
-     display: block;
-     width: 70%;
-     margin: auto;
+.body-container {
+    position: relative;
 }
-.btn:active{
+
+.silhouette {
+    display: block;
+    width: 70%;
+    margin: auto;
+}
+
+.btn1 {
+    position: absolute;
+    background: var(--color-btn);
+    color: var(--color-white);
+    padding: 8px 14px;
+    border-radius: 14px;
+}
+
+.btn1.selected {
     background-color: var(--color-black);
-  
+}
+
+.btn1.cuisses {
+    top: 76%;
+    left: 44%;
+}
+
+.btn1.pelvis {
+    top: 56%;
+    left: 22%;
+}
+
+.btn1.dos {
+    top: 44%;
+    left: 40%;
+}
+
+.btn-retour-face {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: var(--color-btn);
+    color: var(--color-black);
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.btn-retour-face:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.btn-retour-face i {
+    font-size: 14px;
 }

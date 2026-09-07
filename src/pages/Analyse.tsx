@@ -9,8 +9,8 @@ export function Analyse(){
     return(
         <>
             <Navbar/>
-            <Link to="/">
-                <i className="fa-solid fa-chevron-left"></i>
+            <Link to="/" className="retour">
+                    <i className="fa-solid fa-chevron-left"></i>
             </Link>
            
              <IntensityPain/>

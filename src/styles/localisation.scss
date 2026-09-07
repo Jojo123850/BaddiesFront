@@ -1,0 +1,42 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+@import './navbar.scss';
+
+.loc {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+
+    .transport {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+
+        padding: 15px;
+        background-color: var(--color-pink);
+        border-radius: 18px;
+        justify-content: center;
+
+        img {
+            width: 100px;
+            height: 60px;
+            flex-shrink: 0;
+            object-fit: contain;
+
+            background-color: var(--color-rec);
+            border-radius: 50%;
+        }
+        &:hover{
+         background-color: var(--color-black); 
+        border-color: 1px solid var(--color-pink);
+        color: var(--color-white);
+        }
+    }
+}

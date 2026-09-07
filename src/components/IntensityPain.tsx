@@ -2,6 +2,7 @@ import db from "../data/db.json";
 import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
+
 type Niveau = {
   id: string;
   min: number;
@@ -49,9 +50,11 @@ const IntensityPain = () => {
 
   return (
     <>
+       
         <h2 className="analyse">Intensité de la douleur</h2>
         <p className="analyse">Quelle est l’intensité de votre douleur ?</p>
-        <p className="answer">{niveau?.label }</p>
+        <p className="answerPain">{niveau?.label }</p>
+        {intensity === 0 && <p className="answer"> Vous devez cliquer avant de continuer</p>}
              <div className="hand-circle"  
                 onPointerDown={startIncrementing}
                 onPointerUp={stopIncrementing}
@@ -67,7 +70,6 @@ const IntensityPain = () => {
              
              
        
-            {intensity === 0 && <p>Vous devez cliquer avant de continuer</p>}
              <p className="analyse">Maintenez pour sélectionner votre niveau 
              de douleur.</p>
     </>
