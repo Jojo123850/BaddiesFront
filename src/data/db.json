@@ -201,19 +201,23 @@
   "contextes": [
     {
       "id": "maison",
-      "label": "Chez moi"
+      "label": "Chez moi",
+      "img": "../src/assets/images/car.webp"
     },
     {
       "id": "travail_ecole",
-      "label": "Travail / École"
+      "label": "Travail / École",
+      "img": "../src/assets/images/car.webp"
     },
     {
       "id": "transport",
-      "label": "Dans les transports"
+      "label": "Dans les transports",
+      "img": "../src/assets/images/car.webp"
     },
     {
       "id": "exterieur",
-      "label": "À l'extérieur"
+      "label": "À l'extérieur",
+      "img": "../src/assets/images/car.webp"
     }
   ],
 
