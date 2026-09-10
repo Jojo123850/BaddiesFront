@@ -42,7 +42,6 @@ export default function Localisation(){
                     />
                     <p>{contexte.label}</p>
                             </article>
-               
                 
                 ))}
             </div> 

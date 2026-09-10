@@ -86,13 +86,13 @@ p{
       border-radius: 15px;
       place-self: center;
       border-color: var(--color-pink);
-      
     }
     .btnIntensity.selected{
       background-color: var(--color-black);
       color: var(--color-white);
     }
-}
+   
+  }  
 
 @media (min-width: 768px) {
   .hand-icon {

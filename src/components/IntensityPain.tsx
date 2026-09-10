@@ -47,10 +47,8 @@ const IntensityPain = () => {
     navigate("/Zone")
   }
 
-
   return (
     <>
-       
         <h2 className="analyse">Intensité de la douleur</h2>
         <p className="analyse">Quelle est l’intensité de votre douleur ?</p>
         <p className="answerPain">{niveau?.label }</p>
@@ -62,14 +60,9 @@ const IntensityPain = () => {
                 <i className="fa-solid fa-hand-pointer hand-icon"></i>
                
                 {intensity === 0 ? "Appuie": " "} 
-                
-                
-          
              </div>
+
             <button disabled = {intensity === 0} onClick={handleContinue} className="btn">Continuer à analyser</button>
-             
-             
-       
              <p className="analyse">Maintenez pour sélectionner votre niveau 
              de douleur.</p>
     </>
