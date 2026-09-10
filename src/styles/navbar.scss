@@ -71,6 +71,21 @@ header {
       .btn {
         color: var(--color-white);
       }
+    &:hover{
+    // width: 42px;
+    // height: 42px;
+    border-radius: 80%;
+
+    background: rgba(255, 255, 255, 0.2);
+     backdrop-filter: blur(10px);
+
+    color: var(--color-black);
+    text-decoration: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    transition: all 0.2s ease;
+      }
     }
   }
 }

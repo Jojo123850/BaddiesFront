@@ -34,7 +34,7 @@ export default function Localisation(){
             <div className=" loc">
 
                 {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`transport ${selectedContext === contexte.id ? "selected" : ""}`} onClick={() => setSelectedContext (contexte.id)}>
+                    <article key={contexte.id} className={`btn2 ${selectedContext === contexte.id ? "selected" : ""}`} onClick={() => setSelectedContext (contexte.id)}>
                 
                     <img
                         src={contexte.img}

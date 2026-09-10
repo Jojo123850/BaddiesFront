@@ -2,6 +2,16 @@
 @import './_mixins.scss';
 @import './global.scss';
 
+.switchIntensity{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+    .btn{
+      align-self: center;
+    }
+
+}
+
 .hand-circle {
   position: relative;
   width: 45vw;
@@ -64,7 +74,25 @@ p{
   color: #333;
   margin: 0;
 }
+.intensity-btn{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
 
+    .btnIntensity{
+      background-color: var(--color-pink);
+      color: var(--color-black);
+      padding: 8px 60px;
+      border-radius: 15px;
+      place-self: center;
+      border-color: var(--color-pink);
+      
+    }
+    .btnIntensity.selected{
+      background-color: var(--color-black);
+      color: var(--color-white);
+    }
+}
 
 @media (min-width: 768px) {
   .hand-icon {

@@ -4,7 +4,9 @@ import Collapse from "../components/Collapse";
 import "../styles/navbar.scss";
 import "../styles/home.scss";
 
+
 export function Home(){
+    
     return (
         <>
         <Navbar/>

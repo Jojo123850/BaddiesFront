@@ -15,28 +15,22 @@
       "max": 10,
       "niveaux": [
         {
-          "id": "aucune",
-          "min": 0,
-          "max": 0,
-          "label": "Aucune douleur"
-        },
-        {
           "id": "legere",
           "min": 1,
           "max": 3,
-          "label": "Douleur légère"
+          "label": "DOULEUR LÉGÈRE"
         },
         {
           "id": "moderee",
           "min": 4,
           "max": 6,
-          "label": "Douleur modérée"
+          "label": "DOULEUR MODÉRÉE"
         },
         {
           "id": "intense",
           "min": 7,
           "max": 10,
-          "label": "Douleur intense"
+          "label": "DOULEUR MAXIMALE"
         }
       ]
     },
