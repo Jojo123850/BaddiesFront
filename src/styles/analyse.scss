@@ -2,15 +2,6 @@
 @import './_mixins.scss';
 @import './global.scss';
 
-.switchIntensity{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-    .btn{
-      align-self: center;
-    }
-
-}
 
 .hand-circle {
   position: relative;

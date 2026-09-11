@@ -65,7 +65,7 @@ const AnteriorPain = () => {
                     {localisation.label}
                 </button>
             ))}
-
+                
                 <button disabled={selectedZones.length === 0} onClick={handleContinue}className="btn">  Continuer à analyser </button>
         </div>
             

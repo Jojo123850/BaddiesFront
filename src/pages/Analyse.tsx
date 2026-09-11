@@ -15,8 +15,8 @@ export function Analyse(){
             <Navbar/>
             {!isAsking ?(
                 <>
-                <div className="switchIntensity">
-                    <Link to="/" className="retour">
+                <div className="switch">
+                    <Link to="/Zone" className="retour">
                         <i className="fa-solid fa-chevron-left"></i>
                     </Link>
                     <button onClick={() => setIsAsking(true)} className="btn">Mode questionnaire</button>
@@ -27,7 +27,7 @@ export function Analyse(){
 
                 <>
                 <div className="switchIntensity">
-                    <Link to="/" className="retour">
+                    <Link to="/Home" className="retour">
                         <i className="fa-solid fa-chevron-left"></i>
                     </Link>
                     <button onClick={() => setIsAsking(false)} className="btn">Mode anneau</button>

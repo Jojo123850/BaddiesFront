@@ -13,8 +13,8 @@ header {
 
     .logo {
       width: 100%;
-      max-width: 160px; 
-      height: 36px;    
+      max-width: 160px;
+      height: 36px;
       object-fit: cover;
       transition: max-width 0.3s ease;
     }
@@ -22,7 +22,7 @@ header {
     .menu-closed {
       display: none;
     }
-    
+
     .menu-open {
       display: flex;
       flex-direction: column;
@@ -37,65 +37,78 @@ header {
     }
   }
 
+  // NAVIGATION DU BAS
   .bottomNav {
     position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    
+
     background-color: var(--color-pink);
-    border-radius: 18px;
+    border-radius: 18px 18px 0 0;
     border-top: 1px solid var(--color-white);
-    padding-bottom: env(safe-area-inset-bottom);
+
     margin-left: 10px;
     margin-right: 10px;
 
-ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
+    padding-bottom: env(safe-area-inset-bottom);
 
-  a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    font-size: 11px;
-    color: var(--color-black);
-    text-decoration: none;
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
 
-    padding: 8px 12px;
-    border-radius: 14px;
-    border: 1px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      list-style: none;
+      margin: 0;
+      padding: 5px 0;
 
-    /* Le style s'applique sur le survol ET sur le lien de la page active */
-    &:hover,
-    &.active {
-      background: var(--color-black);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      color: var(--color-white);
-      text-decoration: none;
-      border: 1px solid var(--color-black);
-      box-shadow: 
-        0 8px 20px 0 rgba(0, 0, 0, 0.009),
-        inset 0 1px 1px 0 var(--color-black);
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-      transform: translateY(-2px) scale(1.02);
+        gap: 2px;
+
+        font-size: 14px;
+        color: var(--color-black);
+        text-decoration: none;
+
+        padding: 5px 8px;
+        border-radius: 14px;
+
+        white-space: nowrap;
+
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:hover,
+        &.active {
+          background: var(--color-black);
+          color: var(--color-white);
+          text-decoration: none;
+          border: 1px solid var(--color-black);
+
+          transform: translateY(-2px) scale(1.02);
+        }
+      }
+
+      // Bouton "Obtenir de l'aide"
+      .btn {
+        color: var(--color-white);
+        margin-top: 0;
+        padding: 7px 12px;
+        font-size: 14px;
+      }
     }
   }
-
-  .btn {
-    color: var(--color-white);
-  }
-}
-  }
 }
 
+// BURGER
 #burgerMenu {
   background: none;
   border: none;
@@ -105,14 +118,17 @@ ul {
 }
 
 body {
-  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  padding-bottom: calc(70px + env(safe-area-inset-bottom));
 }
 
+
+
+
 @media (min-width: 768px) {
+
   .topNav {
     padding: 16px 32px;
 
-    /* Agrandissement fluide du logo sur écran d'ordinateur */
     .logo {
       max-width: 210px;
       height: 44px;

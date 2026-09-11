@@ -41,6 +41,9 @@
 
 .btn-retour-face {
     display: flex;
+    position: absolute;
+    right: 10px;
+    top: 75%;
     align-items: center;
     gap: 8px;
 

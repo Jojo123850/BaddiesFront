@@ -110,6 +110,10 @@
       {
         "id": "cephalees",
         "label": "Maux de tête"
+      },
+       {
+        "id": "aucun",
+        "label": "Aucun"
       }
     ],
 
@@ -140,7 +144,6 @@
     },
 
     "caractere_habituel": {
-      "question": "Cette douleur est-elle inhabituelle pour toi ?",
       "options": [
         {
           "id": "habituelle",

@@ -11,7 +11,7 @@ export function ZoneP(){
     return(
         <>
             <Navbar/>
-            <Link to="/" className="retour">
+            <Link to="/Analyse" className="retour">
                 <i className="fa-solid fa-chevron-left"></i>
             </Link>
             <h2 className="analyse">Zone de douleur</h2>

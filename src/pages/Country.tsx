@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+ import {  useNavigate } from "react-router-dom"
 import "../styles/navbar.scss";
 import Madagascar from "../assets/images/Madagascar.webp";
 import France from "../assets/images/France.webp";
@@ -31,14 +31,14 @@ export default function Country(){
     const navigate = useNavigate();
     const handleContinue = () => {
         if (!selectedCountry) return;
-        navigate("/Solution");
+        navigate("/Home");
     };
     return(
         <>
                 <header>
-                    <Link to="/">
+                    {/* <Link to="/">
                         <img className="logo" src="../src/assets/images/logo.webp" alt="logo" />
-                    </Link>
+                    </Link> */}
                     <div>
                         <span>Ecouter</span>
                         <span>Comprendre</span>
@@ -53,13 +53,14 @@ export default function Country(){
                     return(
                         <button key={country.id} className={`country ${selectedCountry === country.id ? "selected" : ""}`} onClick={() => setSelectedCountry(country.id)}>
                             <img src={country.flag} alt="flag" />
-                            <span>{country.country}</span>
-                        { selectedCountry === country.id &&(
-                            <span>
-                                <i className="fa-solid fa-check"></i>
-                            </span>
-                        )
-                        }
+                            <span className="text">{country.country}</span>
+
+                            { selectedCountry === country.id &&(
+                                <span className="check">
+                                    <i className="fa-solid fa-check"></i>
+                                </span>
+                            )
+                            }
                         </button>
                     )
                     })}
