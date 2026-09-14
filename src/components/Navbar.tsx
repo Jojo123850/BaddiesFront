@@ -34,7 +34,7 @@ export default function Navbar (){
             </NavLink>
        
           </li>
-          <li><Link to="/" className="btn"><span>Obtenir de l'aide</span></Link></li>
+          <li><Link to="/" className="btn"><span>Aide</span></Link></li>
         </ul>
       </div>
     </header>

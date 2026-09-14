@@ -6,7 +6,11 @@ import Character from "../components/Pain_Character";
 
 
 export default function Solution (){
+
      const navigate = useNavigate();
+
+     
+
     const handleContinue = () => {
         if (Symptom === null) return;
         navigate("/Home");

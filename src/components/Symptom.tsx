@@ -10,32 +10,41 @@ export type Symptom = {
 
 
 export default function Symptom () {
-    const [selectSymptom, setSelectSymptom] = useState<string | null>(null);
-    const [isActive, setIsActive] = useState(false)
-    const handleChange = () => {
-    setIsActive(true); 
-     };
-    // const navigate = useNavigate();
-    // const handleContinue = () => {
-    //     if (selectSymptom === null) return;
-    //     navigate("/Analyse");
-    // };
+    const [selectSymptom, setSelectSymptom] = useState<string [] >([]);
+    const handleChange = (id: string) => {
+    setSelectSymptom(prev =>
+        prev.includes(id)
+            ? prev.filter(item => item !== id)
+            : [...prev, id]
+    );
+    };
       return ( 
         <>
-        
-        <h2 className="analyse">Avez-vous également </h2>
+       
+            <h2 className="analyse">Avez-vous également </h2>
+
         <div className="intensity-btn">
             {db.evaluation_douleur.symptomes.map((item) => (
-                <>
-                  <div>
-                    <input type="checkbox" id="scales" name="scales"  checked={isActive == "Aucun"} onChange={() => handleChange(item.id)}/>
-                    <label  key={item.id} className={`${selectSymptom === item.id ? "selected" : ""}`} onClick={()=>setSelectSymptom(item.id )}>{item.label}
+                <div key={item.id}>
+                    <input
+                        type="checkbox"
+                        id={item.id}
+                        checked={selectSymptom.includes(item.id)}
+                        disabled={
+                            selectSymptom.includes("aucun") &&
+                            item.id !== "aucun"
+                        }
+                        onChange={() => handleChange(item.id)}
+                    />
+
+                    <label
+                        htmlFor={item.id}
+                        className={selectSymptom.includes(item.id) ? "selected" : ""}
+                    >
+                        {item.label}
                     </label>
                 </div>
-                </>
-           
-            ))}
-
+                    ))}
         </div>
 
         </>
