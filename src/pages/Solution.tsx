@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import "../styles/navbar.scss";
 import Symptom from "../components/Symptom";
 import Character from "../components/Pain_Character";
+import { Recap } from "../components/Recap";
 
 
 export default function Solution (){
@@ -24,8 +25,17 @@ export default function Solution (){
                         </Link>
                         <button className="btn">Ajouter au favoris</button>
                     </div>
-            <Symptom/>
-            <Character/>
+            <section>
+                <Recap/>
+            </section>
+            <section>
+                <div>
+                     <Symptom/>  
+                </div>
+                <div>
+                    <Character/>
+                </div>
+            </section>
          
          
              <button disabled = {Symptom === null} onClick={handleContinue} className="btn">Voir les solutions</button>
