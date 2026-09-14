@@ -3,14 +3,13 @@ import Navbar from "../components/Navbar";
 import "../styles/navbar.scss";
 import Symptom from "../components/Symptom";
 import Character from "../components/Pain_Character";
-import { Recap } from "../components/Recap";
+import { useEvaluation } from "../evaluation/useEvaluation";
 
 
 export default function Solution (){
+    const {evaluation} = useEvaluation()
 
      const navigate = useNavigate();
-
-     
 
     const handleContinue = () => {
         if (Symptom === null) return;
@@ -26,7 +25,11 @@ export default function Solution (){
                         <button className="btn">Ajouter au favoris</button>
                     </div>
             <section>
-                <Recap/>
+                <p>Intensité sélectionnée : {evaluation.intensiteValeur}</p>
+                <p>Niveau : {evaluation.intensiteNiveau}</p>
+                <p>Localisations : {evaluation.localisations.join(", ")}</p>
+                
+                <p>Contextes : {evaluation.contextes?.join(", ")}</p>
             </section>
             <section>
                 <div>

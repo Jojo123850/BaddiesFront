@@ -4,7 +4,7 @@ import "../styles/navbar.scss";
 import "../styles/localisation.scss";
 import { useNavigate } from "react-router-dom";
 import db from "../data/db.json";
-import { useState } from "react";
+import { useEvaluation } from "../evaluation/useEvaluation";
 
 type Contexte = {
     id: string;
@@ -13,10 +13,10 @@ type Contexte = {
 };
 
 export default function Localisation(){
-    const [selectedContext, setSelectedContext] = useState<string | null>(null);
+    const { evaluation, setEvaluation } = useEvaluation();
     const navigate = useNavigate();
     const handleContinue = () => {
-        if (!selectedContext) return;
+        if (!evaluation) return;
         navigate("/Solution");
     };
     
@@ -34,7 +34,7 @@ export default function Localisation(){
             <div className=" loc">
 
                 {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`btn2 ${selectedContext === contexte.id ? "selected" : ""}`} onClick={() => setSelectedContext (contexte.id)}>
+                    <article key={contexte.id} className={`btn2 ${evaluation.contextes?.length === null ? "selected" : ""}`} onClick={() => setEvaluation (contexte.id)}>
                 
                     <img
                         src={contexte.img}
