@@ -1,6 +1,6 @@
-import {  useState } from "react";
 import db from "../data/db.json";
 import { useNavigate } from "react-router-dom";
+import { useEvaluation } from "../evaluation/evaluationContext";
 
 
 type Localisation = {
@@ -9,7 +9,8 @@ type Localisation = {
 };
 
 const AnteriorPain = () => {
-    const [selectedZones, setSelectedZones] = useState<string[]>([]);
+    const { evaluation, setEvaluation } = useEvaluation();
+    // const [selectedZones, setSelectedZones] = useState<string[]>([]);
     const navigate = useNavigate();
     // const [activeZone, setAtiveZone] = useState(false)
 
@@ -24,17 +25,25 @@ const AnteriorPain = () => {
     );
 
     const handleZoneClick = (zoneId: string) => {
-        setSelectedZones((prev) => {
-            if (prev.includes(zoneId)) {
-                return prev.filter((id) => id !== zoneId);
-            }
+    setEvaluation((prev) => {
+        if (prev.localisations.includes(zoneId)) {
+            return {
+                ...prev,
+                localisations: prev.localisations.filter(
+                    (id) => id !== zoneId
+                )
+            };
+        }
+        return {
+            ...prev,
+            localisations: [...prev.localisations, zoneId]
+        };
+    });
+};
 
-            return [...prev, zoneId];
-        });
-    };
 
     const handleContinue = () => {
-        if (selectedZones.length === 0) return;
+        if (evaluation.localisations.length === 0) return;
 
         navigate("/Localisation");
     };
@@ -42,7 +51,7 @@ const AnteriorPain = () => {
     return (
         <>
         <div className="body-container">
-                {selectedZones.length === 0 && (
+                {evaluation.localisations.length=== 0 && (
                         <p className="answer">Vous devez sélectionner au moins une zone</p>
                 )}
             
@@ -57,7 +66,7 @@ const AnteriorPain = () => {
                     key={localisation.id}
                     onClick={() => handleZoneClick(localisation.id)}
                     className={`btn1 ${localisation.id} ${
-                        selectedZones.includes(localisation.id)
+                        evaluation.localisations.includes(localisation.id)
                             ? "selected"
                             : ""
                     }`}
@@ -66,7 +75,7 @@ const AnteriorPain = () => {
                 </button>
             ))}
                 
-                <button disabled={selectedZones.length === 0} onClick={handleContinue}className="btn">  Continuer à analyser </button>
+                <button disabled={evaluation.localisations.length === 0} onClick={handleContinue}className="btn">  Continuer à analyser </button>
         </div>
             
         </>
