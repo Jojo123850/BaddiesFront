@@ -1,7 +1,7 @@
 import db from "../data/db.json";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEvaluation } from "../evaluation/evaluationContext";
+import { useEvaluation } from "../evaluation/useEvaluation";
 
 type Niveau = {
     id: string;
@@ -16,42 +16,34 @@ const IntensityPain = () => {
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    const getIntensity = (value: number): Niveau | undefined => {
-        return db.evaluation_douleur.echelle_intensite.niveaux.find(
-            (niveau) => value >= niveau.min && value <= niveau.max
-        );
-    };
+    const getIntensity = (value: number | null): Niveau | undefined => {
+    if (value === null) return undefined;
+    return db.evaluation_douleur.echelle_intensite.niveaux.find(
+        (niveau) => value >= niveau.min && value <= niveau.max
+    );
+};
 
-    const niveau = getIntensity(evaluation.intensites);
+    const niveau = getIntensity(evaluation.intensiteValeur);
 
-    const startIncrementing = () => {
+   const startIncrementing = () => {
+    setEvaluation((prev) => ({
+        ...prev,
+        intensiteValeur: Math.min((prev.intensiteValeur ?? 0) + 1, 10)
+    }));
 
-        setEvaluation((prev) => ({
-            ...prev,
-            intensites: Math.min(prev.intensites + 1, 10)
-        }));
+    intervalRef.current = setInterval(() => {
+        setEvaluation((prev) => {
+            const current = prev.intensiteValeur ?? 0;
 
-        intervalRef.current = setInterval(() => {
+            if (current >= 10) {
+                stopIncrementing();
+                return { ...prev, intensiteValeur: 10 };
+            }
 
-            setEvaluation((prev) => {
-
-                if (prev.intensites >= 10) {
-                    stopIncrementing();
-
-                    return {
-                        ...prev,
-                        intensites: 10
-                    };
-                }
-
-                return {
-                    ...prev,
-                    intensites: prev.intensites + 1
-                };
-            });
-
-        }, 400);
-    };
+            return { ...prev, intensiteValeur: current + 1 };
+        });
+    }, 400);
+};
 
     const stopIncrementing = () => {
         if (intervalRef.current) {
@@ -80,7 +72,7 @@ const IntensityPain = () => {
                 {niveau?.label}
             </p>
 
-            {evaluation.intensites === 0 && (
+            {evaluation.intensiteValeur === 0 && (
                 <p className="answer">
                     Vous devez cliquer avant de continuer
                 </p>
@@ -94,11 +86,11 @@ const IntensityPain = () => {
             >
                 <i className="fa-solid fa-hand-pointer hand-icon"></i>
 
-                {evaluation.intensites === 0 ? "Appuie" : " "}
+                {evaluation.intensiteValeur === 0 ? "Appuie" : " "}
             </div>
 
             <button
-                disabled={evaluation.intensites === 0}
+                disabled={evaluation.intensiteValeur === 0}
                 onClick={handleContinue}
                 className="btn"
             >
