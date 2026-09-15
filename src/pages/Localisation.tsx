@@ -19,11 +19,18 @@ export default function Localisation(){
         if (!evaluation) return;
         navigate("/Solution");
     };
+    const handleLocaltion = (id: string) => {
+        setEvaluation(prev => ({
+            ...prev,
+            contextes: prev.contextes?.includes(id)
+            ? prev.contextes.filter(item => item !== id)
+            : [...(prev.contextes ?? []), id ]
+        }
+       ) )}
     
     const contextes: Contexte[] = db.contextes;
 
     return(
-
         <>
             <Navbar/>
             <Link to="/Zone" className="retour">
@@ -34,21 +41,22 @@ export default function Localisation(){
             <div className=" loc">
 
                 {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`btn2 ${evaluation.contextes?.length === null ? "selected" : ""}`} onClick={() => setEvaluation (contexte.id)}>
-                
-                    <img
-                        src={contexte.img}
-                        alt={contexte.label}
-                    />
-                    <p>{contexte.label}</p>
-                            </article>
+                    <article key={contexte.id} className={`btn2 ${evaluation.contextes?.includes (contexte.id)? "selected" : ""}`} onClick={() =>handleLocaltion(contexte.id)}
+                        >
+                   
+                            <img
+                                src={contexte.img}
+                                alt={contexte.label}
+                            />
+                            <p>{contexte.label}</p>
+                    </article>
                 
                 ))}
             </div> 
 
 
              <button
-                disabled={!selectedContext}
+                disabled={!evaluation}
                 onClick={handleContinue}
                 className="btn"
             >

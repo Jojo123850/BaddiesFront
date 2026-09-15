@@ -10,11 +10,11 @@ export default function Solution (){
     const {evaluation} = useEvaluation()
 
      const navigate = useNavigate();
-
     const handleContinue = () => {
-        if (Symptom === null) return;
-        navigate("/Home");
+    if (!evaluation?.symptomes) return;
+    navigate("/Home");
     };
+
     return(
         <>
              <Navbar/>
@@ -25,12 +25,11 @@ export default function Solution (){
                         <button className="btn">Ajouter au favoris</button>
                     </div>
             <section>
-                <p>Intensité sélectionnée : {evaluation.intensiteValeur}</p>
-                <p>Niveau : {evaluation.intensiteNiveau}</p>
-                <p>Localisations : {evaluation.localisations.join(", ")}</p>
-                
-                <p>Contextes : {evaluation.contextes?.join(", ")}</p>
-            </section>
+    <p>Intensité sélectionnée : {evaluation.intensiteValeur}</p>
+    <p>Niveau : {evaluation.intensiteNiveau}</p>
+    <p>Zone : {evaluation.localisations.join(", ")}</p>
+    <p>Contextes : {evaluation.contextes?.join(", ")}</p>
+</section>
             <section>
                 <div>
                      <Symptom/>  
@@ -41,7 +40,13 @@ export default function Solution (){
             </section>
          
          
-             <button disabled = {Symptom === null} onClick={handleContinue} className="btn">Voir les solutions</button>
+            <button
+             disabled={!evaluation?.symptomes}
+            onClick={handleContinue}
+            className="btn"
+            >
+                Voir les solutions
+            </button>
 
         </>
     )
