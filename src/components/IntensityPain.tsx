@@ -24,7 +24,7 @@ const IntensityPain = () => {
 };
 
     const niveau = getIntensity(evaluation.intensiteValeur);
-
+    
    const startIncrementing = () => {
     setEvaluation((prev) => ({
         ...prev,
@@ -55,8 +55,15 @@ const IntensityPain = () => {
     const navigate = useNavigate();
 
     const handleContinue = () => {
-        navigate("/Zone");
-    };
+    if (evaluation.intensiteValeur === null || !niveau) return;
+
+    setEvaluation(prev => ({
+        ...prev,
+        intensiteNiveau: niveau.id
+    }));
+
+    navigate("/Zone");
+};
 
     return (
         <>

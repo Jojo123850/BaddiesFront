@@ -12,12 +12,16 @@ export type Symptom = {
 export default function Symptom () {
     const [selectSymptom, setSelectSymptom] = useState<string [] >([]);
     const handleChange = (id: string) => {
-    setSelectSymptom(prev =>
-        prev.includes(id)
-            ? prev.filter(item => item !== id)
-            : [...prev, id]
-    );
-    };
+    if (id === "aucun") {
+        setSelectSymptom(["aucun"]);
+        return;
+    }
+
+    setSelectSymptom(prev => [
+        ...prev.filter(item => item !== "aucun"),
+        id
+    ]);
+};
       return ( 
         <>
        
@@ -30,10 +34,6 @@ export default function Symptom () {
                         type="checkbox"
                         id={item.id}
                         checked={selectSymptom.includes(item.id)}
-                        disabled={
-                            selectSymptom.includes("aucun") &&
-                            item.id !== "aucun"
-                        }
                         onChange={() => handleChange(item.id)}
                     />
 

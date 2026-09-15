@@ -1,53 +1,60 @@
-import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../styles/navbar.scss";
-import Symptom from "../components/Symptom";
-import Character from "../components/Pain_Character";
+import "../styles/solution.scss";
+import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 
-
-export default function Solution (){
+export function Solution (){
     const {evaluation} = useEvaluation()
 
-     const navigate = useNavigate();
-    const handleContinue = () => {
-    if (!evaluation?.symptomes) return;
-    navigate("/Home");
-    };
+    const solutionsFiltre = db.solutions.filter((solution) => {
+           const intensityOk =
+               !solution.intensites || 
+               (evaluation.intensiteNiveau !== null &&
+                   solution.intensites.includes(evaluation.intensiteNiveau));
+               
+           const localisatiokOk = 
+               !solution.localisations ||
+               evaluation.localisations.some((localisation) =>
+               solution.localisations.includes(localisation))
+   
+           const contexteOk =
+               !solution.contextes ||
+               (evaluation.contextes !== null &&
+                   solution.contextes.includes(evaluation.contextes));
+           // const symptomeOk= 
+           //     !solution.symptomes_cibles ||
+               
+           //     solution.contextes.includes(evaluation.symptomes)
+           
+               return(
+                   intensityOk &&
+                   localisatiokOk &&
+                   contexteOk 
+                   // symptomeOk
+               )
+   
+       })
+       return(
+           <>
+           <Navbar/>
+           <section>
 
-    return(
-        <>
-             <Navbar/>
-                    <div className="switch">
-                        <Link to="/Localisation" className="retour">
-                                <i className="fa-solid fa-chevron-left"></i>
-                        </Link>
-                        <button className="btn">Ajouter au favoris</button>
-                    </div>
-            <section>
-    <p>Intensité sélectionnée : {evaluation.intensiteValeur}</p>
-    <p>Niveau : {evaluation.intensiteNiveau}</p>
-    <p>Zone : {evaluation.localisations.join(", ")}</p>
-    <p>Contextes : {evaluation.contextes?.join(", ")}</p>
-</section>
-            <section>
-                <div>
-                     <Symptom/>  
-                </div>
-                <div>
-                    <Character/>
-                </div>
-            </section>
-         
-         
-            <button
-             disabled={!evaluation?.symptomes}
-            onClick={handleContinue}
-            className="btn"
-            >
-                Voir les solutions
-            </button>
+           <h2 className="titleSolution">Geste conseillé</h2>
+           <div id="solution">
 
-        </>
-    )
-}
+            {solutionsFiltre.
+             map((item) => (
+                <>
+                    <article className="contentSolution" key={item.id}>
+                        <h3>{item.label}</h3>
+                        <p className="solutionPara">{item.description}</p>
+                    </article>
+                </>
+             ))}
+           </div>
+           </section>
+           </>
+   
+       )
+    }

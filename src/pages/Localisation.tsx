@@ -17,16 +17,13 @@ export default function Localisation(){
     const navigate = useNavigate();
     const handleContinue = () => {
         if (!evaluation) return;
-        navigate("/Solution");
+        navigate("/Recapitulatif");
     };
     const handleLocaltion = (id: string) => {
         setEvaluation(prev => ({
             ...prev,
-            contextes: prev.contextes?.includes(id)
-            ? prev.contextes.filter(item => item !== id)
-            : [...(prev.contextes ?? []), id ]
-        }
-       ) )}
+            contextes: id
+     } ))}
     
     const contextes: Contexte[] = db.contextes;
 
@@ -41,7 +38,7 @@ export default function Localisation(){
             <div className=" loc">
 
                 {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`btn2 ${evaluation.contextes?.includes (contexte.id)? "selected" : ""}`} onClick={() =>handleLocaltion(contexte.id)}
+                    <article key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id? "selected" : ""}`} onClick={() =>handleLocaltion(contexte.id)}
                         >
                    
                             <img

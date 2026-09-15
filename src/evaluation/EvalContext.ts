@@ -4,8 +4,8 @@ export type Evaluation = {
     intensiteNiveau: string | null,
     intensiteValeur: number | null,
     localisations: string[],
-    contextes: string[] | null,
-    symptomes: string
+    contextes: string | null,
+    symptomes: string[]
 }
 
 export type EvaluationContextType = {

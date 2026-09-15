@@ -21,8 +21,8 @@ export default function Character() {
         <h2 className="analyse">Cette douleur est-elle inhabituelle pour vous ? </h2>
         <article className="intensity-btn">
             {db.evaluation_douleur.caractere_habituel.options.map((item) => (
-                <>
-                  <div>
+                
+                  <div key={item.id}>
                     <input
                         type="radio"
                         id={item.id}
@@ -32,10 +32,10 @@ export default function Character() {
                         onChange={() => handleChange(item.id)}
                     />
                     
-                    <label  key={item.id} className={`${selectCharacter === item.id ? "selected" : ""}`} onClick={()=>setSelectCharacter(item.id )}>{item.label}
+                    <label  htmlFor={item.id} className={`${selectCharacter === item.id ? "selected" : ""}`} onClick={()=>setSelectCharacter(item.id )}>{item.label}
                     </label>
                 </div>
-                </>
+                
             ))}
         </article>
           
