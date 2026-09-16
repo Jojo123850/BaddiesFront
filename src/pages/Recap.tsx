@@ -23,9 +23,10 @@ export default function Recap (){
     ? intensityImages[evaluation.intensiteNiveau]
     : null;
 
-     const navigate = useNavigate();
+    const navigate = useNavigate();
+    const isInComplete = evaluation.symptomes.length === 0 || evaluation.option === null;
     const handleContinue = () => {
-    if (!evaluation?.symptomes) return;
+    if (isInComplete) return;
     navigate("/Solution");
     };
 
@@ -77,9 +78,9 @@ export default function Recap (){
          
          
             <button
-             disabled={!evaluation?.symptomes}
-            onClick={handleContinue}
-            className="btn"
+                disabled={isInComplete}
+                onClick={handleContinue}
+                className="btn"
             >
                 Voir les solutions
             </button>

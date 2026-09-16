@@ -7,6 +7,8 @@ export function EvaluationProvider({ children }: { children: React.ReactNode }) 
         intensiteValeur: null,
         localisations: [],
         contextes: null,
+        symptomes: [],
+        option: null
     });
 
     return (

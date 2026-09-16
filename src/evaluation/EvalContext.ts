@@ -5,7 +5,8 @@ export type Evaluation = {
     intensiteValeur: number | null,
     localisations: string[],
     contextes: string | null,
-    symptomes: string[]
+    symptomes: string[],
+    option: string | null
 }
 
 export type EvaluationContextType = {
