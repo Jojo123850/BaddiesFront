@@ -7,6 +7,8 @@ import  Country  from './pages/Country';
 import Recap from './pages/Recap';
 import { EvaluationProvider } from './evaluation/evaluationContext';
 import { Solution } from './pages/Solution';
+import MedicalAlert from './pages/MedicalAlert';
+import { RulesAlert } from './pages/Rules';
 
 export default function App(){
   return(
@@ -18,6 +20,8 @@ export default function App(){
                 <Route path='/Zone' element={<ZoneP />} />
                 <Route path='/Localisation' element={<Localisation />} />
                 <Route path='/Recapitulatif' element={<Recap/>} />
+                <Route path='/Analyse de réponse' element={<RulesAlert/> }/>
+                <Route path='/Alerte' element={<MedicalAlert/>} />
                 <Route path='/Solution' element={<Solution/>} />
 
             </Routes>

@@ -3,7 +3,8 @@ import "../styles/navbar.scss";
 import "../styles/solution.scss";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
-
+// import MedicalAlert from "./MedicalAlert";
+import { Link } from "react-router-dom";
 export function Solution (){
     const {evaluation} = useEvaluation()
 
@@ -22,35 +23,38 @@ export function Solution (){
                !solution.contextes ||
                (evaluation.contextes !== null &&
                    solution.contextes.includes(evaluation.contextes));
-           // const symptomeOk= 
-           //     !solution.symptomes_cibles ||
-               
-           //     solution.contextes.includes(evaluation.symptomes)
+            const symptomeOk =
+                !solution.symptomes_cibles ||
+                solution.symptomes_cibles.some(symptome =>
+                evaluation.symptomes.includes(symptome)
+             );
            
                return(
                    intensityOk &&
                    localisatiokOk &&
-                   contexteOk 
-                   // symptomeOk
+                   contexteOk &&
+                    symptomeOk
                )
    
        })
        return(
            <>
            <Navbar/>
+           <Link to="/Localisation" className="retour">
+                                <i className="fa-solid fa-chevron-left"></i>
+            </Link>
            <section>
 
            <h2 className="titleSolution">Geste conseillé</h2>
            <div id="solution">
-
+            {/* <MedicalAlert/> */}
             {solutionsFiltre.
              map((item) => (
-                <>
                     <article className="contentSolution" key={item.id}>
                         <h3>{item.label}</h3>
                         <p className="solutionPara">{item.description}</p>
                     </article>
-                </>
+                
              ))}
            </div>
            </section>

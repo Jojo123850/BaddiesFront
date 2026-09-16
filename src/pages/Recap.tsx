@@ -27,7 +27,7 @@ export default function Recap (){
     const isInComplete = evaluation.symptomes.length === 0 || evaluation.option === null;
     const handleContinue = () => {
     if (isInComplete) return;
-    navigate("/Solution");
+    navigate("/Analyse de réponse");
     };
 
    
