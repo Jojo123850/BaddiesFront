@@ -1,38 +1,43 @@
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { useEffect } from "react";
+import db from "../data/db.json";
 
-// regle de sécurite db
+// règle de sécurité db
 export function RulesAlert(){
-    const {evaluation} = useEvaluation()
-    const navigate = useNavigate()
+    const { evaluation } = useEvaluation();
+    const navigate = useNavigate();
+    const regles = db.regles_securite;
 
     useEffect(() => {
         const douleurIntense =
-            evaluation.intensiteNiveau === "intense"
+            evaluation.intensiteNiveau === "intense";
 
         const douleurInhabituelle =
             evaluation.option === "a_change" ||
-            evaluation.option=== "nouvelle_ou_bien_plus_forte"
+            evaluation.option === "nouvelle_ou_bien_plus_forte";
 
-        const symptomePreoccupant =
-            evaluation.symptomes.includes('Malaise') ||
-            evaluation.symptomes.includes('Vomissement')
-        
-        const situationNonBaddies = (douleurInhabituelle && douleurIntense) || symptomePreoccupant
-        
-        if(situationNonBaddies){
-            navigate("/Alerte")    
-        }else{
-            navigate("/Solution")
+        const symptomePreoccupant = regles.some((regle) =>
+            regle.declencheur.symptomes_un_de?.some((symptome) =>
+                evaluation.symptomes.includes(symptome)
+            )
+        );
+
+        const situationNonBaddies =
+            (douleurInhabituelle && douleurIntense) ||
+            symptomePreoccupant;
+
+        if (situationNonBaddies) {
+            navigate("/Alerte");
+        } else {
+            navigate("/Solution");
         }
-    },[evaluation, navigate])
-    
+    }, [evaluation, navigate, regles]);
 
-    return(
+    return (
         <>
             <h2>Analyse en cours</h2>
             <div className="loader"></div>
         </>
-    )
+    );
 }

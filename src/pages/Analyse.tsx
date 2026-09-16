@@ -22,9 +22,8 @@ export function Analyse(){
                     <button onClick={() => setIsAsking(true)} className="btn">Mode questionnaire</button>
                 </div>
                 <IntensityPain/>
-                </>
+        </>
         ):(
-
                 <>
                 <div className="switchIntensity">
                     <Link to="/Home" className="retour">

@@ -8,7 +8,6 @@
       "note": "Les recommandations sont des informations générales et ne remplacent pas l'avis d'un professionnel de santé."
     }
   },
-
   "evaluation_douleur": {
     "echelle_intensite": {
       "min": 0,
@@ -34,7 +33,6 @@
         }
       ]
     },
-
     "localisations": [
       {
         "id": "pelvis",
@@ -49,7 +47,6 @@
         "label": "Cuisses"
       }
     ],
-
     "symptomes": [
       {
         "id": "crampes",
@@ -111,12 +108,32 @@
         "id": "cephalees",
         "label": "Maux de tête"
       },
-       {
+      {
+        "id": "douleur_rapports",
+        "label": "Douleurs pendant les rapports"
+      },
+      {
+        "id": "fievre",
+        "label": "Fièvre"
+      },
+      {
+        "id": "pertes_vaginales_anormales",
+        "label": "Pertes vaginales inhabituelles"
+      },
+      {
+        "id": "saignements_entre_regles",
+        "label": "Saignements entre les règles"
+      },
+      {
+        "id": "regles_abondantes",
+        "label": "Règles anormalement abondantes"
+      },
+      {
         "id": "aucun",
         "label": "Aucun"
       }
-    ],
 
+    ],
     "impact_quotidien": {
       "question": "Quel est l'impact de ta douleur sur ta journée ?",
       "options": [
@@ -142,7 +159,6 @@
         }
       ]
     },
-
     "caractere_habituel": {
       "options": [
         {
@@ -160,7 +176,6 @@
       ]
     }
   },
-
   "profil_utilisatrice": {
     "age": {
       "requis": true,
@@ -172,7 +187,6 @@
       ],
       "note": "Baddies ne prescrit pas de médicaments et ne recommande pas automatiquement de traitement médicamenteux."
     },
-
     "nature_douleur_menstruelle": {
       "valeurs": [
         {
@@ -194,7 +208,6 @@
       "regle_app": "Ne pas demander à l'utilisatrice de diagnostiquer elle-même une dysménorrhée primaire ou secondaire. Cette information peut être renseignée uniquement si elle est déjà connue médicalement."
     }
   },
-
   "contextes": [
     {
       "id": "maison",
@@ -217,7 +230,6 @@
       "img": "../src/assets/images/car.webp"
     }
   ],
-
   "solutions": [
     {
       "id": "chaleur",
@@ -238,7 +250,6 @@
       ],
       "source": "ameli"
     },
-
     {
       "id": "bain_douche_chaude",
       "label": "Bain ou douche chaude",
@@ -253,7 +264,6 @@
       ],
       "source": "ameli"
     },
-
     {
       "id": "massage_doux",
       "label": "Massage doux",
@@ -271,7 +281,6 @@
       ],
       "source": "ameli"
     },
-
     {
       "id": "exercice_doux",
       "label": "Exercice doux",
@@ -289,7 +298,6 @@
       ],
       "source": "ameli"
     },
-
     {
       "id": "activite_physique_reguliere",
       "label": "Activité physique régulière",
@@ -301,7 +309,6 @@
       ],
       "source": "msd"
     },
-
     {
       "id": "sommeil",
       "label": "Favoriser un bon sommeil",
@@ -317,7 +324,6 @@
       ],
       "source": "msd"
     },
-
     {
       "id": "repos",
       "label": "Repos et position confortable",
@@ -334,7 +340,6 @@
       ],
       "source": "msd"
     },
-
     {
       "id": "relaxation",
       "label": "Relaxation et respiration",
@@ -352,7 +357,6 @@
       ],
       "source": "msd"
     },
-
     {
       "id": "alimentation_equilibree",
       "label": "Alimentation équilibrée",
@@ -365,7 +369,6 @@
       "source": "soutien_general",
       "note": "L'application ne doit pas présenter l'alimentation comme un traitement médical de la dysménorrhée."
     },
-
     {
       "id": "alimentation_pauvre_en_graisses",
       "label": "Alimentation pauvre en graisses",
@@ -376,7 +379,6 @@
       "source": "msd",
       "note": "À présenter comme une piste de mode de vie et non comme un traitement garanti."
     },
-
     {
       "id": "reduction_stress",
       "label": "Réduire le stress",
@@ -394,7 +396,6 @@
       ],
       "source": "msd"
     },
-
     {
       "id": "hydratation",
       "label": "Boire régulièrement",
@@ -412,7 +413,6 @@
       "source": "soutien_general",
       "note": "Cette recommandation ne constitue pas un traitement spécifique de la dysménorrhée."
     },
-
     {
       "id": "eviter_tabac",
       "label": "Éviter le tabac",
@@ -424,7 +424,6 @@
       "source": "ameli"
     }
   ],
-
   "correspondance_symptomes_solutions": {
     "fatigue": [
       "sommeil",
@@ -460,132 +459,22 @@
       "hydratation"
     ]
   },
-
-  "signes_alerte": [
-    {
-      "id": "fievre",
-      "label": "Fièvre",
-      "action": "conseil_medical",
-      "message": "Une douleur menstruelle accompagnée de fièvre doit être évaluée par un professionnel de santé.",
-      "source": "ameli_msd"
-    },
-
-    {
-      "id": "pertes_vaginales_anormales",
-      "label": "Pertes vaginales anormales",
-      "action": "conseil_medical",
-      "message": "Des pertes vaginales inhabituelles associées aux douleurs nécessitent un avis médical.",
-      "source": "ameli_msd"
-    },
-
-    {
-      "id": "saignements_entre_regles",
-      "label": "Saignements entre les règles",
-      "action": "conseil_medical",
-      "message": "Des saignements entre les règles doivent être signalés à un professionnel de santé.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "regles_abondantes",
-      "label": "Règles anormalement abondantes",
-      "action": "conseil_medical",
-      "message": "Des règles anormalement abondantes associées à des douleurs nécessitent un avis médical.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "douleur_rapports",
-      "label": "Douleurs lors des rapports sexuels",
-      "action": "conseil_medical",
-      "message": "Des douleurs pendant les rapports associées aux douleurs menstruelles doivent être signalées à un professionnel de santé.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "syndrome_intestin_irritable",
-      "label": "Symptômes digestifs importants ou syndrome de l'intestin irritable",
-      "action": "conseil_medical",
-      "message": "Des symptômes digestifs importants associés aux douleurs menstruelles peuvent justifier une consultation.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "douleur_soudaine_severe",
-      "label": "Douleur très intense apparue soudainement",
-      "action": "consultation_rapide",
-      "message": "Une douleur pelvienne sévère apparue soudainement nécessite une évaluation médicale rapide.",
-      "source": "msd"
-    },
-
-    {
-      "id": "douleur_constante",
-      "label": "Douleur constante",
-      "action": "conseil_medical",
-      "message": "Une douleur constante ou nettement différente de la douleur habituelle doit être évaluée par un professionnel de santé.",
-      "source": "msd"
-    },
-
-    {
-      "id": "douleur_non_soulagee",
-      "label": "Douleur non soulagée",
-      "action": "conseil_medical",
-      "message": "Si les douleurs ne sont pas soulagées malgré les mesures habituelles, un avis médical est recommandé.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "retentissement_quotidien",
-      "label": "Retentissement important sur la vie quotidienne",
-      "action": "conseil_medical",
-      "message": "Si les douleurs empêchent régulièrement de travailler, d'étudier ou de mener les activités habituelles, une consultation est recommandée.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "douleur_aggravation",
-      "label": "Douleur qui s'aggrave",
-      "action": "conseil_medical",
-      "message": "Une aggravation inhabituelle des douleurs menstruelles doit être évaluée par un professionnel de santé.",
-      "source": "ameli"
-    },
-
-    {
-      "id": "douleur_adulte",
-      "label": "Apparition de douleurs importantes à l'âge adulte",
-      "action": "conseil_medical",
-      "message": "L'apparition de douleurs menstruelles importantes à l'âge adulte mérite une évaluation médicale.",
-      "source": "ameli_msd"
-    },
-
-    {
-      "id": "douleur_avant_apres_regles",
-      "label": "Douleurs durant plusieurs jours avant et après les règles",
-      "action": "conseil_medical",
-      "message": "Des douleurs qui durent plusieurs jours avant et après les règles peuvent nécessiter un avis médical.",
-      "source": "ameli"
-    }
-  ],
-
   "regles_securite": [
     {
       "id": "choc_toxique",
       "declencheur": {
         "protection_interne": true,
         "symptomes_un_de": [
-          "fievre_elevee",
+          "fievre",
           "vomissements",
           "diarrhee",
-          "malaise",
-          "douleur_abdominale",
-          "douleur_musculaire"
+          "malaise"
         ]
       },
       "action": "urgence_medicale",
       "message": "Retirer le tampon ou la coupe et consulter en urgence en cas de symptômes évocateurs d'un syndrome de choc toxique.",
       "source": "ameli"
     },
-
     {
       "id": "douleur_forte_ou_inhabituelle",
       "declencheur": {
@@ -596,7 +485,6 @@
       "message": "Une douleur importante ou inhabituelle mérite une évaluation médicale, notamment si elle s'aggrave ou retentit fortement sur la vie quotidienne.",
       "source": "ameli"
     },
-
     {
       "id": "douleur_intense",
       "declencheur": {
@@ -606,7 +494,6 @@
       "message": "Une douleur intense nécessite de vérifier la présence éventuelle de signes d'alerte avant de proposer uniquement des mesures de confort.",
       "source": "ameli_msd"
     },
-
     {
       "id": "symptomes_inquietants",
       "declencheur": {
@@ -616,7 +503,7 @@
           "saignements_entre_regles",
           "regles_abondantes",
           "douleur_rapports",
-          "vomissements_importants",
+          "vomissements",
           "malaise"
         ]
       },
@@ -624,17 +511,6 @@
       "message": "La présence de ces symptômes associés aux douleurs menstruelles justifie un avis médical.",
       "source": "ameli_msd"
     },
-
-    {
-      "id": "douleur_bloquante_repetee",
-      "declencheur": {
-        "impact": "majeur"
-      },
-      "action": "conseil_medical",
-      "message": "Si une douleur empêche régulièrement de mener les activités quotidiennes, une consultation est recommandée.",
-      "source": "ameli"
-    },
-
     {
       "id": "tendance_en_hausse",
       "declencheur": {
@@ -644,7 +520,6 @@
       "message": "Une augmentation progressive de l'intensité des douleurs sur plusieurs cycles mérite une évaluation par un professionnel de santé.",
       "source": "a_valider_gynecologue"
     },
-
     {
       "id": "toute_premiere_douleur_de_ce_type",
       "declencheur": {
@@ -656,7 +531,6 @@
       "source": "ameli_msd"
     }
   ],
-
   "facteurs_risque": [
     {
       "id": "premieres_regles_precoces",
@@ -691,7 +565,6 @@
       "label": "Antécédents familiaux de dysménorrhée"
     }
   ],
-
   "causes_possibles_dysmenorrhee_secondaire": [
     {
       "id": "endometriose",
@@ -739,7 +612,6 @@
       "note": "Cause rare."
     }
   ],
-
   "informations_medicales": {
     "medicaments": {
       "active": false,
@@ -747,7 +619,6 @@
       "note": "Si des informations sur les AINS sont ajoutées ultérieurement, elles devront être encadrées par des règles de sécurité et un contrôle de l'âge.",
       "source": "ameli"
     },
-
     "alimentation_et_complements": {
       "note": "Certaines approches alimentaires et certains compléments ont été étudiés, mais les preuves sont limitées. Baddies ne doit pas présenter ces éléments comme des traitements garantis.",
       "exemples": [
@@ -761,7 +632,6 @@
       ],
       "source": "msd"
     },
-
     "depistage_cancer_col": {
       "separe_du_parcours_douleur": true,
       "note": "Ne pas présenter le dépistage du cancer du col comme une réponse à une douleur menstruelle.",
@@ -769,7 +639,6 @@
       "source": "ameli"
     }
   },
-
   "sources": [
     {
       "nom": "Ameli - Douleurs pendant les règles : que faire pour être soulagée ?",

@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom";
 
 export default function MedicalAlert() {
     return (
-        <section>
+        <>
+            <Link to="/Localisation" className="retour">
+                <i className="fa-solid fa-chevron-left"></i>
+            </Link>
+            <section>
             <h2>Une consultation médicale est recommandée</h2>
 
             <p>
@@ -13,6 +18,7 @@ export default function MedicalAlert() {
                 Si vos symptômes sont très intenses, s'aggravent
                 ou vous inquiètent, consultez rapidement.
             </p>
-        </section>
+            </section>
+        </>
     );
 }
