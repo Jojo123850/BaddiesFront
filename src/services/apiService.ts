@@ -82,6 +82,40 @@ async forgotPassword(email: string, signal: AbortSignal) {
     }
 
     return await req.json()
-}
+},
 
+
+
+async resetPassword(
+    token: string,
+    newPassword: string,
+    signal: AbortSignal
+) {
+    const req = await fetch(
+        `${BASE_URL}/api/v1/auth/resetPassword`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token,
+                newPassword
+            }),
+            signal
+        }
+    )
+
+    if (!req.ok) {
+        const errorData = await req.json()
+
+        throw new Error(
+            errorData.error ||
+            errorData.message ||
+            `Error HTTP: ${req.status}`
+        )
+    }
+
+    return await req.json()
+}
 }

@@ -13,6 +13,7 @@ import Login from './components/login';
 // import Login from './components/Login';
 import Register from './components/Register';
 import { ForgotPassword } from './components/ForgotPassword';
+import { ResetPassword } from './components/ResetPassword';
 
 export default function App(){
   return(
@@ -22,6 +23,7 @@ export default function App(){
                 <Route path='/Register' element={<Register/>} />
                 <Route path='/Login' element={<Login/>} />
                 <Route path='/ForgotPassword' element={<ForgotPassword/>} />
+                <Route path='/ResetPassword' element={<ResetPassword />} />
                 <Route path='/Home' element={<Home />} />
                 <Route path='/Analyse' element={<Analyse />} />
                 <Route path='/Zone' element={<ZoneP />} />

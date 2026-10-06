@@ -7,6 +7,8 @@ function Login() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState<string>("")
+    const [messageType, setMessageType] = useState<"error" | "success" | "">("")
 
     const navigate = useNavigate();
     if (loading) return <p>Chargement...</p>
@@ -19,19 +21,22 @@ function Login() {
 
             try {
                 setLoading(true)
+                console.log("loading ON")
 
                 const datas = await apiService.login(
                     email,
                     password,
                     controller.signal
                 )
-
+                console.log("réponse reçue")
                 console.log(datas)
+
                 navigate("/Home")
 
             } catch (err) {
                 if (err instanceof Error && err.name !== 'AbortError') {
-                    console.error('Loading error:', err)
+                     setMessage(err.message)
+                    setMessageType("error")
                 }
             } finally {
                 if (!controller.signal.aborted) {
@@ -60,6 +65,11 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
 
             />
+            {message && (
+                <p className={messageType}>
+                    {message}
+            </p>
+            )}
             <Link to="/ForgotPassword">
                 Mot de passe oublié ?
             </Link>

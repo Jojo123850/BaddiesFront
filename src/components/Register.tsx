@@ -8,7 +8,8 @@ function Register() {
     const [pseudo, setPseudo] = useState<string>("")
     // const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    // if (loading) return <p>Chargement...</p>
+   const [message, setMessage] = useState<string>("")
+    const [messageType, setMessageType] = useState<"error" | "success" | "">("")
 
     return (
         <form onSubmit={async (e) => {
@@ -31,7 +32,8 @@ function Register() {
 
             } catch (err) {
                 if (err instanceof Error && err.name !== 'AbortError') {
-                    console.error('Loading error:', err)
+                     setMessage(err.message)
+                    setMessageType("error")
                 }
             }
             
@@ -63,7 +65,12 @@ function Register() {
                 placeholder="Votre mot de passe"
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <p>Déjà un compte ? <Link to="/Login">S'inscrire</Link></p>
+            {message && (
+                <p className={messageType}>
+                    {message}
+            </p>
+            )}
+            <p>Déjà un compte ? <Link to="/Login">Se connecter</Link></p>
 
             <button type="submit">S'inscrire</button>
         </form>

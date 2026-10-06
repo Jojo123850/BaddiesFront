@@ -3,6 +3,8 @@ import { apiService } from "../services/apiService"
 
 export function ForgotPassword() {
     const [email, setEmail] = useState<string>("")
+    const [message, setMessage] = useState<string>("")
+    const [messageType, setMessageType] = useState<"error" | "success" | "">("")
 
     return (
         <form onSubmit={async (e) => {
@@ -16,11 +18,15 @@ export function ForgotPassword() {
                     controller.signal
                 )
 
-                console.log(datas)
+                
+                setMessage(datas.message)
+                setMessageType("success")
+
 
             } catch (err) {
                 if (err instanceof Error && err.name !== "AbortError") {
-                    console.error("Erreur :", err)
+                     setMessage(err.message)
+                    setMessageType("error")
                 }
             }
         }}>
@@ -36,6 +42,11 @@ export function ForgotPassword() {
                 placeholder="Votre email"
                 onChange={(e) => setEmail(e.target.value)}
             />
+            {message && (
+                <p className={messageType}>
+                    {message}
+            </p>
+            )}
 
             <button type="submit">
                 Réinitialiser le mot de passe
