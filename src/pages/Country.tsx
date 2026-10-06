@@ -31,7 +31,7 @@ export default function Country(){
     const navigate = useNavigate();
     const handleContinue = () => {
         if (!selectedCountry) return;
-        navigate("/Home");
+        navigate("/Login");
     };
     return(
         <>

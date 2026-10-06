@@ -9,12 +9,19 @@ import { EvaluationProvider } from './evaluation/evaluationContext';
 import { Solution } from './pages/Solution';
 import MedicalAlert from './pages/MedicalAlert';
 import { RulesAlert } from './pages/Rules';
+import Login from './components/login';
+// import Login from './components/Login';
+import Register from './components/Register';
+import { ForgotPassword } from './components/ForgotPassword';
 
 export default function App(){
   return(
       <EvaluationProvider>
             <Routes>
                 <Route path='/' element={<Country/>} />
+                <Route path='/Register' element={<Register/>} />
+                <Route path='/Login' element={<Login/>} />
+                <Route path='/ForgotPassword' element={<ForgotPassword/>} />
                 <Route path='/Home' element={<Home />} />
                 <Route path='/Analyse' element={<Analyse />} />
                 <Route path='/Zone' element={<ZoneP />} />
