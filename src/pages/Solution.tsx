@@ -5,6 +5,8 @@ import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 // import MedicalAlert from "./MedicalAlert";
 import { Link } from "react-router-dom";
+import { saveEvaluation } from "../services/localStorageService";
+
 export function Solution (){
     const {evaluation} = useEvaluation()
 
@@ -57,6 +59,12 @@ export function Solution (){
                 
              ))}
            </div>
+           </section>
+           <section>
+            <button className="btn" onClick={()=>{saveEvaluation(evaluation)}}>+ Enregistrer cet épisode</button>
+           <Link to="/Home">Evaluation terminé</Link>
+            <p>Information générale, ne remplace pas un avis médical</p>
+
            </section>
            </>
    

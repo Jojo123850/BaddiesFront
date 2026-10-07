@@ -11,6 +11,7 @@ import intense from "../assets/images/intense.webp";
 
 
 
+
 export default function Recap (){
     const {evaluation} = useEvaluation()
     const intensityImages : Record<string, string> ={
@@ -27,6 +28,7 @@ export default function Recap (){
     const isInComplete = evaluation.symptomes.length === 0 || evaluation.option === null;
     const handleContinue = () => {
     if (isInComplete) return;
+  
     navigate("/Analyse de réponse");
     };
 

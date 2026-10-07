@@ -14,6 +14,8 @@ import Login from './components/login';
 import Register from './components/Register';
 import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
+import { History } from './pages/History';
+import Episode from './pages/Episode';
 
 export default function App(){
   return(
@@ -32,6 +34,8 @@ export default function App(){
                 <Route path='/Analyse de réponse' element={<RulesAlert/> }/>
                 <Route path='/Alerte' element={<MedicalAlert/>} />
                 <Route path='/Solution' element={<Solution/>} />
+                <Route path='/Historique' element={<History/>} />
+                <Route path='/Historique/:id' element={<Episode/>} />
 
             </Routes>
       </EvaluationProvider>

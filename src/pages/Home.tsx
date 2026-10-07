@@ -27,9 +27,16 @@ export function Home(){
             <Collapse/>
         </section>
 
-        <section>
-            <h2>Vos dernières évaluations</h2>
-        </section>
+        
+           <section className="historyHome">
+                <h2>Votre historique</h2>
+                <p>Retrouvez vos dernières évaluations</p>
+
+                <Link to="/Historique" className="btn">
+                    Voir mon historique
+                </Link>
+            </section>
+        
 
         </>
     )
