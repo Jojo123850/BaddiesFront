@@ -30,7 +30,7 @@ function Login() {
                 )
                 console.log("réponse reçue")
                 console.log(datas)
-
+                localStorage.setItem("token", datas.token)
                 navigate("/Home")
 
             } catch (err) {

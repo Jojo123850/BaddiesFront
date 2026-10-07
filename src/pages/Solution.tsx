@@ -6,10 +6,30 @@ import { useEvaluation } from "../evaluation/useEvaluation";
 // import MedicalAlert from "./MedicalAlert";
 import { Link } from "react-router-dom";
 import { saveEvaluation } from "../services/localStorageService";
+import { useState } from "react";
+import { createHistory } from "../services/historyService";
 
 export function Solution (){
     const {evaluation} = useEvaluation()
+    const [saved, setSaved] = useState(false);
+    
+const handleSave = async () => {
+    if (saved) return;
 
+    const token = localStorage.getItem("token");
+
+    try {
+        if (token) {
+            await createHistory(evaluation, solutionsFiltre);
+        } else {
+            saveEvaluation(evaluation, solutionsFiltre);
+        }
+
+        setSaved(true);
+    } catch (error) {
+        console.error("Erreur enregistrement :", error);
+    }
+};
     const solutionsFiltre = db.solutions.filter((solution) => {
            const intensityOk =
                !solution.intensites || 
@@ -61,7 +81,12 @@ export function Solution (){
            </div>
            </section>
            <section>
-            <button className="btn" onClick={()=>{saveEvaluation(evaluation)}}>+ Enregistrer cet épisode</button>
+            <button
+                className="btn"
+            onClick={handleSave} disabled={saved}
+            >
+                   {saved ? "Épisode enregistré" : "+ Enregistrer cet épisode"}
+        </button>
            <Link to="/Home">Evaluation terminé</Link>
             <p>Information générale, ne remplace pas un avis médical</p>
 

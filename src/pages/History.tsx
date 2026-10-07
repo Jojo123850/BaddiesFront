@@ -1,19 +1,39 @@
-import {  useState } from "react"
+import {  useState, useEffect } from "react"
 import type { HistoryEvaluation } from "../services/localStorageService"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { getHistory } from "../services/historyService";
 
 export  function History(){
 const navigate = useNavigate();
-const [history] = useState<HistoryEvaluation[]>(() => {
-        const historyStock = localStorage.getItem("historique");
+const [history, setHistory] = useState<HistoryEvaluation[]>([]);
 
-        if (historyStock) {
-            return JSON.parse(historyStock);
+useEffect(() => {
+    const loadHistory = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                const data = await getHistory();
+                setHistory(data);
+            } else {
+                const historiqueStock = localStorage.getItem("historique");
+
+                if (historiqueStock) {
+                    setHistory(JSON.parse(historiqueStock));
+                } else {
+                    setHistory([]);
+                }
+            }
+
+        } catch (error) {
+            console.error("Erreur historique :", error);
         }
+    };
 
-        return [];
-});
+    loadHistory();
+}, []);
+
     return(
         <>
             <h2>Mes évaluations</h2>

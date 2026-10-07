@@ -1,22 +1,58 @@
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import type { HistoryEvaluation } from "../services/localStorageService";
 import { useNavigate } from "react-router-dom";
+import { getHistoryById } from "../services/historyService";
+import { Link } from "react-router-dom";
+
+
 export default function Episode() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [episode, setEpisode] = useState<HistoryEvaluation | null> (null);
+    
 
-    const historiqueStock = localStorage.getItem("historique");
+useEffect(() => {
+    const loadEpisode = async () => {
+        try {
+            if (!id) {
+                return;
+            }
 
-    const historique: HistoryEvaluation[] = historiqueStock
-        ? JSON.parse(historiqueStock)
-        : [];
+            const token = localStorage.getItem("token");
 
-    const episode = historique.find((item) => item.id === id);
+            if (token) {
+                const data = await getHistoryById(id);
+                setEpisode(data);
+            } else {
+                const historiqueStock = localStorage.getItem("historique");
 
-    if (!episode) {
-        return <p>Épisode introuvable.</p>;
+                if (!historiqueStock) {
+                    return;
+                }
+
+                const historique: HistoryEvaluation[] = JSON.parse(historiqueStock);
+
+                const episodeLocal = historique.find(
+                    (item) => item.id === id
+                );
+
+                if (episodeLocal) {
+                    setEpisode(episodeLocal);
+                }
+            }
+
+        } catch (error) {
+            console.error("Erreur épisode :", error);
+        }
+    };
+
+    loadEpisode();
+}, [id]);
+    if(!episode){
+        return <p>Chargement...</p>
     }
-
+    
 const handleDelete = () => {
     const historiqueStock = localStorage.getItem("historique");
 
@@ -70,9 +106,17 @@ const handleDelete = () => {
             <p>
                 Caractéristique : {episode.evaluation.option}
             </p>
+            <h3>Geste conseillé</h3>
+            {episode.solutions.map((solution) => (
+                <article key={solution.id}>
+                    <h4>{solution.label}</h4>
+                    <p>{solution.description}</p>
+                </article>
+            ))}
             <button onClick={handleDelete} className="btn">
                         Supprimer cet épisode
             </button>
+            <Link to="/Home">Retour à l'accueil</Link>
         </>
     );
 }
