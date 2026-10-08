@@ -8,7 +8,7 @@ export function RulesAlert(){
     const { evaluation } = useEvaluation();
     const navigate = useNavigate();
     const regles = db.regles_securite;
-
+// analyse => naviguer
     useEffect(() => {
         const douleurIntense =
             evaluation.intensiteNiveau === "intense";
@@ -32,6 +32,8 @@ export function RulesAlert(){
         } else {
             navigate("/Solution");
         }
+
+    // Si une de ces valeurs change, React peut réexécuter cet effet, et l'analyse est refait
     }, [evaluation, navigate, regles]);
 
     return (
@@ -41,3 +43,4 @@ export function RulesAlert(){
         </>
     );
 }
+

@@ -15,16 +15,19 @@ type Contexte = {
 export default function Localisation(){
     const { evaluation, setEvaluation } = useEvaluation();
     const navigate = useNavigate();
+
     const handleContinue = () => {
         if (!evaluation) return;
         navigate("/Recapitulatif");
     };
-    const handleLocaltion = (id: string) => {
+
+    const handleLocation = (id: string) => {
         setEvaluation(prev => ({
             ...prev,
             contextes: id
      } ))}
     
+    // données db contextes
     const contextes: Contexte[] = db.contextes;
 
     return(
@@ -38,9 +41,8 @@ export default function Localisation(){
             <div className=" loc">
 
                 {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id? "selected" : ""}`} onClick={() =>handleLocaltion(contexte.id)}
+                    <article key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id? "selected" : ""}`} onClick={() =>handleLocation(contexte.id)}
                         >
-                   
                             <img
                                 src={contexte.img}
                                 alt={contexte.label}

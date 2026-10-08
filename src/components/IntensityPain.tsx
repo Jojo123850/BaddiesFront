@@ -13,11 +13,12 @@ type Niveau = {
 const IntensityPain = () => {
 
     const { evaluation, setEvaluation } = useEvaluation();
-
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const getIntensity = (value: number | null): Niveau | undefined => {
-    if (value === null) return undefined;
+    if (value === null) 
+        return undefined;
+
     return db.evaluation_douleur.echelle_intensite.niveaux.find(
         (niveau) => value >= niveau.min && value <= niveau.max
     );
@@ -37,10 +38,14 @@ const IntensityPain = () => {
 
             if (current >= 10) {
                 stopIncrementing();
-                return { ...prev, intensiteValeur: 10 };
+                return { 
+                    ...prev,
+                    intensiteValeur: 10 };
             }
 
-            return { ...prev, intensiteValeur: current + 1 };
+            return { 
+                ...prev, 
+                intensiteValeur: current + 1 };
         });
     }, 400);
 };

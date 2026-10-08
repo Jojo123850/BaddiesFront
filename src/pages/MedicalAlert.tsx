@@ -18,6 +18,7 @@ export default function MedicalAlert() {
                 Si vos symptômes sont très intenses, s'aggravent
                 ou vous inquiètent, consultez rapidement.
             </p>
+            <Link to="/Home" className="btn">Retour à l'accueil</Link>
             </section>
         </>
     );

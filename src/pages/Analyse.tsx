@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-
 import "../styles/navbar.scss";
 import "../styles/analyse.scss";
+
 import IntensityPain from "../components/IntensityPain";
 import { useState } from "react";
 import IntensityPainB from "../components/IntesityPainB";

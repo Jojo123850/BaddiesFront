@@ -41,7 +41,9 @@ export async function createHistory(
 export async function getHistory(): Promise<HistoryEvaluation[]> {
     // pour savoir qui veut récuperer l'historique
     const token = localStorage.getItem("token");
-
+    if(!token){
+        throw  Error("Impossible de récuperer l'historique");
+    }
     const response = await fetch(API_URL, {
         method: "GET",
         headers: {
@@ -73,7 +75,7 @@ export async function getHistoryById(
     id: string
 ): Promise<HistoryEvaluation> {
     const token = localStorage.getItem("token");
-
+  
     const response = await fetch(`${API_URL}/${id}`, {
         method: "GET",
         headers: {

@@ -16,6 +16,8 @@ import "@fontsource/inter/600.css";
 import "@fontsource/fraunces/400.css";
 import "@fontsource/fraunces/500.css";
 
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

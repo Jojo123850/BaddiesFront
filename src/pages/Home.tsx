@@ -10,7 +10,6 @@ export function Home(){
     return (
         <>
         <Navbar/>
-
         <section>
             <h1>Votre assistant de premier geste pour les douleurs menstruelles, utilisable même hors ligne.</h1>
             <p>Parce que chaque femme et chaque cycle sont uniques,ce questionnaire rapide nous permet de comprendre précisément votre inconfort. 
@@ -20,7 +19,6 @@ export function Home(){
             </div>
             <Link to= "/Analyse" className="btn">Commencer à évaluer</Link>
             <hr className="hr1" />
-
         </section>
 
         <section>
@@ -28,16 +26,14 @@ export function Home(){
         </section>
 
         
-           <section className="historyHome">
+        <section className="historyHome">
                 <h2>Votre historique</h2>
                 <p>Retrouvez vos dernières évaluations</p>
 
                 <Link to="/Historique" className="btn">
                     Voir mon historique
                 </Link>
-            </section>
-        
-
+        </section>
         </>
     )
 }

@@ -6,19 +6,13 @@ import { useEvaluation } from "../evaluation/useEvaluation";
 const PosteriorPain = () => {
      const { evaluation, setEvaluation } = useEvaluation();
     const navigate = useNavigate();
-    // const [activeZone, setAtiveZone] = useState(false)
 
-    // const toggleSection = ()=> {
-    //     setAtiveZone((prev)=> !prev);
-    // });
-
-
-  const dos = db.evaluation_douleur.localisations.find(
+    const dos = db.evaluation_douleur.localisations.find(
     (localisation) => localisation.id === "dos"
 );
 
        const handleZoneClick = (zoneId: string) => {
-    setEvaluation((prev) => {
+        setEvaluation((prev) => {
         if (prev.localisations.includes(zoneId)) {
             return {
                 ...prev,

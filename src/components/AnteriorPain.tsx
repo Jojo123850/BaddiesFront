@@ -10,13 +10,7 @@ type Localisation = {
 
 const AnteriorPain = () => {
     const { evaluation, setEvaluation } = useEvaluation();
-    // const [selectedZones, setSelectedZones] = useState<string[]>([]);
     const navigate = useNavigate();
-    // const [activeZone, setAtiveZone] = useState(false)
-
-    // const toggleSection = ()=> {
-    //     setAtiveZone((prev)=> !prev);
-    // });
 
 
    const localisations: Localisation[] =

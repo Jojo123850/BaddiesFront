@@ -9,14 +9,18 @@ const navigate = useNavigate();
 const [history, setHistory] = useState<HistoryEvaluation[]>([]);
 
 useEffect(() => {
+    // pour récuperer les historiques
     const loadHistory = async () => {
         try {
             const token = localStorage.getItem("token");
 
             if (token) {
+            //  récupère l'historique depuis le backend
                 const data = await getHistory();
                 setHistory(data);
+
             } else {
+                //  récupère l'historique depuis le backend, en tableau JSON, sinon pas d'historique
                 const historiqueStock = localStorage.getItem("historique");
 
                 if (historiqueStock) {

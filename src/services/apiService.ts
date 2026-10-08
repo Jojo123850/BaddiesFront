@@ -54,9 +54,13 @@ export const apiService = {
     if (!req.ok) {
         const errorData = await req.json()
 
-        throw new Error(
-            errorData.error || errorData.message || `Error HTTP: ${req.status}`
-        )
+          throw new Error(
+            errorData.detail ||
+            errorData.title ||
+            errorData.error ||
+            errorData.message ||
+            `Error HTTP: ${req.status}`
+    )
     }
 
     return await req.json()
