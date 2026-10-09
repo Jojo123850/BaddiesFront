@@ -1,7 +1,7 @@
 import db from "../data/db.json";
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
-
+import silhouette from "../assets/images/silohouette-Photoroom.webp";
 
 const PosteriorPain = () => {
      const { evaluation, setEvaluation } = useEvaluation();
@@ -42,10 +42,10 @@ const PosteriorPain = () => {
                         <p className="answer">Vous devez sélectionner au moins une zone</p>
                 )}
             
-                <img
-                    src="../src/assets/images/silohouette-Photoroom.webp"
+                 <img
+                    src={silhouette}
                     className="silhouette"
-                    alt="silhouette face"
+                    alt="Silhouette vue de dos"
                 />
 
                 {dos && (

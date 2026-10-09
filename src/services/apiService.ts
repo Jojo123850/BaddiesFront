@@ -7,7 +7,66 @@
 // ? 'https://localhost:3000/api/v1/'
 // : 'https://jsonplaceholder.typicode.com/'
 
-const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = 'http://localhost:3001'
+
+
+
+const refreshAccessToken = async (): Promise<string> => {
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (!refreshToken) {
+        throw new Error("Session expirée. Veuillez vous reconnecter.");
+    }
+
+    const response = await fetch(`${BASE_URL}/api/v1/auth/refresh`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ token: refreshToken })
+    });
+
+    if (!response.ok) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        throw new Error("Session expirée. Veuillez vous reconnecter.");
+    }
+
+    const data = await response.json();
+    localStorage.setItem("token", data.accessToken);
+
+    return data.accessToken;
+};
+
+export const fetchWithAuth = async (
+    url: string,
+    options: RequestInit = {}
+): Promise<Response> => {
+    let accessToken = localStorage.getItem("token");
+
+    if (!accessToken) {
+        throw new Error("Veuillez vous connecter.");
+    }
+
+    const sendRequest = (token: string) => {
+        const headers = new Headers(options.headers);
+        headers.set("Authorization", `Bearer ${token}`);
+
+        return fetch(url, {
+            ...options,
+            headers
+        });
+    };
+
+    let response = await sendRequest(accessToken);
+
+    if (response.status === 401) {
+        accessToken = await refreshAccessToken();
+        response = await sendRequest(accessToken);
+    }
+
+    return response;
+};
 
 export const apiService = {
     async getPosts(signal:AbortSignal) {
@@ -24,7 +83,8 @@ export const apiService = {
             
       
     },
-    async login(email: string, password: string, signal: AbortSignal) {
+
+async login(email: string, password: string, signal: AbortSignal) {
     const req = await fetch(`${BASE_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
@@ -34,12 +94,19 @@ export const apiService = {
         signal
     })
 
+    const data = await req.json()
+
     if (!req.ok) {
-        throw new Error(`Error HTTP: ${req.status}`)
+        throw new Error(
+            data.message ||
+            data.error ||
+            `Erreur HTTP : ${req.status}`
+        )
     }
 
-    return await req.json()
+    return data
 },
+
 
  async register(email: string, password: string, pseudo:string, signal: AbortSignal) {
     const req = await fetch(`${BASE_URL}/api/v1/auth/register`, {

@@ -9,7 +9,7 @@ import { EvaluationProvider } from './evaluation/evaluationContext';
 import { Solution } from './pages/Solution';
 import MedicalAlert from './pages/MedicalAlert';
 import { RulesAlert } from './pages/Rules';
-import Login from './components/login';
+import Login from './components/Login.tsx';
 import Register from './components/Register';
 import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';

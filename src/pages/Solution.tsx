@@ -101,15 +101,20 @@ export function Solution() {
     return (
         <>
             <Navbar />
-
-            <Link to="/Localisation" className="retour">
+            <div className="switch">
+                <Link to="/Localisation" className="retour">
                 <i className="fa-solid fa-chevron-left"></i>
-            </Link>
+                </Link>
+                 <button className="btn">Télécharger le fichier</button>
+            </div>
+
+            
 
             <section>
-                <h2 className="titleSolution">Geste conseillé</h2>
+                    <h2 className="titleSolution">Geste conseillé</h2>
+                   
 
-                <div id="solution">
+                <article id="solution">
                     {solutionsFiltre.map((item) => (
                         <article
                             className="contentSolution"
@@ -122,7 +127,7 @@ export function Solution() {
                             </p>
                         </article>
                     ))}
-                </div>
+                </article>
             </section>
 
             <section>

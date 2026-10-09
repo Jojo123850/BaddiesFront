@@ -40,7 +40,7 @@ export default function Recap (){
                         <Link to="/Localisation" className="retour">
                                 <i className="fa-solid fa-chevron-left"></i>
                         </Link>
-                        <button className="btn">Ajouter au favoris</button>
+                        
                     </div>
             <section>
                     <h2>Recapitulatif de votre évaluation</h2>

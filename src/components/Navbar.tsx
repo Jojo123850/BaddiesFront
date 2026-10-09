@@ -1,19 +1,24 @@
 import { NavLink,Link } from "react-router-dom";
 import BurgerM from "./BurgerMenu";
+import logo from "../assets/images/logo.webp";
 
 export default function Navbar (){
   return(
     <header>
       <div className="topNav">
-        <Link to="/">
-            <img className="logo" src="../src/assets/images/logo.webp" alt="logo" />
+        <Link to="/Home">
+             <img
+                    src={logo}
+                    className="silhouette"
+                    alt="Silhouette vue de dos"
+                />
         </Link>
         <BurgerM/>
       </div>
       <div className="bottomNav">
         <ul>
           <li>
-            <NavLink to="/">
+            <NavLink to="/Home">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 11.5L12 4l9 7.5" />
                 <path d="M5.5 10v9a1 1 0 0 0 1 1H9v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4h2.5a1 1 0 0 0 1-1v-9" />
@@ -34,7 +39,7 @@ export default function Navbar (){
             </NavLink>
        
           </li>
-          <li><Link to="/" className="btn"><span>Aide</span></Link></li>
+          <li><Link to="/urgence" className="btn"><span>Aide</span></Link></li>
         </ul>
       </div>
     </header>

@@ -1,25 +1,25 @@
 import type { HistoryEvaluation } from "./localStorageService";
+import { BASE_URL, fetchWithAuth } from "./apiService";
 
-const API_URL = "http://localhost:3001/api/v1/history";
+const API_URL = `${BASE_URL}/api/v1/history`;
 
 
 export async function createHistory(
     evaluation: HistoryEvaluation["evaluation"],
     solutions: HistoryEvaluation["solutions"]
 ) {
-    const token = localStorage.getItem("token");
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            evaluation,
-            solutions
-        })
-    });
+
+const response = await fetchWithAuth(API_URL, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        evaluation,
+        solutions
+    })
+});
 
     if (!response.ok) {
         const error = await response.json();
@@ -44,7 +44,7 @@ export async function getHistory(): Promise<HistoryEvaluation[]> {
     if(!token){
         throw  Error("Impossible de récuperer l'historique");
     }
-    const response = await fetch(API_URL, {
+    const response = await fetchWithAuth(API_URL, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -76,7 +76,7 @@ export async function getHistoryById(
 ): Promise<HistoryEvaluation> {
     const token = localStorage.getItem("token");
   
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetchWithAuth(`${API_URL}/${id}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`

@@ -30,7 +30,8 @@ function Login() {
                 )
                 console.log("réponse reçue")
                 console.log(datas)
-                localStorage.setItem("token", datas.token)
+                localStorage.setItem("token", datas.accessToken)
+                localStorage.setItem("refreshToken", datas.refreshToken)
                 navigate("/Home")
 
             } catch (err) {

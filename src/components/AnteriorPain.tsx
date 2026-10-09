@@ -1,6 +1,7 @@
 import db from "../data/db.json";
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
+import silhouette from "../assets/images/silohouette-Photoroom.webp";
 
 
 type Localisation = {
@@ -50,9 +51,9 @@ const AnteriorPain = () => {
                 )}
             
                 <img
-                    src="../src/assets/images/silohouette-Photoroom.webp"
+                    src={silhouette}
                     className="silhouette"
-                    alt="silhouette face"
+                    alt="Silhouette vue de face"
                 />
 
                 {localisations.map((localisation) => (

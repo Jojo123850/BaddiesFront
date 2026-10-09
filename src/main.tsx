@@ -20,7 +20,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/baddies_essai">
       <App />
     </BrowserRouter>
   </React.StrictMode>

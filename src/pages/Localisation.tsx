@@ -5,6 +5,7 @@ import "../styles/localisation.scss";
 import { useNavigate } from "react-router-dom";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
+import { contextImages } from "../data/contextDataImages";
 
 type Contexte = {
     id: string;
@@ -44,7 +45,7 @@ export default function Localisation(){
                     <article key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id? "selected" : ""}`} onClick={() =>handleLocation(contexte.id)}
                         >
                             <img
-                                src={contexte.img}
+                                src={contextImages[contexte.id]}
                                 alt={contexte.label}
                             />
                             <p>{contexte.label}</p>

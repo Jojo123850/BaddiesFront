@@ -40,3 +40,13 @@ export function saveEvaluation(
     localStorage.setItem ("historique", JSON.stringify(historyEvaluation))
 
 }
+
+// lire l'historique local
+export function getEvaluations(): HistoryEvaluation[] {
+    try {
+        const historique = localStorage.getItem("historique")
+        return historique ? JSON.parse(historique) : []
+    } catch {
+        return []
+    }
+}
