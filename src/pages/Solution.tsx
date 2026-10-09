@@ -70,33 +70,42 @@ export function Solution() {
     }
 
     // Enregistrer l'épisode
-    const handleSave = async () => {
-        if (saved) return;
+   const handleSave = async () => {
+    if (saved) return;
 
-        const token = localStorage.getItem("token");
+    console.log("État en ligne :", navigator.onLine);
+
+    const token = localStorage.getItem("token");
+
+    try {
+        if (token && navigator.onLine) {
+            await createHistory(evaluation, solutionsFiltre);
+            setMessage("Enregistré sur ton compte.");
+        } else {
+            saveEvaluation(evaluation, solutionsFiltre);
+            console.log(
+                "Historique après sauvegarde :",
+                localStorage.getItem("historique")
+            );
+            setMessage("Enregistré sur cet appareil.");
+        }
+
+        setSaved(true);
+    } catch (error) {
+        console.error("Erreur pendant la sauvegarde :", error);
 
         try {
-            if (token && navigator.onLine) {
-                await createHistory(evaluation, solutionsFiltre);
-                setMessage("Enregistré sur ton compte.");
-            } else {
-                saveEvaluation(evaluation, solutionsFiltre);
-                setMessage("Enregistré sur cet appareil.");
-            }
-
+            saveEvaluation(evaluation, solutionsFiltre);
             setSaved(true);
-        } catch {
-            try {
-                saveEvaluation(evaluation, solutionsFiltre);
-                setSaved(true);
-                setMessage(
-                    "Le serveur ne répond pas : enregistré sur cet appareil."
-                );
-            } catch {
-                setMessage("Impossible d'enregistrer. Réessaie.");
-            }
+            setMessage(
+                "Le serveur ne répond pas : enregistré sur cet appareil."
+            );
+        } catch (localError) {
+            console.error("Erreur de sauvegarde locale :", localError);
+            setMessage("Impossible d'enregistrer. Réessaie.");
         }
-    };
+    }
+};
 
     return (
         <>

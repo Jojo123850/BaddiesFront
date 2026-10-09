@@ -6,9 +6,9 @@ import "../styles/home.scss";
 import homeImage from "../assets/images/f6582a18b6158c3bf409305bda0f8a88-Photoroom.webp";
 import { getEvaluations } from "../services/localStorageService";
 
-
 export function Home(){
-     const hasHistory = localStorage.getItem("token") || getEvaluations().length > 0;
+    const evaluations = getEvaluations();
+      const hasHistory = evaluations.length > 0;
     return (
         <>
         <Navbar/>
@@ -32,8 +32,16 @@ export function Home(){
                 <h2>Votre historique</h2>
                 <p>Retrouvez vos dernières évaluations</p>
 
+            
                
-        {hasHistory && ( <section className="historyHome"> ... </section> )}
+        {hasHistory ? (
+    <Link to="/Historique" className="historyLink">
+        Voir mon historique ({evaluations.length})
+    </Link>
+) : (
+   
+    <p>Aucun épisode enregistré pour le moment.</p>
+)}
         </section>
         </>
     )
