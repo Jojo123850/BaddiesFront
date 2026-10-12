@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { saveEvaluation } from "../services/localStorageService";
 import { useState } from "react";
 import { createHistory } from "../services/historyService";
-
+import {jsPDF} from 'jspdf';
 export function Solution() {
     const { evaluation } = useEvaluation();
     const [saved, setSaved] = useState(false);
@@ -44,7 +44,342 @@ export function Solution() {
             symptomeOk
         );
     });
+const handleDownloadPDF = () => {
+    try {
+        const pdf = new jsPDF();
 
+        const colors = {
+            black: [22, 22, 26] as const,
+            pink: [231, 88, 146] as const,
+            lightPink: [255, 241, 246] as const,
+            white: [255, 255, 255] as const,
+            gray: [108, 108, 118] as const,
+            border: [235, 235, 239] as const,
+        };
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const margin = 18;
+        const contentWidth = pageWidth - margin * 2;
+        const bottomLimit = pageHeight - 22;
+
+        let y = 0;
+
+        // Ajouter un en-tête sur chaque page
+        const addHeader = () => {
+            pdf.setFillColor(...colors.black);
+            pdf.rect(0, 0, pageWidth, 47, "F");
+
+            // Accent rose
+            pdf.setFillColor(...colors.pink);
+            pdf.roundedRect(
+                margin,
+                12,
+                5,
+                23,
+                2,
+                2,
+                "F"
+            );
+
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(25);
+            pdf.setTextColor(...colors.white);
+            pdf.text("BADDIES", margin + 12, 25);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.setTextColor(225, 225, 230);
+            pdf.text(
+                "Mon bilan de douleur",
+                margin + 12,
+                33
+            );
+
+            y = 59;
+        };
+
+        // Ajouter un pied de page
+        const addFooter = () => {
+            const totalPages = pdf.getNumberOfPages();
+
+            for (let i = 1; i <= totalPages; i++) {
+                pdf.setPage(i);
+
+                pdf.setDrawColor(...colors.border);
+                pdf.line(
+                    margin,
+                    pageHeight - 18,
+                    pageWidth - margin,
+                    pageHeight - 18
+                );
+
+                pdf.setFontSize(8);
+                pdf.setFont("helvetica", "normal");
+                pdf.setTextColor(...colors.gray);
+
+                pdf.text(
+                    "BADDIES - Informations générales, ne remplace pas un avis médical.",
+                    margin,
+                    pageHeight - 12
+                );
+
+                pdf.text(
+                    `${i} / ${totalPages}`,
+                    pageWidth - margin,
+                    pageHeight - 12,
+                    { align: "right" }
+                );
+            }
+        };
+
+        const newPage = () => {
+            pdf.addPage();
+            addHeader();
+        };
+
+        addHeader();
+
+        // Date
+        pdf.setFontSize(10);
+        pdf.setTextColor(...colors.gray);
+        pdf.text(
+            `Évaluation du ${new Date().toLocaleDateString("fr-FR")}`,
+            margin,
+            y
+        );
+
+        y += 12;
+
+        // Titre de section
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(15);
+        pdf.setTextColor(...colors.black);
+        pdf.text("Résumé de mon évaluation", margin, y);
+
+        y += 9;
+
+        // Carte intensité
+        pdf.setFillColor(...colors.lightPink);
+        pdf.roundedRect(
+            margin,
+            y,
+            contentWidth,
+            36,
+            4,
+            4,
+            "F"
+        );
+
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "normal");
+        pdf.setTextColor(...colors.gray);
+        pdf.text("INTENSITÉ DE LA DOULEUR", margin + 9, y + 11);
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(22);
+        pdf.setTextColor(...colors.pink);
+
+        const intensity = evaluation.intensiteNiveau;
+
+        pdf.text(
+            intensity == null
+                ? "Non renseignée"
+                : `${intensity}/10`,
+            margin + 9,
+            y + 27
+        );
+
+        y += 47;
+
+        // Symptômes
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "bold");
+        pdf.setTextColor(...colors.black);
+        pdf.text("SYMPTÔMES RENSEIGNÉS", margin, y);
+
+        y += 7;
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setTextColor(...colors.gray);
+        pdf.setFontSize(10);
+
+        const symptoms = pdf.splitTextToSize(
+            evaluation.symptomes.join(", ") || "Aucun symptôme renseigné",
+            contentWidth
+        );
+
+        pdf.text(symptoms, margin, y);
+        y += symptoms.length * 5 + 17;
+
+        // Section solutions
+        if (y > bottomLimit - 35) {
+            newPage();
+        }
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(15);
+        pdf.setTextColor(...colors.black);
+        pdf.text("Solutions proposées", margin, y);
+
+        y += 7;
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
+        pdf.setTextColor(...colors.gray);
+        pdf.text(
+            `${solutionsFiltre.length} geste(s) adapté(s) à ton évaluation`,
+            margin,
+            y
+        );
+
+        y += 12;
+
+        // Cartes des solutions
+        solutionsFiltre.forEach((solution, index) => {
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(11);
+
+           const titleLines: string[] = pdf.splitTextToSize(
+            `${index + 1}. ${solution.label ?? ""}`,
+             contentWidth - 24
+);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+
+            const descriptionLines: string[] = pdf.splitTextToSize(
+                String(solution.description ?? ""),
+                contentWidth - 24
+            );
+
+            const lineHeight = 5;
+            const cardPadding = 9;
+            // const titleHeight = titleLines.length * 6;
+            // const availableHeight = bottomLimit - 59;
+
+            // Les cartes longues peuvent être découpées en plusieurs pages
+            const  remaining = [...descriptionLines];
+            let firstPart = true;
+
+            do {
+                const currentTitle = firstPart
+                    ? titleLines
+                    : [`${solution.label} (suite)`];
+
+                const currentTitleHeight = currentTitle.length * 6;
+
+                const minimumHeight =
+                    cardPadding * 2 + currentTitleHeight + 7;
+
+                if (y + minimumHeight + lineHeight > bottomLimit) {
+                    newPage();
+                }
+
+                const spaceForDescription =
+                    bottomLimit -
+                    y -
+                    minimumHeight -
+                    5;
+
+                const maxLines = Math.max(
+                    0,
+                    Math.floor(spaceForDescription / lineHeight)
+                );
+
+                if (maxLines === 0 && remaining.length > 0) {
+                    newPage();
+                    continue;
+                }
+
+                const currentDescription = remaining.splice(0, maxLines);
+
+                const cardHeight =
+                    cardPadding * 2 +
+                    currentTitleHeight +
+                    7 +
+                    currentDescription.length * lineHeight;
+
+                // Fond de la carte
+                pdf.setFillColor(249, 249, 251);
+                pdf.setDrawColor(...colors.border);
+                pdf.roundedRect(
+                    margin,
+                    y,
+                    contentWidth,
+                    cardHeight,
+                    4,
+                    4,
+                    "FD"
+                );
+
+                // Trait rose à gauche
+                pdf.setFillColor(...colors.pink);
+                pdf.roundedRect(
+                    margin,
+                    y + 7,
+                    3,
+                    Math.min(18, cardHeight - 14),
+                    1,
+                    1,
+                    "F"
+                );
+
+                // Numéro et titre
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(11);
+                pdf.setTextColor(...colors.black);
+
+                const displayTitle = currentTitle;
+
+                pdf.text(
+                    displayTitle,
+                    margin + 10,
+                    y + 12
+                );
+
+                // Description
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.setTextColor(...colors.gray);
+
+                if (currentDescription.length > 0) {
+                    pdf.text(
+                        currentDescription,
+                        margin + 10,
+                        y + 12 + currentTitleHeight + 3
+                    );
+                }
+
+                y += cardHeight + 8;
+                firstPart = false;
+
+                if (remaining.length > 0) {
+                    newPage();
+                }
+            } while (remaining.length > 0);
+        });
+
+        if (solutionsFiltre.length === 0) {
+            pdf.setFontSize(10);
+            pdf.setTextColor(...colors.gray);
+            pdf.text(
+                "Aucune solution correspondante pour cette évaluation.",
+                margin,
+                y
+            );
+        }
+
+        addFooter();
+
+        pdf.save("BADDIES-bilan.pdf");
+
+    } catch (error) {
+        console.error("Erreur génération PDF :", error);
+        setMessage("Impossible de générer le PDF.");
+    }
+};
     // Partager le résumé de l'évaluation
     async function shareSummary() {
         const text =
@@ -107,6 +442,9 @@ export function Solution() {
     }
 };
 
+
+
+
     return (
         <>
             <Navbar />
@@ -114,7 +452,7 @@ export function Solution() {
                 <Link to="/Localisation" className="retour">
                 <i className="fa-solid fa-chevron-left"></i>
                 </Link>
-                 <button className="btn">Télécharger le fichier</button>
+                 <button className="btn" onClick={handleDownloadPDF}>Télécharger le fichier</button>
             </div>
 
             
