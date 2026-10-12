@@ -42,7 +42,10 @@ useEffect(() => {
         <>
             <h2>Mes évaluations</h2>
             {history.length===0 ? (
-                <p>Aucune évaluation actuellement</p>
+                
+                <p>Aucune évaluation actuellement
+                   <br /> <span>Commencez à faire une évaluation pour pouvoir l'enregistrer</span>
+                </p>
 
             ):(history.map((item) => (
                 <article key={item.id}>
