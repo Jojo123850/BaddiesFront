@@ -7,3 +7,4 @@ export const contextImages: Record<string, string> = {
   transport: carImage,
   exterieur: carImage,
 };
+

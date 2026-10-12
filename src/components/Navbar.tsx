@@ -1,47 +1,80 @@
-import { NavLink,Link } from "react-router-dom";
-import BurgerM from "./BurgerMenu";
-import logo from "../assets/images/logo.webp";
+import { NavLink, Link } from "react-router-dom";
+import "../styles/navbar.scss";
 
-export default function Navbar (){
-  return(
-    <header>
+import {
+  House,
+  ClipboardList,
+  ChartNoAxesColumnIncreasing,
+  HeartPulse,
+} from "lucide-react";
+
+import logo from "../assets/images/logoFinal.webp";
+import defaultProfile from "../assets/images/DefaultProfile.webp";
+
+export default function Navbar() {
+  return (
+    <header className="app-header">
+
       <div className="topNav">
-        <Link to="/Home">
-             <img
-                    src={logo}
-                    className="silhouette"
-                    alt="Silhouette vue de dos"
-                />
+        <Link to="/Home" className="brand">
+          <img
+            src={logo}
+            className="brand-logo"
+            alt="Logo BADDIES"
+          />
         </Link>
-        <BurgerM/>
+
+        <Link to="/Setting" className="profile-link">
+          <img
+            src={defaultProfile}
+            className="profile-avatar"
+            alt="Mon profil"
+          />
+        </Link>
       </div>
-      <div className="bottomNav">
+
+      <nav className="bottomNav">
         <ul>
+         
+
+
+
           <li>
-            <NavLink to="/Home">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 11.5L12 4l9 7.5" />
-                <path d="M5.5 10v9a1 1 0 0 0 1 1H9v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4h2.5a1 1 0 0 0 1-1v-9" />
-                <path d="M12 15.2c1.6-1.3 2.6-2.1 2.6-3.2a1.4 1.4 0 0 0-2.6-.8 1.4 1.4 0 0 0-2.6.8c0 1.1 1 1.9 2.6 3.2z" fill="currentColor" stroke="none" />
-                </svg>
-                <span>Accueil</span>
-           </NavLink>
-          </li>
-          <li>
-            <NavLink to="/analyse">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="8" width="18" height="12" rx="2" />
-                <path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
-                <line x1="12" y1="12" x2="12" y2="16" />
-                <line x1="10" y1="14" x2="14" y2="14" />
-                </svg>
-                <span>Analyse</span>  
+            <NavLink to="/Home" className="nav-item">
+               <House size={23} strokeWidth={1.7} />
+              <span>Accueil</span>
             </NavLink>
-       
           </li>
-          <li><Link to="/urgence" className="btn"><span>Aide</span></Link></li>
+
+          <li>
+            <NavLink to="/analyse" className="nav-item">
+           
+              <ClipboardList size={23} strokeWidth={1.7} />
+              <span>Analyse</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/suivi" className="nav-item">
+             
+              <ChartNoAxesColumnIncreasing size={23} strokeWidth={1.7} />
+              <span>Suivi</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/urgence"
+              className="nav-item nav-emergency"
+            >
+              
+              <HeartPulse size={23} strokeWidth={1.7} />
+              <span>Urgence</span>
+            </NavLink>
+          </li>
         </ul>
-      </div>
+      </nav>
+
     </header>
-  )
+  );
 }

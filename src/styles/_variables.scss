@@ -1,15 +1,31 @@
+
 :root {
-  // couleurs
+  // COULEURS PRINCIPALES
   --color-white: #FFFFFF;
-  --color-black: #000000;
+  --color-black: #171317;
+
+  // FONDS
+  --color-bg: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-card-soft: #FAF5F7;
   --color-fond: #D9D9D9;
+  --color-fond-clair: #FAF8F9;
+
+  // TEXTES
+  --color-text: #171317;
+  --color-text-muted: #706970;
+
+  // BORDURES
+  --color-border: #EEE5E9;
+
+  // COULEURS BADDIES
   --color-btn: #741D2D;
-  // --color-fint: #F7F4F0;
-  // --color-fint:  #A40149;
-  --color-pink: rgba(116, 29, 45, 0.2);
+  --color-accent: #741D2D;
+  --color-pink: rgba(116, 29, 45, 0.16);
   --color-rec: rgba(217, 217, 217, 0.21);
 
-  // typographie
+  // TYPOGRAPHIE
+  --font-display: "Manrope", sans-serif;
   --font-heading: "Manrope", sans-serif;
   --font-body: "Inter", sans-serif;
 }

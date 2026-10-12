@@ -1,48 +1,110 @@
+
 import { useState } from "react";
+import {
+  ChevronDown,
+  Smartphone,
+  Monitor,
+  Download,
+  CheckCircle2
+} from "lucide-react";
+
+type Platform = "ios" | "android" | "ordinateur";
 
 export default function Collapse() {
   const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState<string | null>("ios");
+  const [content, setContent] = useState<Platform>("ios");
 
-  const contenus: Record<string, string[]> = {
-    ios: ["1   Ouvrez Baddies dans Safari", "2    Appuyez sur l'icône partager", "3   Sélectionnez Sur l'écran d'accueil"],
-    android: ["1    Ouvrez Baddies dans Android", "2    Appuyez sur l'icône partager", "3   Sélectionnez Sur l'écran d'accueil"],
-    ordinateur: ["1 Ouvrez Baddies dans ordi", "2   Appuyez sur l'icône partager", "3   Sélectionnez Sur l'écran d'accueil"],
+  const contenus: Record<Platform, string[]> = {
+    ios: [
+      "Ouvrez BADDIES dans Safari.",
+      "Appuyez sur le bouton Partager.",
+      "Choisissez « Sur l'écran d'accueil », puis confirmez."
+    ],
+    android: [
+      "Ouvrez BADDIES dans Chrome.",
+      "Appuyez sur le menu ⋮ du navigateur.",
+      "Choisissez « Installer l'application » ou « Ajouter à l'écran d'accueil »."
+    ],
+    ordinateur: [
+      "Ouvrez BADDIES dans Chrome ou Edge.",
+      "Cliquez sur l'icône d'installation dans la barre d'adresse, si elle apparaît.",
+      "Confirmez l'installation."
+    ]
   };
 
-  const handleClick = (e: React.MouseEvent, key: string) => {
-    e.stopPropagation();
-    setContent(key);
-    setIsOpen(true);
-  };
+  const plateformes = [
+    { id: "ios", label: "iOS", icon: Smartphone },
+    { id: "android", label: "Android", icon: Smartphone },
+    { id: "ordinateur", label: "Ordinateur", icon: Monitor }
+  ] as const;
 
   return (
-    <div className="collapse" onClick={() => setIsOpen(!isOpen)}>
-      <div className="collapsediv">
-        <p aria-expanded={isOpen}>Installable pour un usage hors ligne</p>
-        <i className={`fa-solid fa-square-caret-${isOpen ? "up" : "down"}`}></i>
-      </div>
+    <section className="collapse">
+      <button
+        type="button"
+        className="collapse-trigger"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls="collapse-installation"
+      >
+        <span className="collapse-heading">
+          <span className="collapse-icon">
+            <Download size={20} />
+          </span>
+
+          <span className="collapse-title">
+            <strong>Installer BADDIES</strong>
+            <small>Pour une utilisation hors ligne</small>
+          </span>
+        </span>
+
+        <ChevronDown
+          size={20}
+          className={`collapse-chevron ${isOpen ? "open" : ""}`}
+        />
+      </button>
 
       {isOpen && (
-        <>
+        <div id="collapse-installation" className="collapse-content">
+          <p className="collapse-description">
+            Choisissez votre appareil pour découvrir
+            comment installer BADDIES.
+          </p>
+
           <div className="btnCollapse">
-            <button className="btnChoice" onClick={(e) => handleClick(e, "ios")}>IOS</button>
-            <button className="btnChoice" onClick={(e) => handleClick(e, "android")}>Android</button>
-            <button className="btnChoice" onClick={(e) => handleClick(e, "ordinateur")}>Ordinateur</button>
+            {plateformes.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                type="button"
+                className={`btnChoice ${content === id ? "selected" : ""}`}
+                onClick={() => setContent(id)}
+                aria-pressed={content === id}
+              >
+                <Icon size={17} />
+                <span>{label}</span>
+              </button>
+            ))}
           </div>
 
-          {content && (
-            <ul className="ulCollapse">
-              {contenus[content].map((item, index) => (
-                <li key={index}>
-                  {item}
-                  {index < contenus[content].length - 1 && <hr className="hrCollapse" />}
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
+          <ol className="installation-steps">
+            {contenus[content].map((item, index) => (
+              <li key={index}>
+                <span className="step-number">{index + 1}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="collapse-note">
+            <CheckCircle2 size={18} />
+            <p>
+              Une fois installée et ses ressources mises en cache,
+              BADDIES peut être utilisée hors ligne pour
+              les fonctionnalités prévues à cet effet.
+            </p>
+          </div>
+        </div>
       )}
-    </div>
+    </section>
   );
 }

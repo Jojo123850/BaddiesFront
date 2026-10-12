@@ -15,6 +15,7 @@ import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
 import { History } from './pages/History';
 import Episode from './pages/Episode';
+import { Settings } from "./pages/Setting";
 
 export default function App(){
   return(
@@ -35,6 +36,7 @@ export default function App(){
                 <Route path='/Solution' element={<Solution/>} />
                 <Route path='/Historique' element={<History/>} />
                 <Route path='/Historique/:id' element={<Episode/>} />
+                <Route path="/Setting" element={<Settings />} />
 
             </Routes>
       </EvaluationProvider>

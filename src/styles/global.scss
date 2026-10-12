@@ -1,3 +1,4 @@
+
 @import './_variables.scss';
 @import './_mixins.scss';
 
@@ -7,113 +8,142 @@
   box-sizing: border-box;
 }
 
-.logo{
-
-      width: 100%;
-      max-width: 160px; 
-      height: 36px;    
-      object-fit: cover;
-      transition: max-width 0.3s ease;
-    
-}
-li {
-  list-style: none;
+html {
+  background: var(--color-bg);
+  color-scheme: light;
 }
 
-a {
-  text-decoration: none;
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+
+  padding-bottom: calc(
+    110px + env(safe-area-inset-bottom)
+  );
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 36px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
 }
 
 h2 {
   font-family: var(--font-heading);
-  padding: 10px;
-}
-
-h1 {
-   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 26px;
+  font-size: 23px;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -0.2px;
-  padding: 10px;
+  letter-spacing: -0.4px;
 }
 
-h2 {
-  font-size: 26px;
+h3 {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 700;
 }
 
-p, span {
+p {
   font-family: var(--font-body);
-  font-size: 16px;
-
+  font-size: 15px;
+  line-height: 1.6;
 }
+
+a {
+  font-family: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+// BOUTONS GÉNÉRAUX
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+
   background: var(--color-btn);
   color: var(--color-white);
-  padding: 8px 14px;
-  border-radius: 14px;
-  place-self: center;
-  margin-top: 20px;
-  font-size: 16px;
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background: #5D1724;
+    transform: translateY(-2px);
+  }
 }
 
+// MESSAGES
 
-.answer{
+.answer,
+.answerPain {
   color: var(--color-btn);
-  text-align-last:center ;
 }
-.answerPain{
-  color: var(--color-btn);
-  place-self: center;
-  font-weight: bold;
-}
+
+// BOUTON RETOUR
 
 .retour {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 42px;
-    height: 42px;
-
-    border-radius: 10%;
-
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-
-    color: var(--color-black);
-    text-decoration: none;
-
-    border: 1px solid rgba(255, 255, 255, 0.4);
-
-    transition: all 0.2s ease;
-}
-
-.retour:hover {
-    transform: translateX(-3px);
-    background: var(--color-black);
-    color: var(--color-white);
-}
-
-.retour i {
-    font-size: 15px;
-}
-
-.check{
-  background-color: var(--color-rec);
-
-}
-
-
-.switch{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-    .btn{
-      align-self: center;
-    }
+  align-items: center;
+  justify-content: center;
 
+  width: 42px;
+  height: 42px;
+
+  background: var(--color-card-soft);
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--color-btn);
+    color: var(--color-white);
+    transform: translateX(-3px);
+  }
+}
+
+// ACCESSIBILITÉ
+
+:focus-visible {
+  outline: 2px solid var(--color-btn);
+  outline-offset: 3px;
 }

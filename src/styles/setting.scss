@@ -1,0 +1,425 @@
+
+@import './_variables.scss';
+@import './_mixins.scss';
+
+.settings-page {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 24px 20px 130px;
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+
+  h1 {
+    font-size: 29px;
+    margin: 5px 0 8px;
+  }
+
+  p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+}
+
+.settings-eyebrow {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--color-btn);
+}
+
+.settings-heading-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 48px;
+  height: 48px;
+  color: var(--color-btn);
+  border-radius: 15px;
+  font-size: 21px;
+}
+
+// PROFIL
+
+.settings-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 20px;
+  margin-bottom: 30px;
+
+  background: #FAF5F7;
+  border: 1px solid #EEE5E9;
+  border-radius: 22px;
+}
+
+.settings-avatar {
+  width: 66px;
+  height: 66px;
+  flex-shrink: 0;
+
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #E8D6DC;
+  background: white;
+}
+
+.settings-profile-info {
+  flex: 1;
+  min-width: 0;
+
+  h2 {
+    padding: 0;
+    margin: 0 0 5px;
+    font-size: 17px;
+    font-weight: 800;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    color: #706970;
+    overflow-wrap: anywhere;
+  }
+}
+
+.settings-account-status {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-btn);
+}
+
+.settings-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-btn);
+}
+
+// SECTIONS
+
+.settings-section {
+  margin-bottom: 28px;
+
+  > h2 {
+    padding: 0;
+    margin-bottom: 13px;
+
+    font-size: 17px;
+    font-weight: 800;
+    color: #171317;
+  }
+}
+
+.settings-item,
+.settings-field {
+  background: white;
+  border: 1px solid #EEE5E9;
+  border-radius: 17px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 40px;
+  height: 40px;
+
+  background: #FAF0F4;
+  color: var(--color-btn);
+
+  border-radius: 12px;
+  font-size: 17px;
+}
+
+.settings-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+
+  strong {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  small {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #706970;
+  }
+}
+
+.settings-arrow {
+  font-size: 12px;
+  color: #A49AA0;
+}
+
+// CHAMPS
+
+.settings-field-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 16px;
+
+  > div,
+  > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  strong {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  small {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #706970;
+  }
+}
+
+// THÈME
+
+.settings-theme-choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 12px 10px;
+
+    background: #FAF8F9;
+    color: #625B60;
+
+    border: 1px solid #EEE5E9;
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    &.selected {
+      background: var(--color-btn);
+      color: white;
+      border-color: var(--color-btn);
+    }
+  }
+}
+
+// PAYS
+
+.settings-select {
+  display: block;
+  width: 100%;
+
+  padding: 13px 14px;
+
+  background: #FAF8F9;
+  color: #171317;
+
+  border: 1px solid #EEE5E9;
+  border-radius: 12px;
+
+  font-size: 13px;
+}
+
+// CONTACT D'URGENCE
+
+.settings-contact-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+  margin-bottom: 14px;
+
+  background: #FAF5F7;
+  border-radius: 13px;
+
+  > i {
+    color: var(--color-btn);
+    font-size: 20px;
+  }
+
+  strong {
+    font-size: 13px;
+  }
+
+  p {
+    font-size: 12px;
+    color: #706970;
+  }
+}
+
+.settings-secondary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  width: 100%;
+  padding: 12px;
+
+  background: #FAF0F4;
+  color: var(--color-btn);
+
+  border: 1px solid #E8D6DC;
+  border-radius: 12px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.settings-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 14px;
+
+    background: #FAF8F9;
+    border: 1px solid #EEE5E9;
+    border-radius: 12px;
+
+    font-size: 14px;
+
+    &:focus {
+      outline: 2px solid #E8D6DC;
+    }
+  }
+}
+
+.settings-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+
+  button {
+    flex: 1;
+    padding: 12px 8px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+.settings-cancel-btn {
+  background: #F4F0F2;
+  color: #625B60;
+  border: none;
+}
+
+.settings-save-btn {
+  background: var(--color-btn);
+  color: white;
+  border: none;
+}
+
+.settings-delete-btn {
+  display: block;
+  margin: 12px auto 0;
+
+  background: transparent;
+  border: none;
+
+  color: #A02B41;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.settings-feedback {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--color-btn);
+}
+
+.settings-static-item {
+  align-items: flex-start;
+}
+
+// DÉCONNEXION
+
+.settings-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  padding: 14px;
+
+  background: #FAF5F7;
+  color: var(--color-btn);
+
+  border: 1px solid #EEE5E9;
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.settings-footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 11px;
+  color: #A49AA0;
+}
+
+@media (max-width: 360px) {
+  .settings-page {
+    padding: 18px 12px 120px;
+  }
+
+  .settings-profile {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .settings-avatar {
+    width: 54px;
+    height: 54px;
+  }
+}
