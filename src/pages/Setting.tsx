@@ -149,17 +149,14 @@ export function Settings() {
       <main className="settings-page">
         {/* EN-TÊTE */}
 
+            <h2 className="settings-eyebrow">
+              MON ESPACE
+            </h2>
         <div className="settings-heading">
           <div>
-            <span className="settings-eyebrow">
-              MON ESPACE
-            </span>
 
             <h1>Paramètres</h1>
 
-            <p>
-              Personnalisez votre expérience BADDIES.
-            </p>
           </div>
 
           <SettingsIcon
@@ -167,6 +164,8 @@ export function Settings() {
             size={24}
           />
         </div>
+
+        <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
 
         {/* PROFIL */}
 
@@ -186,19 +185,19 @@ export function Settings() {
                 <h2>{user.pseudo}</h2>
                 <p>{user.email}</p>
 
-                <span className="settings-account-status">
-                  Compte connecté
+                <span className="setting-login">
+                  Connecté 
                 </span>
               </>
             ) : (
               <>
-                <h2>Bienvenue sur BADDIES</h2>
+                <h2>BIENVENUE SUR  BADDIES</h2>
 
-                <p>Utilisation sans compte</p>
+                <p className="paraSetting">Utilisation sans compte</p>
 
                 <Link
                   to="/Login"
-                  className="settings-login"
+                  className="home-btn"
                 >
                   Se connecter
                   <ArrowRight size={16} />

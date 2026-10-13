@@ -64,7 +64,7 @@ export default function Navbar() {
 
           <li>
             <NavLink
-              to="/urgence"
+              to="/emergencyContact"
               className="nav-item nav-emergency"
             >
               

@@ -16,6 +16,8 @@ import { ResetPassword } from './components/ResetPassword';
 import { History } from './pages/History';
 import Episode from './pages/Episode';
 import { Settings } from "./pages/Setting";
+import Urgency from './pages/emergencyContact.tsx';
+
 
 export default function App(){
   return(
@@ -37,6 +39,7 @@ export default function App(){
                 <Route path='/Historique' element={<History/>} />
                 <Route path='/Historique/:id' element={<Episode/>} />
                 <Route path="/Setting" element={<Settings />} />
+                <Route path="/emergencyContact" element={<Urgency/>} />
 
             </Routes>
       </EvaluationProvider>

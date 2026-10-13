@@ -141,6 +141,31 @@ img {
   }
 }
 
+.home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 420px;
+  min-height: 50px;
+
+  margin: 12px auto 0;
+  padding: 14px 20px;
+
+  background: var(--color-btn);
+  color: var(--color-white);
+
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+
+  &:hover {
+    background: #5D1724;
+  }
+}
 // ACCESSIBILITÉ
 
 :focus-visible {

@@ -25,13 +25,13 @@ const country: Country[] = [
         "flag": France
 
     }
-]
+] 
 export default function Country(){
     const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
     const navigate = useNavigate();
     const handleContinue = () => {
         if (!selectedCountry) return;
-        navigate("/Login");
+        navigate("/Home");
     };
     return(
         <>

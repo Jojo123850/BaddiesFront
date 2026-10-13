@@ -6,7 +6,7 @@
   width: 100%;
   max-width: 620px;
   margin: 0 auto;
-  padding: 24px 20px 130px;
+  padding: 0px 20px 130px;
 }
 
 .settings-heading {
@@ -40,9 +40,11 @@
   justify-content: center;
   flex-shrink: 0;
 
-  width: 48px;
-  height: 48px;
-  color: var(--color-btn);
+  width: 32px;
+  height: 35px;
+
+//   background: #FAF0F4;
+  color: var(--color-text);
   border-radius: 15px;
   font-size: 21px;
 }
@@ -84,13 +86,13 @@
     font-weight: 800;
   }
 
-  p {
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
-    color: #706970;
-    overflow-wrap: anywhere;
-  }
+}
+.paraSetting {
+  padding-bottom: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: #706970;
+  
 }
 
 .settings-account-status {
@@ -101,7 +103,7 @@
   color: var(--color-btn);
 }
 
-.settings-login {
+.home-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -110,8 +112,33 @@
   font-size: 12px;
   font-weight: 700;
   color: var(--color-btn);
+  
+  justify-content: center;
+
+  width: 100%;
+  max-width: 420px;
+  min-height: 50px;
+
+  margin: 12px auto 0;
+  padding: 14px 20px;
+
+  background: var(--color-btn);
+  color: var(--color-white);
+
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+
+  &:hover {
+    background: #5D1724;
+  }
 }
 
+.setting-login{
+    color: var(--color-ok);
+}
 // SECTIONS
 
 .settings-section {

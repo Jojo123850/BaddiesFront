@@ -25,7 +25,7 @@ export function Home(){
                 Évaluez vos douleurs en quelques minutes
                 et découvrez des gestes adaptés pour vous soulager.
             </p>
-            <Link to="/analyse" className="btn home-btn">
+            <Link to="/analyse" className="home-btn">
                 Commencer mon évaluation
             </Link>
         </section>
@@ -38,10 +38,6 @@ export function Home(){
     <div>
       <h2>Mes évaluations</h2>
       <p>Retrouvez vos douleurs enregistrées</p>
-    </div>
-
-    <div className="historyHome-icon">
-      <i className="fa-solid fa-clock-rotate-left"></i>
     </div>
   </div>
 
@@ -72,13 +68,11 @@ export function Home(){
     </>
   ) : (
     <div className="historyHome-empty">
-      <i className="fa-regular fa-calendar"></i>
-
       <p>
         Aucune évaluation enregistrée pour le moment.
       </p>
 
-      <Link to="/analyse" className="historyLink">
+      <Link to="/analyse" className="home-btn">
         Faire ma première évaluation
         <i className="fa-solid fa-arrow-right"></i>
       </Link>

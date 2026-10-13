@@ -1,0 +1,190 @@
+
+@import "./_variables.scss";
+@import "./_mixins.scss";
+
+.urgence-page {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 24px 20px 130px;
+
+  h1 {
+    font-size: 30px;
+    margin: 8px 0 12px;
+    color: var(--color-text);
+  }
+}
+
+.urgence-eyebrow {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--color-btn);
+}
+
+.urgence-description {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.urgence-country {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 22px;
+  border: 1px solid #eee5e9;
+  border-radius: 15px;
+  background: #faf8f9;
+
+  svg {
+    color: var(--color-btn);
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+    font-size: 13px;
+  }
+
+  strong {
+    font-size: 13px;
+  }
+}
+
+.urgence-medical,
+.urgence-contact {
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.urgence-medical {
+  background: #faf0f4;
+  border: 1px solid #e8d6dc;
+}
+
+.urgence-contact {
+  background: white;
+  border: 1px solid #eee5e9;
+
+  > p {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    margin: 16px 0;
+  }
+}
+
+.urgence-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-btn);
+
+  h2 {
+    font-size: 18px;
+    color: var(--color-text);
+    margin: 0;
+  }
+}
+
+.urgence-number {
+  display: block;
+  margin: 22px 0 4px;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--color-btn);
+}
+
+.urgence-medical > p {
+  font-size: 13px;
+  color: #706970;
+}
+
+.urgence-call {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--color-btn);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.urgence-secondary-call,
+.urgence-add-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px;
+  margin-top: 12px;
+  border: 1px solid #e8d6dc;
+  border-radius: 12px;
+  color: var(--color-btn);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.urgence-note {
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+.urgence-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+
+  strong {
+    font-size: 16px;
+  }
+
+  span {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+}
+
+.urgence-reminder {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #faf8f9;
+  color: #706970;
+
+  svg {
+    color: var(--color-btn);
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 360px) {
+  .urgence-page {
+    padding: 18px 12px 120px;
+  }
+
+  .urgence-medical,
+  .urgence-contact {
+    padding: 16px;
+  }
+}

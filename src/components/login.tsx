@@ -32,6 +32,8 @@ function Login() {
                 console.log(datas)
                 localStorage.setItem("token", datas.accessToken)
                 localStorage.setItem("refreshToken", datas.refreshToken)
+
+                localStorage.setItem("user", JSON.stringify(datas.user));
                 navigate("/Home")
 
             } catch (err) {

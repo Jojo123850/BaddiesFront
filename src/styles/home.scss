@@ -191,10 +191,6 @@
   text-align: left;
 }
 
-// ====================================
-// BOUTONS APPAREILS
-// ====================================
-
 .btnCollapse {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -245,9 +241,7 @@
   }
 }
 
-// ====================================
-// ÉTAPES INSTALLATION
-// ====================================
+
 
 .installation-steps {
   display: flex;
@@ -301,9 +295,7 @@
   font-weight: 700;
 }
 
-// ====================================
-// NOTE HORS LIGNE
-// ====================================
+
 
 .collapse-note {
   display: flex;
@@ -337,9 +329,7 @@
   }
 }
 
-// ====================================
-// HISTORIQUE HOME
-// ====================================
+
 
 .historyHome {
   width: calc(100% - 40px);
@@ -514,9 +504,6 @@
   }
 }
 
-// ====================================
-// TABLETTE ET ORDINATEUR
-// ====================================
 
 @media (min-width: 768px) {
   .home-intro {
@@ -537,9 +524,6 @@
   }
 }
 
-// ====================================
-// PETITS ÉCRANS
-// ====================================
 
 @media (max-width: 360px) {
   .home-intro {
