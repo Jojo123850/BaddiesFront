@@ -29,7 +29,7 @@ export default function Recap (){
     const handleContinue = () => {
     if (isInComplete) return;
   
-    navigate("/Analyse de réponse");
+    navigate("/Analyse-reponse");
     };
 
    

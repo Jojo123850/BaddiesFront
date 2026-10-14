@@ -478,27 +478,28 @@ const handleDownloadPDF = () => {
             </section>
 
             <section>
-                <button
-                    className="btn"
-                    onClick={handleSave}
-                    disabled={saved}
-                >
-                    {saved
-                        ? "Épisode enregistré"
-                        : "+ Enregistrer cet épisode"}
-                </button>
+                <div className="btnSolution">
+                    <button
+                        className="btn"
+                        onClick={handleSave}
+                        disabled={saved}>
+                        {saved
+                            ? "Épisode enregistré"
+                            : "+ Enregistrer"}
+                    </button>
 
-                <button
-                    className="btn"
-                    onClick={shareSummary}
-                >
-                    <i className="fa-solid fa-share-nodes"></i>
-                    Partager mon résumé
-                </button>
+                    <button
+                        className="btn"
+                        onClick={shareSummary}
+                    >
+                        <i className="fa-solid fa-share-nodes"></i>
+                        Partager 
+                    </button>
+                </div>
 
                 {message && <p>{message}</p>}
-
-                <Link to="/Home">
+                
+                <Link to="/Home" className="btn-container">
                     Evaluation terminé
                 </Link>
 

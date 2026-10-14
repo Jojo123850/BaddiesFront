@@ -24,3 +24,18 @@ padding: 15px;
         }
     }
 }
+
+.btnSolution{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+
+    // .btnSol1{
+    //     background: var(--color-card-soft);
+    //     color: var(--color-black);
+    //     padding: 14px 24px;
+    //     border: none;
+    //     border-radius: 14px;
+    // }
+}

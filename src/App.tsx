@@ -34,7 +34,7 @@ export default function App(){
                 <Route path='/Zone' element={<ZoneP />} />
                 <Route path='/Localisation' element={<Localisation />} />
                 <Route path='/Recapitulatif' element={<Recap/>} />
-                <Route path='/AnalyseReponse' element={<RulesAlert/> }/>
+                <Route path='/Analyse-reponse' element={<RulesAlert/> }/>
                 <Route path='/Alerte' element={<MedicalAlert/>} />
                 <Route path='/Solution' element={<Solution/>} />
                 <Route path='/Historique' element={<History/>} />
