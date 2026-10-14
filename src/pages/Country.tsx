@@ -31,6 +31,7 @@ export default function Country(){
     const navigate = useNavigate();
     const handleContinue = () => {
         if (!selectedCountry) return;
+        localStorage.setItem("country", selectedCountry);
         navigate("/Home");
     };
     return(
@@ -66,7 +67,15 @@ export default function Country(){
                     })}
             </div>   
             </>
-                <button className="btn" onClick={handleContinue}>Continuer</button>
+            <div className="btn-container">
+                <button
+                    type="button"
+                    className="btn"
+                    onClick={handleContinue}
+                >
+                    Continuer
+                </button>
+                </div>
            
         </>
     )

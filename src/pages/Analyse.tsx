@@ -19,7 +19,7 @@ export function Analyse(){
                     <Link to="/Zone" className="retour">
                         <i className="fa-solid fa-chevron-left"></i>
                     </Link>
-                    <button onClick={() => setIsAsking(true)} className="btn">Mode questionnaire</button>
+                    <button onClick={() => setIsAsking(true)} className="btn-switch">Mode questionnaire</button>
                 </div>
                 <IntensityPain/>
         </>
@@ -29,7 +29,7 @@ export function Analyse(){
                     <Link to="/Home" className="retour">
                         <i className="fa-solid fa-chevron-left"></i>
                     </Link>
-                    <button onClick={() => setIsAsking(false)} className="btn">Mode anneau</button>
+                    <button onClick={() => setIsAsking(false)} className="btn-switch">Mode anneau</button>
                 </div>
                     <IntensityPainB/>
                 </>

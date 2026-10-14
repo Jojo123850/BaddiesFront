@@ -40,8 +40,10 @@ export default function IntensityPainB () {
                         {item.label}
                     </button>
                 ))}
+            <div className="btn-container">
 
              <button disabled = {evaluation.intensiteNiveau === null} onClick={handleContinue} className="btn">Continuer à analyser</button>
+            </div>
         </div>
         </>
        

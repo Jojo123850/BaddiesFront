@@ -1,4 +1,4 @@
-import { Routes, Route} from 'react-router-dom';
+﻿import { Routes, Route} from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Analyse } from './pages/Analyse';
 import { ZoneP } from './pages/Zone';
@@ -16,7 +16,8 @@ import { ResetPassword } from './components/ResetPassword';
 import { History } from './pages/History';
 import Episode from './pages/Episode';
 import { Settings } from "./pages/Setting";
-import Urgency from './pages/emergencyContact.tsx';
+import Urgency from './pages/EmergencyContact';
+
 
 
 export default function App(){
@@ -33,7 +34,7 @@ export default function App(){
                 <Route path='/Zone' element={<ZoneP />} />
                 <Route path='/Localisation' element={<Localisation />} />
                 <Route path='/Recapitulatif' element={<Recap/>} />
-                <Route path='/Analyse de réponse' element={<RulesAlert/> }/>
+                <Route path='/AnalyseReponse' element={<RulesAlert/> }/>
                 <Route path='/Alerte' element={<MedicalAlert/>} />
                 <Route path='/Solution' element={<Solution/>} />
                 <Route path='/Historique' element={<History/>} />
@@ -46,3 +47,4 @@ export default function App(){
     
   );
 }
+

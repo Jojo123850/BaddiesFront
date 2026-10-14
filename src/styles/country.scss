@@ -3,9 +3,6 @@
 @import './navbar.scss';
 
 .country{
-    // display: flex;
-    // flex-wrap: wrap;
-    // justify-content: space-between;
     position: relative;
     margin: 20px;
     display: grid;
@@ -47,4 +44,8 @@
         .text{
             color: var(--color-white);
         }
+}
+.btn{
+    display: block;
+    align-items: center;
 }

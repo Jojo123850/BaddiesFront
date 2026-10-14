@@ -78,14 +78,16 @@ export default function Recap (){
                 </div>
             </section>
          
-         
-            <button
-                disabled={isInComplete}
-                onClick={handleContinue}
-                className="btn"
-            >
-                Voir les solutions
-            </button>
+            <div className="btn-container">
+
+                <button
+                    disabled={isInComplete}
+                    onClick={handleContinue}
+                    className="btn"
+                >
+                    Voir les solutions
+                </button>
+            </div>
 
         </>
     )

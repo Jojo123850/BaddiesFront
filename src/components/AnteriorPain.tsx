@@ -69,8 +69,9 @@ const AnteriorPain = () => {
                     {localisation.label}
                 </button>
             ))}
-                
+            <div className="btn-container"> 
                 <button disabled={evaluation.localisations.length === 0} onClick={handleContinue}className="btn">  Continuer à analyser </button>
+            </div>    
         </div>
             
         </>

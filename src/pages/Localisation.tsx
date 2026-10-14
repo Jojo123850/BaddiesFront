@@ -54,6 +54,7 @@ export default function Localisation(){
                 ))}
             </div> 
 
+            <div className="btn-container">
 
              <button
                 disabled={!evaluation}
@@ -62,6 +63,7 @@ export default function Localisation(){
             >
                 Continuer à analyser
             </button>
+            </div>
 
             <p className="answer"> C’est indispensable pour analyser le plan d’action personnalisé par rapport à votre douleur</p>
         </>

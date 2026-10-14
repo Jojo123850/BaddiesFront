@@ -100,14 +100,16 @@ const IntensityPain = () => {
 
                 {evaluation.intensiteValeur === 0 ? "Appuie" : " "}
             </div>
+            <div className="btn-container">
 
-            <button
-                disabled={evaluation.intensiteValeur === 0}
-                onClick={handleContinue}
-                className="btn"
-            >
-                Continuer à analyser
-            </button>
+                <button
+                    disabled={evaluation.intensiteValeur === 0}
+                    onClick={handleContinue}
+                    className="btn"
+                >
+                    Continuer à analyser
+                </button>
+            </div>
 
             <p className="analyse">
                 Maintenez pour sélectionner votre niveau de douleur.
