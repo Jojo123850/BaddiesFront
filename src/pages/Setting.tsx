@@ -225,10 +225,7 @@ export function Settings() {
                 <strong>
                   Informations personnelles
                 </strong>
-
-                <small>
-                  Modifier mon pseudo et ma photo
-                </small>
+                <Link to="EditProfile"> Modifier mon profile</Link>
               </span>
 
               <ChevronRight
@@ -296,7 +293,7 @@ export function Settings() {
             </div>
 
             {hasContact && !editingContact && (
-              <div className="settings-contact-preview">
+              <div className="btn-fond">
                 <UserRoundCheck size={21} />
 
                 <div>

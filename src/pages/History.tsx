@@ -40,7 +40,6 @@ useEffect(() => {
 
     return(
         <>
-            <h2>Mes évaluations</h2>
             {history.length===0 ? (
                 
                 <p>Aucune évaluation actuellement

@@ -17,6 +17,9 @@ import { History } from './pages/History';
 import Episode from './pages/Episode';
 import { Settings } from "./pages/Setting";
 import Urgency from './pages/EmergencyContact';
+import EditProfile from './pages/EditProfle.tsx';
+// import { PainChart } from './components/PainChart.tsx';
+import Tracking from './pages/Tracking.tsx';
 
 
 
@@ -40,7 +43,9 @@ export default function App(){
                 <Route path='/Historique' element={<History/>} />
                 <Route path='/Historique/:id' element={<Episode/>} />
                 <Route path="/Setting" element={<Settings />} />
+                <Route path="/EditProfle" element={<EditProfile/>} />
                 <Route path="/emergencyContact" element={<Urgency/>} />
+                <Route path="/Suivi" element={<Tracking/>} />
 
             </Routes>
       </EvaluationProvider>

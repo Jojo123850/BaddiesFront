@@ -1,0 +1,27 @@
+
+
+.btnSuivi{
+    display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap:20px;
+}
+.tracking {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px 16px 120px;
+  box-sizing: border-box;
+  min-width: 0;
+
+  h1 {
+    font-size: 26px;
+    margin: 0 0 24px;
+    text-align: left;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: 0 0 20px;
+    text-align: left;
+  }
+}

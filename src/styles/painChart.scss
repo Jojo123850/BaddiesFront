@@ -1,0 +1,32 @@
+
+@import './_variables.scss';
+@import './_mixins.scss';
+
+.Pain-chart {
+  width: 100%;
+  height: 260px;
+  margin: 15px 0 25px;
+  padding: 0;
+  min-width: 0;
+  box-sizing: border-box;
+
+  .chart-line {
+    color: var(--color-btn);
+    stroke-width: 3px;
+  }
+
+  .chart-grid {
+    stroke: #E8D6DD;
+  }
+
+  .recharts-cartesian-axis-tick-value {
+    fill: #741D2D;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 768px) {
+  .Pain-chart {
+    height: 330px;
+  }
+}

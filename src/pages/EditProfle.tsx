@@ -4,14 +4,14 @@ import type { FormEvent } from "react";
 import Navbar from "../components/Navbar";
 import defaultProfile from "../assets/images/DefaultProfile.webp";
 
-import avatar1 from "../assets/avatars/avatar1.webp";
-import avatar2 from "../assets/avatars/avatar2.webp";
-import avatar3 from "../assets/avatars/avatar3.webp";
-import avatar4 from "../assets/avatars/avatar4.webp";
+import MochiCol1 from "../assets/images/MochiCol.webp";
+import MochiHeureux from "../assets/images/MochiHeureux.webp";
+import MochiSom from "../assets/images/MochiSom.webp";
+import MochiSupris from "../assets/images/MociSurpris.webp";
 
 import "../styles/setting.scss";
 
-const avatars = [avatar1, avatar2, avatar3, avatar4];
+const avatars = [MochiCol1, MochiHeureux, MochiSom, MochiSupris];
 
 type User = {
   id: number;

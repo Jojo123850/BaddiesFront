@@ -186,6 +186,33 @@ img {
     background: #5D1724;
   }
 }
+
+.btn-fond {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+  margin-bottom: 14px;
+
+  background: #FAF5F7;
+  border-radius: 13px;
+
+  > i {
+    color: var(--color-btn);
+    font-size: 20px;
+  }
+
+  strong {
+    font-size: 13px;
+  }
+
+  p {
+    font-size: 12px;
+    color: #706970;
+  }
+}
+
 // ACCESSIBILITÉ
 
 :focus-visible {

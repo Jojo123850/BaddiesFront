@@ -55,7 +55,7 @@ export default function Navbar() {
           </li>
 
           <li>
-            <NavLink to="/suivi" className="nav-item">
+            <NavLink to="/Suivi" className="nav-item">
              
               <ChartNoAxesColumnIncreasing size={23} strokeWidth={1.7} />
               <span>Suivi</span>
