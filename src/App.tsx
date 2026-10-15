@@ -13,7 +13,7 @@ import Login from './components/Login.tsx';
 import Register from './components/Register';
 import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
-import { History } from './pages/History';
+import { History } from './components/History.tsx';
 import Episode from './pages/Episode';
 import { Settings } from "./pages/Setting";
 import Urgency from './pages/EmergencyContact';

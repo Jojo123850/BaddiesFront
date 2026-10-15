@@ -61,7 +61,7 @@ export function Home(){
         </div>
       </div>
 
-      <Link to="/Historique" className="historyLink">
+      <Link to="/Suivi?tab=historique" className="historyLink">
         Voir mon historique
         <i className="fa-solid fa-arrow-right"></i>
       </Link>

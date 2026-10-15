@@ -3,7 +3,7 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
-  Settings as SettingsIcon,
+  // Settings as SettingsIcon,
   ArrowRight,
   UserRound,
   ChevronRight,
@@ -149,26 +149,22 @@ export function Settings() {
       <main className="settings-page">
         {/* EN-TÊTE */}
 
-            <h2 className="settings-eyebrow">
-              MON ESPACE
-            </h2>
-        <div className="settings-heading">
+        {/* <div className="settings-heading">
           <div>
-
-            <h1>Paramètres</h1>
-
+          
+          <h1>Paramètres</h1>
+          
           </div>
-
+          
           <SettingsIcon
-            className="settings-heading-icon"
-            size={24}
+          className="settings-heading-icon"
+          size={24}
           />
-        </div>
-
-        <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
+          </div> */}
+{/* 
+        <p className="paraSetting">Personnalisez votre compte selon votre préference</p> */}
 
         {/* PROFIL */}
-
         <section className="settings-profile">
           <img
             src={user?.avatar_url || defaultProfile}
@@ -204,15 +200,12 @@ export function Settings() {
                 </Link>
               </>
             )}
+        
           </div>
         </section>
-
-        {/* MON COMPTE */}
-
         {user && (
           <section className="settings-section">
             <h2>Mon compte</h2>
-
             <Link
               to="/EditProfile"
               className="settings-item"
@@ -235,6 +228,13 @@ export function Settings() {
             </Link>
           </section>
         )}
+         <h2 className="settings-eyebrow">
+          MON ESPACE
+        </h2>
+         <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
+
+
+        {/* MON COMPTE */}
 
         {/* PRÉFÉRENCES */}
 
@@ -293,7 +293,7 @@ export function Settings() {
             </div>
 
             {hasContact && !editingContact && (
-              <div className="btn-fond">
+              <div className="settings-contact-preview">
                 <UserRoundCheck size={21} />
 
                 <div>

@@ -5,15 +5,30 @@ import { PainChart } from "../components/PainChart";
 
 import type { HistoryEvaluation } from "../services/localStorageService";
 import { getHistory } from "../services/historyService";
-import { History } from "./History";
+import { History } from "../components/History";
+import { useSearchParams } from "react-router-dom";
 
 import "../styles/tracking.scss";
 
 export default function Tracking() {
   const [history, setHistory] = useState<HistoryEvaluation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isActive, setIsActive] = useState("suivi")
+//  
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+const tab = searchParams.get("tab");
+
+const isActive =tab === "historique" || tab === "comparaison"
+    ? tab
+    : "suivi";
+
+const setIsActive = (onglet: string) => {
+  setSearchParams({ tab: onglet });
+};
+ 
+
+ 
   useEffect(() => {
     const loadHistory = async () => {
       try {
@@ -71,12 +86,15 @@ export default function Tracking() {
       <main className="tracking">
        
         <div className="btnSuivi">
-            <button  onClick={() => setIsActive("suivi")}
-            className={`btn-fond ${isActive === "suivi" ? "active" : ""}`} >Suivi</button>
-            <button  onClick={() => setIsActive("historique")}
-            className={`btn-fond ${isActive === "historique" ? "active" : ""}`}>Historique</button>
-            <button  onClick={() => setIsActive("comparaison")}
-            className={` btn-fond ${isActive === "comparaison" ? "active" : ""}`}>Comparaison</button>
+            <div>
+                <button  onClick={() => setIsActive("suivi")}
+                className={`btn-fond ${isActive === "suivi" ? "active" : ""}`} >Suivi</button>
+            </div>
+            <div>
+                <button  onClick={() => setIsActive("historique")}
+                className={`btn-fond ${isActive === "historique" ? "active" : ""}`}>Historique</button>
+            </div>
+
         </div>
         {isActive=== "suivi"  &&(
             <>
@@ -94,22 +112,13 @@ export default function Tracking() {
          }
 
         {isActive=== "historique"  &&(
-            <>
-                <h1>Votre historique </h1>
-
-                <h2>Historique de ma douleur</h2>
+            <>  
                 <History />
             </>
         )
          }
 
-          {isActive=== "comparaison"  &&(
-            <>
-                <h1>Comparaison de votre douleur </h1>
-                {/* <History /> */}
-            </>
-        )
-         }
+          
       </main>
     </>
   );

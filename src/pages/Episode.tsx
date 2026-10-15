@@ -69,7 +69,7 @@ const handleDelete = () => {
         JSON.stringify(nouvelHistorique)
     );
 
-    navigate("/Historique");
+    navigate("/Suivi?tab=historique");
 };
 
     return (
