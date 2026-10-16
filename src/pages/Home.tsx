@@ -4,11 +4,40 @@ import Collapse from "../components/Collapse";
 import "../styles/navbar.scss";
 import "../styles/home.scss";
 // import homeImage from "../assets/images/f6582a18b6158c3bf409305bda0f8a88-Photoroom.webp";
-import { getEvaluations } from "../services/localStorageService";
+import { useEffect, useState } from "react";
+import { getHistory } from "../services/historyService";
+import type { HistoryEvaluation } from "../services/localStorageService";
 
-export function Home(){
-    const evaluations = getEvaluations();
-      const hasHistory = evaluations.length > 0;
+export function Home() {
+    const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadHistory = async () => {
+            try {
+                const token = localStorage.getItem("token");
+
+                if (token) {
+                    // Utilisatrice connectée : backend
+                    const data = await getHistory();
+                    setEvaluations(data);
+                } else {
+                    // Utilisatrice non connectée : localStorage
+                    const saved = localStorage.getItem("historique");
+                    setEvaluations(saved ? JSON.parse(saved) : []);
+                }
+            } catch (error) {
+                console.error("Erreur historique accueil :", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadHistory();
+    }, []);
+
+    const hasHistory = evaluations.length > 0;
+    
     return (
         <>
         <Navbar/>
@@ -40,8 +69,9 @@ export function Home(){
       <p>Retrouvez vos douleurs enregistrées</p>
     </div>
   </div>
-
-  {hasHistory ? (
+    {loading ? (
+      <p>Chargement des évaluations...</p>
+    ):hasHistory ? (
     <>
       <div className="historyHome-summary">
         <span className="historyHome-count">
@@ -78,6 +108,7 @@ export function Home(){
       </Link>
     </div>
   )}
+  
 </section>
 
         </>

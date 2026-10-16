@@ -164,7 +164,6 @@ export function Settings() {
 {/* 
         <p className="paraSetting">Personnalisez votre compte selon votre préference</p> */}
 
-        {/* PROFIL */}
         <section className="settings-profile">
           <img
             src={user?.avatar_url || defaultProfile}
@@ -178,16 +177,16 @@ export function Settings() {
           <div className="settings-profile-info">
             {user ? (
               <>
-                <h2>{user.pseudo}</h2>
-                <p>{user.email}</p>
+                <h2 className="pseudo">{user.pseudo}</h2>
+                <p className="paraSetting">{user.email}</p>
 
                 <span className="setting-login">
-                  Connecté 
+                  Status: Connecté 
                 </span>
               </>
             ) : (
               <>
-                <h2>BIENVENUE SUR  BADDIES</h2>
+                <h2 className="pseudo">BIENVENUE SUR  BADDIES</h2>
 
                 <p className="paraSetting">Utilisation sans compte</p>
 
@@ -203,6 +202,10 @@ export function Settings() {
         
           </div>
         </section>
+        <h2 className="settings-eyebrow">
+          MON ESPACE
+        </h2>
+         <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
         {user && (
           <section className="settings-section">
             <h2>Mon compte</h2>
@@ -228,10 +231,7 @@ export function Settings() {
             </Link>
           </section>
         )}
-         <h2 className="settings-eyebrow">
-          MON ESPACE
-        </h2>
-         <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
+       
 
 
         {/* MON COMPTE */}

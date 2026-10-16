@@ -32,6 +32,7 @@
   font-weight: 800;
   letter-spacing: 2px;
   color: var(--color-btn);
+  place-self: self-start;
 }
 
 .settings-heading-icon {
@@ -62,6 +63,10 @@
   background: #FAF5F7;
   border: 1px solid #EEE5E9;
   border-radius: 22px;
+
+  .pseudo{
+    place-self: self-start;
+  }
 }
 
 .settings-avatar {
@@ -84,6 +89,8 @@
     margin: 0 0 5px;
     font-size: 17px;
     font-weight: 800;
+   
+
   }
 
 }
@@ -152,6 +159,7 @@
     font-size: 17px;
     font-weight: 800;
     color: #171317;
+    place-self: self-start;
   }
 }
 

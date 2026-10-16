@@ -111,7 +111,6 @@ export default function Urgency() {
           </strong>
         </div> */}
 
-        {/* URGENCE MÉDICALE */}
 
         <section className="urgence-medical">
 
@@ -121,7 +120,7 @@ export default function Urgency() {
 
           {isFrance ? (
             <>
-              <p>SAMU — France</p>
+              <p className="samu">SAMU — France</p>
 
               <a
                 href="tel:15"
@@ -133,7 +132,7 @@ export default function Urgency() {
             </>
           ) : (
             <>
-              {/* MADAGASCAR */}
+              
 
               <p>Secours — Madagascar</p>
 

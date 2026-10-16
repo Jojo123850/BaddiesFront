@@ -27,6 +27,7 @@
   line-height: 1.7;
   color: var(--color-text-muted);
   margin-bottom: 24px;
+  text-align: start;
 }
 
 .urgence-country {
@@ -70,7 +71,8 @@
   background: white;
   border: 1px solid #eee5e9;
 
-  > p {
+  > .samu{
+    text-align: start;
     color: var(--color-text-muted);
     font-size: 13px;
     margin: 16px 0;

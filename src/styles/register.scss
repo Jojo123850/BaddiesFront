@@ -1,0 +1,145 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+@import './global.scss';
+
+h2{
+    text-align: center;
+    color: var(--color-btn);
+}
+.login{
+    color: var(--color-btn);
+}
+.paraRegister{
+    // width: 70%;
+    // place-self: center;
+    color: var(--color-text-muted);
+}
+.formDiv{
+      width: 90%;
+    max-width: 420px;
+    margin: 20px auto;
+    padding: 24px 20px;
+    box-sizing: border-box;
+
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 17px;
+    box-shadow: 0 12px 35px rgba(116, 29, 45, 0.18);
+}
+
+#register{
+    margin: 20px auto;
+}
+.wave-group {
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.wave-group .input {
+  font-size: 14px;
+  padding: 10px 10px 5px;
+  display: block;
+  padding: 10px;
+ border-radius: 14px;
+  background: transparent;
+    border-top: 1px solid var(--color-btn);
+    border-top:  none;
+    border-right: none;
+    border-left:  2px solid var(--color-text-muted);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.wave-group .input:focus {
+  outline: none;
+  margin-right: 10px;
+}
+
+.wave-group .label {
+    color: var( --color-text-muted);
+ 
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  display: flex;
+}
+
+.wave-group .label-char {
+  transition: 0.2s ease all;
+  transition-delay: calc(var(--index) * .05s);
+
+}
+
+.wave-group .input:focus ~ label .label-char,
+.wave-group .input:valid ~ label .label-char {
+  transform: translate(10px,-20px);
+  font-size: 16px;
+   color: var(--color-btn);
+  
+}
+
+.wave-group .bar {
+  position: relative;
+  display: block;
+  width: 200px;
+}
+
+.wave-group .bar:before,.wave-group .bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264AE;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.wave-group .bar:before {
+  left: 50%;
+}
+
+.wave-group .bar:after {
+  right: 50%;
+}
+
+.wave-group .input:focus ~ .bar:before,
+.wave-group .input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.btn{
+    place-self: center;
+    display: block;
+}
+
+.forgotPassword {
+    width: 100%;
+    text-align: right;
+    margin-top: -15px;
+    margin-bottom: 25px;
+
+    a {
+        color: var(--color-btn);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+}
+.forgotPass{
+  margin-bottom: 40px;
+
+  .emailForgot{
+      color: var(--color-text-muted);
+  }
+}
+@media (min-width: 768px) {
+    .formDiv {
+        padding: 32px;
+    }
+}
