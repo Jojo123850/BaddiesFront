@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { getHistory } from "../services/historyService";
 import type { HistoryEvaluation } from "../services/localStorageService";
 
-export function Home() {
+export default function Home() {
     const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -54,7 +54,7 @@ export function Home() {
                 Évaluez vos douleurs en quelques minutes
                 et découvrez des gestes adaptés pour vous soulager.
             </p>
-            <Link to="/analyse" className="home-btn">
+            <Link to="/Analyse" className="home-btn">
                 Commencer mon évaluation
             </Link>
         </section>

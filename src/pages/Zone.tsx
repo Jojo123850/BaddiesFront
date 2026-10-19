@@ -6,7 +6,7 @@ import PosteriorPain from "../components/PosteriorPain";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export function ZoneP(){
+export default function ZoneP(){
     const [isPosterior, setIsPosterior] = useState(false)
     return(
         <>

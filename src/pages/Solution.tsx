@@ -8,7 +8,8 @@ import { saveEvaluation } from "../services/localStorageService";
 import { useState } from "react";
 import { createHistory } from "../services/historyService";
 import {jsPDF} from 'jspdf';
-export function Solution() {
+
+export default function Solution() {
     const { evaluation } = useEvaluation();
     const [saved, setSaved] = useState(false);
     const [message, setMessage] = useState("");

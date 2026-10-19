@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
   import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom"
 import "../styles/register.scss";
-function Register() {
+
+export default  function Register() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [pseudo, setPseudo] = useState<string>("")
@@ -136,4 +137,3 @@ function Register() {
                 
             
 
-export default Register

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import "../styles/register.scss";
 import type { CSSProperties } from "react";
 
-function Login() {
+export default function Login() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState(false)
@@ -13,7 +13,17 @@ function Login() {
     const [messageType, setMessageType] = useState<"error" | "success" | "">("")
 
     const navigate = useNavigate();
-    if (loading) return <p>Chargement...</p>
+    if (loading) return(
+        <>
+            <div className="loading1">
+                <svg height="48px" width="64px">
+                    <polyline id="back" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
+                    <polyline id="front" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
+                </svg>
+            </div>
+        </>
+    )
+    
 
     return (
      <div className="formDiv">
@@ -136,4 +146,3 @@ function Login() {
     )
 }
 
-export default Login

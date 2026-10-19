@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import db from "../data/db.json";
 
 // règle de sécurité db
-export function RulesAlert(){
+export default function RulesAlert(){
     const { evaluation } = useEvaluation();
     const navigate = useNavigate();
     const regles = db.regles_securite;

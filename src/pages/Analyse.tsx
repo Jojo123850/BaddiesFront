@@ -8,7 +8,7 @@ import { useState } from "react";
 import IntensityPainB from "../components/IntesityPainB";
 
 
-export function Analyse(){
+export default function Analyse(){
     const [isAsking, setIsAsking] = useState(false)
     return(
         <>

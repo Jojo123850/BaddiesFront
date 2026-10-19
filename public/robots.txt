@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap:https://baddies-beryl.vercel.app/sitemap.xml

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
  import {  useNavigate } from "react-router-dom"
 import "../styles/navbar.scss";
 import Madagascar from "../assets/images/Madagascar.webp";
@@ -26,36 +26,54 @@ const country: Country[] = [
 
     }
 ] 
+
 export default function Country(){
     const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-    const navigate = useNavigate();
-    const handleContinue = () => {
-        if (!selectedCountry) return;
-        localStorage.setItem("country", selectedCountry);
-        navigate("/Home");
-    };
+
+  const [savedCountry] = useState(() =>
+    localStorage.getItem("country")
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (savedCountry === "Mada" || savedCountry === "France") {
+      navigate("/Home", { replace: true });
+    }
+  }, [savedCountry, navigate]);
+
+  const handleContinue = () => {
+    if (!selectedCountry) return;
+
+    localStorage.setItem("country", selectedCountry);
+    navigate("/Home", { replace: true });
+  };
+
+  if (savedCountry === "Mada" || savedCountry === "France") {
+    return null;
+  }
+
     return(
         <>
-                <header>
-                    {/* <Link to="/">
-                        <img className="logo" src="../src/assets/images/logo.webp" alt="logo" />
-                    </Link> */}
+            <header>
                     <div>
                         <span>Ecouter</span>
                         <span>Comprendre</span>
                         <span>Soulager</span>
                     </div>
-                </header>
+            </header>
             <>
                 <h1>Choisissez votre pays</h1>
-                <p>Pour commencer, séléctionnez votre pays <br /> Choisissez votre pays afin que Baddies puisse vous proposer le numéro d’urgence adapté en cas de besoin.</p>
+                <p>
+                Sélectionnez votre pays afin que BADDIES puisse vous
+                proposer les informations d'urgence adaptées.
+                </p>
              <div>
                 {country.map((country) => {
                     return(
                         <button key={country.id} className={`country ${selectedCountry === country.id ? "selected" : ""}`} onClick={() => setSelectedCountry(country.id)}>
                             <img src={country.flag} alt="flag" />
                             <span className="text">{country.country}</span>
-
                             { selectedCountry === country.id &&(
                                 <span className="check">
                                     <i className="fa-solid fa-check"></i>

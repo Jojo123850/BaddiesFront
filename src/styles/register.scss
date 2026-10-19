@@ -20,7 +20,6 @@ h2{
     margin: 20px auto;
     padding: 24px 20px;
     box-sizing: border-box;
-
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 17px;
@@ -138,6 +137,43 @@ h2{
       color: var(--color-text-muted);
   }
 }
+.loading1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto;
+}
+.loading1 svg polyline {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.loading1 svg polyline#back {
+  fill: none;
+  stroke: #e0464b33;
+}
+
+.loading1 svg polyline#front {
+  fill: none;
+  stroke: #d2494b;
+  stroke-dasharray: 48, 144;
+  stroke-dashoffset: 192;
+  animation: dash_682 1.4s linear infinite;
+}
+
+@keyframes dash_682 {
+  72.5% {
+    opacity: 0;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (min-width: 768px) {
     .formDiv {
         padding: 32px;

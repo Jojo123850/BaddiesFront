@@ -74,7 +74,7 @@ function getStoredContact(): EmergencyContact {
   return { name: "", phone: "" };
 }
 
-export function Settings() {
+export default function Settings() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<User | null>(
