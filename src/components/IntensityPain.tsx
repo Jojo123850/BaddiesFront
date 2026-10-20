@@ -2,6 +2,9 @@ import db from "../data/db.json";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
+import { Pointer } from "lucide-react";
+import "../styles/analyse.scss";
+
 
 type Niveau = {
     id: string;
@@ -96,7 +99,12 @@ const IntensityPain = () => {
                 onPointerUp={stopIncrementing}
                 onPointerLeave={stopIncrementing}
             >
-                <i className="fa-solid fa-hand-pointer hand-icon"></i>
+               <Pointer 
+                className="hand-icon"
+                size={35}
+                strokeWidth={1.8}
+                aria-hidden="true"
+                />
 
                 {evaluation.intensiteValeur === 0 ? "Appuie" : " "}
             </div>

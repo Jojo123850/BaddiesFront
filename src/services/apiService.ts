@@ -9,7 +9,18 @@
 
 export const BASE_URL = 'http://localhost:3001'
 
+export type ProfileUser = {
+    id: number;
+    pseudo: string;
+    email: string;
+    avatar_url: string | null;
+};
 
+type ProfileUpdate = {
+    pseudo: string;
+    email: string;
+    avatar_url: string;
+};
 
 const refreshAccessToken = async (): Promise<string> => {
     const refreshToken = localStorage.getItem("refreshToken");
@@ -188,5 +199,41 @@ async resetPassword(
     }
 
     return await req.json()
+},
+async updateProfile(profile: ProfileUpdate): Promise<ProfileUser> {
+    const response = await fetchWithAuth(
+        `${BASE_URL}/api/v1/user/profile`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(profile)
+        }
+    );
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ||
+            data?.error ||
+            `Erreur HTTP : ${response.status}`
+        );
+    }
+
+    const user = data?.user;
+
+    if (
+        !user ||
+        !Number.isInteger(user.id) ||
+        typeof user.pseudo !== "string" ||
+        typeof user.email !== "string" ||
+        !(user.avatar_url === null || typeof user.avatar_url === "string")
+    ) {
+        throw new Error("Réponse du serveur invalide.");
+    }
+
+    return user;
 }
 }

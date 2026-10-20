@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import "../styles/alert.scss";
-
+import { ChevronLeft } from "lucide-react";
 export default function MedicalAlert() {
     return (
         <>
             <Link to="/Localisation" className="retour">
-                <i className="fa-solid fa-chevron-left"></i>
+                <ChevronLeft
+                size={22}
+                strokeWidth={1.8}
+                aria-hidden="true"
+                />
             </Link>
 
             <section className="medicalAlert">

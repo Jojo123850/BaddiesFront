@@ -8,6 +8,8 @@ import { saveEvaluation } from "../services/localStorageService";
 import { useState } from "react";
 import { createHistory } from "../services/historyService";
 import {jsPDF} from 'jspdf';
+import { ChevronLeft } from "lucide-react";
+import { Share2 } from "lucide-react";
 
 export default function Solution() {
     const { evaluation } = useEvaluation();
@@ -451,7 +453,11 @@ const handleDownloadPDF = () => {
             <Navbar />
             <div className="switch">
                 <Link to="/Localisation" className="retour">
-                <i className="fa-solid fa-chevron-left"></i>
+                <ChevronLeft
+                size={22}
+                strokeWidth={1.8}
+                aria-hidden="true"
+                />
                 </Link>
                  <button className="btn" onClick={handleDownloadPDF}>Télécharger le fichier</button>
             </div>
@@ -493,7 +499,7 @@ const handleDownloadPDF = () => {
                         className="btn"
                         onClick={shareSummary}
                     >
-                        <i className="fa-solid fa-share-nodes"></i>
+                        <Share2 size={20} strokeWidth={1.8} aria-hidden="true" />
                         Partager 
                     </button>
                 </div>

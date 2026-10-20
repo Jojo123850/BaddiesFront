@@ -5,6 +5,7 @@ import AnteriorPain from "../components/AnteriorPain";
 import PosteriorPain from "../components/PosteriorPain";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 export default function ZoneP(){
     const [isPosterior, setIsPosterior] = useState(false)
@@ -28,7 +29,11 @@ export default function ZoneP(){
                     <> 
                         <PosteriorPain/>
                         <button onClick={() => setIsPosterior(false)} className="btn-retour-face">
-                            <i className="fa-solid fa-rotate"></i>
+                             <ChevronLeft
+                                    size={22}
+                                    strokeWidth={1.8}
+                                    aria-hidden="true"
+                                    />
                         </button>
                     </>
                 )

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { contextImages } from "../data/contextDataImages";
+import { ChevronLeft } from "lucide-react";
 
 type Contexte = {
     id: string;
@@ -35,7 +36,11 @@ export default function Localisation(){
         <>
             <Navbar/>
             <Link to="/Zone" className="retour">
-                    <i className="fa-solid fa-chevron-left"></i>
+                    <ChevronLeft
+                    size={22}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                    />
             </Link>
             <h2 className="analyse">Localisation</h2>
             <p  className="analyse">Où êtes-vous actuellement ?</p>

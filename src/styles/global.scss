@@ -120,15 +120,7 @@ img {
   margin: 30px auto;
 }
 
-.btn-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  width: 100%;
-  margin: 30px auto;
-  padding: 10px;
-}
 // MESSAGES
 
 .answer,
@@ -198,7 +190,7 @@ img {
   background: #FAF5F7;
   border-radius: 13px;
 
-  > i {
+  > svg {
     color: var(--color-btn);
     font-size: 20px;
   }

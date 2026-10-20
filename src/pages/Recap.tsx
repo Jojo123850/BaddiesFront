@@ -7,6 +7,7 @@ import { useEvaluation } from "../evaluation/useEvaluation";
 import legere from "../assets/images/legere.webp";
 import moderee from "../assets/images/moderee.webp";
 import intense from "../assets/images/intense.webp";
+import { ChevronLeft } from "lucide-react";
 
 
 
@@ -38,7 +39,11 @@ export default function Recap (){
              <Navbar/>
                     <div className="switch">
                         <Link to="/Localisation" className="retour">
-                                <i className="fa-solid fa-chevron-left"></i>
+                                 <ChevronLeft
+                                    size={22}
+                                    strokeWidth={1.8}
+                                    aria-hidden="true"
+                                    />
                         </Link>
                         
                     </div>

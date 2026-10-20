@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 
 import Navbar from "../components/Navbar";
-import defaultProfile from "../assets/images/DefaultProfile.webp";
+import { apiService } from "../services/apiService";
+import type { ProfileUser } from "../services/apiService";
 
+import defaultProfile from "../assets/images/DefaultProfile.webp";
 import MochiCol1 from "../assets/images/MochiCol.webp";
 import MochiHeureux from "../assets/images/MochiHeureux.webp";
 import MochiSom from "../assets/images/MochiSom.webp";
@@ -13,89 +15,134 @@ import "../styles/setting.scss";
 
 const avatars = [MochiCol1, MochiHeureux, MochiSom, MochiSupris];
 
-type User = {
-  id: number;
-  pseudo: string;
-  email: string;
-  avatar_url: string | null;
-};
-
-function getStoredUser(): User | null {
-  const token = localStorage.getItem("token");
-  const storedUser = localStorage.getItem("user");
-
-  if (!token || !storedUser) return null;
-
+function getStoredUser(): ProfileUser | null {
   try {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (!token || !storedUser) return null;
+
     const parsed = JSON.parse(storedUser);
 
     if (
+      !parsed ||
+      !Number.isInteger(parsed.id) ||
       typeof parsed.pseudo !== "string" ||
       typeof parsed.email !== "string"
     ) {
       return null;
     }
 
-    return parsed as User;
+    return {
+      id: parsed.id,
+      pseudo: parsed.pseudo,
+      email: parsed.email,
+      avatar_url:
+        typeof parsed.avatar_url === "string" ? parsed.avatar_url : null,
+    };
   } catch {
     return null;
   }
 }
 
-function getInitialAvatar(): string {
-  const savedAvatar = localStorage.getItem("companionAvatar");
+function getInitialAvatar(user: ProfileUser | null): string {
+  if (user?.avatar_url) return user.avatar_url;
 
-  if (savedAvatar) {
-    const index = Number(savedAvatar);
+  try {
+    const savedAvatar = localStorage.getItem("companionAvatar");
 
-    if (
-      Number.isInteger(index) &&
-      index >= 0 &&
-      index < avatars.length
-    ) {
-      return avatars[index];
+    if (savedAvatar !== null && savedAvatar !== "") {
+      const index = Number(savedAvatar);
+
+      if (Number.isInteger(index) && index >= 0 && index < avatars.length) {
+        return avatars[index];
+      }
     }
+  } catch {
+    // Utiliser le premier compagnon si le stockage est indisponible.
   }
 
-  const randomIndex = Math.floor(Math.random() * avatars.length);
-
-  localStorage.setItem("companionAvatar", String(randomIndex));
-
-  return avatars[randomIndex];
+  return avatars[0];
 }
 
 export default function EditProfile() {
-  const [user] = useState<User | null>(getStoredUser);
-
+  const [user, setUser] = useState<ProfileUser | null>(getStoredUser);
   const [pseudo, setPseudo] = useState(user?.pseudo ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
-
-  const [selectedAvatar, setSelectedAvatar] =
-    useState<string>(getInitialAvatar);
+  const [selectedAvatar, setSelectedAvatar] = useState(
+    () => getInitialAvatar(user)
+  );
 
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const submitting = useRef(false);
 
-  const handleAvatarChange = (avatar: string, index: number) => {
+  const handleAvatarChange = (avatar: string) => {
     setSelectedAvatar(avatar);
-    localStorage.setItem("companionAvatar", String(index));
+    setMessage("");
+    setError("");
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user) return;
+    if (!user || submitting.current) return;
 
-    // Mise à jour locale provisoire.
-    // Il faudra aussi envoyer les changements au backend.
-    const updatedUser: User = {
-      ...user,
-      pseudo,
-      email,
-    };
+    setMessage("");
+    setError("");
 
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    const cleanPseudo = pseudo.trim();
+    const cleanEmail = email.trim();
 
-    setMessage("Modifications enregistrées localement.");
+    if (!cleanPseudo || !cleanEmail) {
+      setError("Le pseudo et l’email sont obligatoires.");
+      return;
+    }
+
+    submitting.current = true;
+    setIsSaving(true);
+
+    try {
+      const updatedUser = await apiService.updateProfile({
+        pseudo: cleanPseudo,
+        email: cleanEmail,
+        avatar_url: selectedAvatar,
+      });
+
+      setUser(updatedUser);
+      setPseudo(updatedUser.pseudo);
+      setEmail(updatedUser.email);
+      setSelectedAvatar(updatedUser.avatar_url || defaultProfile);
+
+      try {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        const avatarIndex = avatars.indexOf(updatedUser.avatar_url ?? "");
+
+        if (avatarIndex >= 0) {
+          localStorage.setItem("companionAvatar", String(avatarIndex));
+        } else {
+          localStorage.removeItem("companionAvatar");
+        }
+      } catch {
+        setMessage(
+          "Profil enregistré sur le serveur, mais le stockage local n’a pas pu être actualisé."
+        );
+        return;
+      }
+
+      setMessage("Modifications enregistrées.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Impossible d’enregistrer les modifications."
+      );
+    } finally {
+      submitting.current = false;
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -117,51 +164,46 @@ export default function EditProfile() {
 
           <div className="avatar-list">
             {avatars.map((avatar, index) => (
-              <button
-                type="button"
-                key={index}
-                onClick={() => handleAvatarChange(avatar, index)}
-                className={
-                  selectedAvatar === avatar ? "selected" : ""
-                }
-                aria-label={`Choisir le compagnon ${index + 1}`}
-                aria-pressed={selectedAvatar === avatar}
-              >
-                <img
-                  src={avatar}
-                  alt={`Compagnon ${index + 1}`}
-                />
+              <button type="button" key={avatar} onClick={() => handleAvatarChange(avatar)} className={selectedAvatar === avatar ? "selected" : ""} aria-label={`Choisir le compagnon ${index + 1}`} aria-pressed={selectedAvatar === avatar} disabled={isSaving}>
+                <img src={avatar} alt={`Compagnon ${index + 1}`} />
               </button>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} aria-busy={isSaving}>
             <label htmlFor="pseudo">Pseudo</label>
             <input
               id="pseudo"
+              name="pseudo"
               type="text"
+              autoComplete="nickname"
               value={pseudo}
               onChange={(e) => setPseudo(e.target.value)}
+              disabled={isSaving}
               required
             />
 
             <label htmlFor="email">Email</label>
             <input
               id="email"
+              name="email"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isSaving}
               required
             />
 
             <div className="btn-container">
-              <button className="btn" type="submit">
-                Enregistrer les modifications
+              <button className="btn" type="submit" disabled={isSaving}>
+                {isSaving ? "Enregistrement…" : "Enregistrer les modifications"}
               </button>
             </div>
           </form>
 
-          {message && <p>{message}</p>}
+          {error && <p role="alert">{error}</p>}
+          {message && <p role="status">{message}</p>}
         </main>
       ) : (
         <p>Connecte-toi pour modifier ton profil.</p>

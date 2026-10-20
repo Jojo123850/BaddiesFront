@@ -8,56 +8,66 @@ import {
   HeartPulse,
 } from "lucide-react";
 
-import logo from "../assets/images/logoFinal.webp";
-import defaultProfile from "../assets/images/DefaultProfile.webp";
+import logo from "../assets/images/logo-nav.webp"
+import defaultProfile from "../assets/images/IM(.webp";
 
 export default function Navbar() {
   return (
     <header className="app-header">
-
       <div className="topNav">
-        <Link to="/Home" className="brand">
+        <Link
+          to="/Home"
+          className="brand"
+          aria-label="BADDIES - Accueil"
+        >
           <img
             src={logo}
             className="brand-logo"
-            alt="Logo BADDIES"
+            alt=""
+            width={105}
+            height={105}
+            fetchPriority="high"
           />
         </Link>
 
-        <Link to="/Setting" className="profile-link">
+        <Link
+          to="/Setting"
+          className="profile-link"
+          aria-label="Accéder à mon profil"
+        >
           <img
             src={defaultProfile}
             className="profile-avatar"
-            alt="Mon profil"
+            alt=""
+            width={70}
+            height={70}
           />
         </Link>
       </div>
 
-      <nav className="bottomNav">
+      <nav className="bottomNav" aria-label="Navigation principale">
         <ul>
-         
-
-
-
           <li>
             <NavLink to="/Home" className="nav-item">
-               <House size={23} strokeWidth={1.7} />
+              <House size={23} strokeWidth={1.7} aria-hidden="true" />
               <span>Accueil</span>
             </NavLink>
           </li>
 
           <li>
             <NavLink to="/analyse" className="nav-item">
-           
-              <ClipboardList size={23} strokeWidth={1.7} />
+              <ClipboardList size={23} strokeWidth={1.7} aria-hidden="true" />
               <span>Analyse</span>
             </NavLink>
           </li>
 
           <li>
             <NavLink to="/Suivi" className="nav-item">
-             
-              <ChartNoAxesColumnIncreasing size={23} strokeWidth={1.7} />
+              <ChartNoAxesColumnIncreasing
+                size={23}
+                strokeWidth={1.7}
+                aria-hidden="true"
+              />
               <span>Suivi</span>
             </NavLink>
           </li>
@@ -67,14 +77,12 @@ export default function Navbar() {
               to="/emergencyContact"
               className="nav-item nav-emergency"
             >
-              
-              <HeartPulse size={23} strokeWidth={1.7} />
+              <HeartPulse size={23} strokeWidth={1.7} aria-hidden="true" />
               <span>Urgence</span>
             </NavLink>
           </li>
         </ul>
       </nav>
-
     </header>
   );
 }

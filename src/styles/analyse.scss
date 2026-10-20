@@ -1,6 +1,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
-@import './global.scss';
+
 
 
 .hand-circle {
@@ -55,11 +55,14 @@
         background: #5d1724;
     }
 }
-.hand-icon {
-  font-size: 2rem;
-  color: var(--color-btn);
-  padding-top: 20px;
-}
+
+    .hand-icon {
+    width: 41px;
+    height: 65px;
+    color: var(--color-btn);
+    flex-shrink: 0;
+  }
+
 
 .hand-circle::before {
   content: "";
@@ -147,9 +150,6 @@ padding: 20px;
   }  
 }
 @media (min-width: 768px) {
-  .hand-icon {
-    font-size: 2.5rem;
-  }
   .hand-label {
     font-size: 1rem;
   }

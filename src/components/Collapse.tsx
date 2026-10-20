@@ -39,7 +39,7 @@ export default function Collapse() {
   ] as const;
 
   return (
-    <section className="collapse">
+    <div className="collapse">
       <button
         type="button"
         className="collapse-trigger"
@@ -105,6 +105,6 @@ export default function Collapse() {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }

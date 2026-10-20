@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";
-import defaultProfile from "../assets/images/DefaultProfile.webp";
+import defaultProfile from "../assets/images/IM(.webp";
 
 import "../styles/setting.scss";
 

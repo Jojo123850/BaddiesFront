@@ -1,116 +1,155 @@
+
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import Collapse from "../components/Collapse";
-import "../styles/navbar.scss";
-import "../styles/home.scss";
-// import homeImage from "../assets/images/f6582a18b6158c3bf409305bda0f8a88-Photoroom.webp";
-import { useEffect, useState } from "react";
 import { getHistory } from "../services/historyService";
 import type { HistoryEvaluation } from "../services/localStorageService";
 
+import "../styles/navbar.scss";
+import "../styles/home.scss";
+
 export default function Home() {
-    const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [historyError, setHistoryError] = useState(false);
 
-    useEffect(() => {
-        const loadHistory = async () => {
-            try {
-                const token = localStorage.getItem("token");
+  useEffect(() => {
+    let active = true;
 
-                if (token) {
-                    // Utilisatrice connectée : backend
-                    const data = await getHistory();
-                    setEvaluations(data);
-                } else {
-                    // Utilisatrice non connectée : localStorage
-                    const saved = localStorage.getItem("historique");
-                    setEvaluations(saved ? JSON.parse(saved) : []);
-                }
-            } catch (error) {
-                console.error("Erreur historique accueil :", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const loadHistory = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-        loadHistory();
-    }, []);
+        let data: HistoryEvaluation[];
 
-    const hasHistory = evaluations.length > 0;
-    
-    return (
-        <>
-        <Navbar/>
-        <section>
-            <Collapse/>
-        </section>
-        <section className="home-intro">
-             <h1>
-                Votre assistant de premiers gestes pour les
-                douleurs menstruelles, utilisable même hors ligne.
-            </h1>
+        if (token) {
+          data = await getHistory();
+        } else {
+          const saved = localStorage.getItem("historique");
+          data = saved ? JSON.parse(saved) : [];
+        }
 
-            <p>
-                Évaluez vos douleurs en quelques minutes
-                et découvrez des gestes adaptés pour vous soulager.
-            </p>
-            <Link to="/Analyse" className="home-btn">
-                Commencer mon évaluation
-            </Link>
-        </section>
+        if (active) {
+          setEvaluations(data);
+        }
+      } catch (error) {
+        console.error("Erreur historique accueil :", error);
 
+        if (active) {
+          setHistoryError(true);
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
 
-        
-        
-<section className="historyHome">
-  <div className="historyHome-header">
-    <div>
-      <h2>Mes évaluations</h2>
-      <p>Retrouvez vos douleurs enregistrées</p>
-    </div>
-  </div>
-    {loading ? (
-      <p>Chargement des évaluations...</p>
-    ):hasHistory ? (
+    loadHistory();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const hasHistory = evaluations.length > 0;
+
+  return (
     <>
-      <div className="historyHome-summary">
-        <span className="historyHome-count">
-          {evaluations.length}
-        </span>
+      <Navbar />
 
-        <div>
-          <strong>
-            {evaluations.length > 1
-              ? "Évaluations enregistrées"
-              : "Évaluation enregistrée"}
-          </strong>
+      <main>
+        <Collapse />
+
+        <section
+          className="home-intro"
+          aria-labelledby="home-title"
+        >
+          <h1 id="home-title">
+            Votre assistant de premiers gestes pour les
+            douleurs menstruelles, utilisable même hors ligne.
+          </h1>
+
           <p>
-            Consultez vos précédentes évaluations
-            et les solutions associées.
+            Évaluez vos douleurs en quelques minutes
+            et découvrez des gestes adaptés pour vous soulager.
           </p>
-        </div>
-      </div>
 
-      <Link to="/Suivi?tab=historique" className="historyLink">
-        Voir mon historique
-        <i className="fa-solid fa-arrow-right"></i>
-      </Link>
+          <Link to="/analyse" className="home-btn">
+            Commencer mon évaluation
+          </Link>
+        </section>
+
+        <section className="historyHome" aria-labelledby="history-title">
+          <div className="historyHome-header">
+            <div>
+              <h2 id="history-title">Mes évaluations</h2>
+              <p>Retrouvez vos douleurs enregistrées</p>
+            </div>
+          </div>
+
+          {loading ? (
+            <p role="status">
+              Chargement des évaluations...
+            </p>
+          ) : historyError ? (
+            <p role="alert">
+              Impossible de charger vos évaluations pour le moment.
+            </p>
+          ) : hasHistory ? (
+            <>
+              <div className="historyHome-summary">
+                <span className="historyHome-count">
+                  {evaluations.length}
+                </span>
+
+                <div>
+                  <strong>
+                    {evaluations.length > 1
+                      ? "Évaluations enregistrées"
+                      : "Évaluation enregistrée"}
+                  </strong>
+
+                  <p>
+                    Consultez vos précédentes évaluations
+                    et les solutions associées.
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                to="/Suivi?tab=historique"
+                className="historyLink"
+              >
+                Voir mon historique
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+              </Link>
+            </>
+          ) : (
+            <div className="historyHome-empty">
+              <p>
+                Aucune évaluation enregistrée pour le moment.
+              </p>
+
+              <Link to="/analyse" className="home-btn">
+                Faire ma première évaluation
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          )}
+        </section>
+      </main>
     </>
-  ) : (
-    <div className="historyHome-empty">
-      <p>
-        Aucune évaluation enregistrée pour le moment.
-      </p>
-
-      <Link to="/analyse" className="home-btn">
-        Faire ma première évaluation
-        <i className="fa-solid fa-arrow-right"></i>
-      </Link>
-    </div>
-  )}
-  
-</section>
-
-        </>
-    )
+  );
 }

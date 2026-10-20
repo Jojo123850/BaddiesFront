@@ -2,6 +2,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { EvaluationProvider } from "./evaluation/evaluationContext";
+import NotFound from "./pages/NotFound";
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -66,7 +67,7 @@ export default function App() {
           <Route path="/ResetPassword" element={<ResetPassword />} />
 
           <Route path="/Home" element={<Home />} />
-          <Route path="/Analyse" element={<Analyse />} />
+          <Route path="/analyse" element={<Analyse />} />
           <Route path="/Zone" element={<ZoneP />} />
           <Route path="/Localisation" element={<Localisation />} />
           <Route path="/Recapitulatif" element={<Recap />} />
@@ -81,6 +82,7 @@ export default function App() {
           <Route path="/Setting" element={<Settings />} />
           <Route path="/EditProfle" element={<EditProfile />} />
           <Route path="/emergencyContact" element={<Urgency />} />
+            <Route path='*' element={<NotFound />} /> 
         </Routes>
       </Suspense>
     </EvaluationProvider>

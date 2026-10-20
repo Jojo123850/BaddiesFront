@@ -2,9 +2,6 @@
 @import './_variables.scss';
 @import './_mixins.scss';
 
-// ====================================
-// INTRODUCTION HOME
-// ====================================
 
 .home-intro {
   display: flex;
@@ -37,9 +34,6 @@
   }
 }
 
-// ====================================
-// IMAGE D'ACCUEIL
-// ====================================
 
 .homeImage {
   display: block;
@@ -52,9 +46,6 @@
   border-radius: 20px;
 }
 
-// ====================================
-// BOUTON ÉVALUATION
-// ====================================
 
 .home-btn {
   display: flex;
@@ -82,9 +73,6 @@
   }
 }
 
-// ====================================
-// COLLAPSE INSTALLATION
-// ====================================
 
 .collapse {
   width: calc(100% - 40px);
@@ -102,7 +90,7 @@
   box-shadow: 0 5px 22px rgba(0, 0, 0, 0.04);
 }
 
-// EN-TÊTE
+
 
 .collapse-trigger {
   display: flex;
@@ -173,7 +161,7 @@
   }
 }
 
-// CONTENU
+
 
 .collapse-content {
   padding: 0 18px 18px;
@@ -221,8 +209,8 @@
 
   cursor: pointer;
 
-  svg,
-  i {
+  svg
+   {
     flex-shrink: 0;
   }
 
@@ -310,8 +298,7 @@
 
   color: var(--color-btn);
 
-  svg,
-  i {
+  svg {
     flex-shrink: 0;
   }
 
@@ -488,7 +475,7 @@
 
     text-align: center;
 
-    > i {
+    > svg {
       font-size: 30px;
       color: var(--color-btn);
     }
@@ -523,7 +510,9 @@
     max-width: 600px;
   }
 }
-
+.hand-icon{
+  font-size: 55px
+}
 
 @media (max-width: 360px) {
   .home-intro {
