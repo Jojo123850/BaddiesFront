@@ -1,148 +1,131 @@
-import { useState } from "react"
-import { apiService } from "../services/apiService"
-import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+
+import { useState } from "react";
+import type { CSSProperties, FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { apiService } from "../services/apiService";
 import "../styles/register.scss";
-import type { CSSProperties } from "react";
 
 export default function Login() {
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState<string>("")
-    const [messageType, setMessageType] = useState<"error" | "success" | "">("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState<"error" | "success" | "">("");
 
     const navigate = useNavigate();
-    if (loading) return(
-        <>
-            <div className="loading1">
-                <svg height="48px" width="64px">
-                    <polyline id="back" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
-                    <polyline id="front" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
-                </svg>
-            </div>
-        </>
-    )
-    
 
-    return (
-     <div className="formDiv">
-        <form onSubmit={async (e) => {
-            e.preventDefault()
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-            const controller = new AbortController()
+        if (loading) return;
 
-            try {
-                setLoading(true)
-                console.log("loading ON")
+        const controller = new AbortController();
 
-                const datas = await apiService.login(
-                    email,
-                    password,
-                    controller.signal
-                )
-                console.log("réponse reçue")
-                console.log(datas)
-                localStorage.setItem("token", datas.accessToken)
-                localStorage.setItem("refreshToken", datas.refreshToken)
+        setLoading(true);
+        setMessage("");
+        setMessageType("");
 
-                localStorage.setItem("user", JSON.stringify(datas.user));
-                navigate("/Home")
+        try {
+            const datas = await apiService.login(email, password, controller.signal);
 
-            } catch (err) {
-                if (err instanceof Error && err.name !== 'AbortError') {
-                     setMessage(err.message)
-                    setMessageType("error")
-                }
-            } finally {
-                if (!controller.signal.aborted) {
-                    setLoading(false)
-                }
+            localStorage.setItem("token", datas.accessToken);
+            localStorage.setItem("refreshToken", datas.refreshToken);
+            localStorage.setItem("user", JSON.stringify(datas.user));
+
+            const country = localStorage.getItem("country");
+            const hasCountry = country === "Mada" || country === "France";
+
+            navigate(hasCountry ? "/Home" : "/Country", { replace: true });
+        } catch (err) {
+            if (err instanceof Error && err.name !== "AbortError") {
+                setMessage(err.message);
+                setMessageType("error");
             }
-        }}>
-            <h2>Connexion</h2>
-            <p className="paraRegister">Connectez vous à votre compte pour recevoir des conseils naturels adaptés à votre cycle</p>
-            <div id="register">
-                <div className="wave-group">
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            id="email"
-                                            className="input"
-                                            required
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                
-                                        <label className="label" htmlFor="email">
-                                            {"Email".split("").map((lettre, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="label-char"
-                                                    style={{ "--index": index } as CSSProperties}
-                                                >
-                                                    {lettre}
-                                                </span>
-                                            ))}
-                                        </label>
-                    </div>
-                                    <div className="wave-group">
-                                        <input
-                                            type="password"
-                                            name="password"
-                                            id="password"
-                                            className="input"
-                                            required
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                
-                                        <label className="label" htmlFor="password">
-                                            {"Mot de passe".split("").map((lettre, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="label-char"
-                                                    style={{ "--index": index } as CSSProperties}
-                                                >
-                                                    {lettre === " " ? "\u00A0" : lettre}
-                                                </span>
-                                            ))}
-                                        </label>
-                                    </div>
+        } finally {
+            if (!controller.signal.aborted) {
+                setLoading(false);
+            }
+        }
+    };
+
+        if (loading) {
+    return (
+        <main className="loading1" role="status" aria-label="Connexion en cours">
+    <div className="container">
+        <div className="content">
+            <div className="heart-rate">
+                <svg viewBox="0 0 150 73" height="73" width="150" aria-hidden="true">
+                    <polyline
+                        points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486"
+                        fill="none"
+                        strokeMiterlimit={10}
+                        strokeWidth={3}
+                    />
+                </svg>
+
+                <div className="fade-in"></div>
+                <div className="fade-out"></div>
             </div>
-{/*            
-
-            <input
-                type="email"
-                name="mail"
-                placeholder="Votre email"
-                onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <label htmlFor="password">Mot de passe:</label>
-            {/* <label htmlFor="password">Password :</label> */}
-
-            {/* <input
-                type="password"
-                name="password"
-                placeholder="Votre mot de passe"
-                onChange={(e) => setPassword(e.target.value)}
-
-            /> */} 
-            {message && (
-                <p className={messageType}>
-                    {message}
-            </p>
-            )}
-            <div className="forgotPassword">
-                <Link to="/ForgotPassword">
-                    Mot de passe oublié ?
-                </Link>
-            </div>
-            <p className="paraRegister">Pas encore de  compte ? <Link to="/Register" className="login">S'inscrire</Link></p>
-            <button type="submit" className="btn">Connexion</button>
-        </form>
+        </div>
+        <p className="loading-text" aria-hidden="true">Connexion en cours...</p>
     </div>
-    )
+</main>
+    );
 }
 
+    return (
+        <main className="formDiv">
+            <form onSubmit={handleSubmit}>
+                <h1>Connexion</h1>
+
+                <p className="paraRegister">
+                    Connectez-vous à votre compte pour retrouver vos évaluations
+                    et bénéficier des fonctionnalités de BADDIES.
+                </p>
+
+                <div id="register">
+                    <div className="wave-group">
+                        <input id="email" name="email" type="email" className="input" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+
+                        <label className="label" htmlFor="email">
+                            {"Email".split("").map((lettre, index) => (
+                                <span key={index} className="label-char" style={{ "--index": index } as CSSProperties}>
+                                    {lettre}
+                                </span>
+                            ))}
+                        </label>
+                    </div>
+
+                    <div className="wave-group">
+                        <input id="password" name="password" type="password" className="input" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+
+                        <label className="label" htmlFor="password">
+                            {"Mot de passe".split("").map((lettre, index) => (
+                                <span key={index} className="label-char" style={{ "--index": index } as CSSProperties}>
+                                    {lettre === " " ? "\u00A0" : lettre}
+                                </span>
+                            ))}
+                        </label>
+                    </div>
+                </div>
+
+                {message && (
+                    <p className={messageType} role={messageType === "error" ? "alert" : "status"}>
+                        {message}
+                    </p>
+                )}
+
+                <div className="forgotPassword">
+                    <Link to="/ForgotPassword">Mot de passe oublié ?</Link>
+                </div>
+
+                <p className="paraRegister">
+                    Pas encore de compte ? <Link to="/Register" className="login">S'inscrire</Link>
+                </p>
+
+                <button type="submit" className="btn" disabled={loading}>Connexion</button>
+            </form>
+        </main>
+    );
+}

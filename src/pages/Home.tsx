@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bookmark } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import Collapse from "../components/Collapse";
@@ -16,16 +15,19 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
 
+  const isConnected = Boolean(localStorage.getItem("token"));
+
   useEffect(() => {
     let active = true;
 
     const loadHistory = async () => {
-      try {
-        const token = localStorage.getItem("token");
+      setLoading(true);
+      setHistoryError(false);
 
+      try {
         let data: HistoryEvaluation[];
 
-        if (token) {
+        if (isConnected) {
           data = await getHistory();
         } else {
           const saved = localStorage.getItem("historique");
@@ -53,7 +55,7 @@ export default function Home() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [isConnected]);
 
   const hasHistory = evaluations.length > 0;
 
@@ -61,19 +63,18 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main>
+      <main className="home-page">
         <Collapse />
 
-        <section
-          className="home-intro"
-          aria-labelledby="home-title"
-        >
+       <section  className="home-intro"  aria-labelledby="home-title" >
+         
+
           <h1 id="home-title">
             Votre assistant de premiers gestes pour les
             douleurs menstruelles, utilisable même hors ligne.
           </h1>
 
-          <p>
+          <p className="home-description">
             Évaluez vos douleurs en quelques minutes
             et découvrez des gestes adaptés pour vous soulager.
           </p>
@@ -81,14 +82,61 @@ export default function Home() {
           <Link to="/analyse" className="home-btn">
             Commencer mon évaluation
           </Link>
+
+          {!isConnected && (
+            <>
+             <span className="home-badge">
+            À ton rythme
+          </span>
+            <p className="home-login">
+              Déjà un compte ?{" "}
+              <Link to="/Login">Se connecter</Link>
+            </p>
+            </>
+          )}
         </section>
 
-        <section className="historyHome" aria-labelledby="history-title">
-          <div className="historyHome-header">
-            <div>
-              <h2 id="history-title">Mes évaluations</h2>
-              <p>Retrouvez vos douleurs enregistrées</p>
+        {!isConnected && (
+          <section
+            className="home-account"
+            aria-labelledby="home-account-title"
+          >
+            <div className="home-account-card">
+              <Bookmark
+                className="home-account-icon"
+                size={32}
+                strokeWidth={1.6}
+                aria-hidden="true"
+              />
+
+              <h2 id="home-account-title">
+                Ton historique, avec toi
+              </h2>
+
+              <p>
+                Crée ton compte pour retrouver tes prochaines
+                évaluations sur plusieurs appareils.
+              </p>
+
+              <Link to="/Register" className="home-account-btn">
+                Créer mon compte
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
             </div>
+
+            <p className="home-local-note">
+              Sans compte, ton historique reste sur cet appareil.
+            </p>
+          </section>
+        )}
+
+        <section
+          className="historyHome"
+          aria-labelledby="history-title"
+        >
+          <div className="historyHome-header">
+            <h2 id="history-title">Mes évaluations</h2>
+            <p>Retrouve tes évaluations enregistrées.</p>
           </div>
 
           {loading ? (
@@ -97,7 +145,7 @@ export default function Home() {
             </p>
           ) : historyError ? (
             <p role="alert">
-              Impossible de charger vos évaluations pour le moment.
+              Impossible de charger tes évaluations pour le moment.
             </p>
           ) : hasHistory ? (
             <>
@@ -114,8 +162,8 @@ export default function Home() {
                   </strong>
 
                   <p>
-                    Consultez vos précédentes évaluations
-                    et les solutions associées.
+                    Consulte tes précédentes évaluations
+                    et les gestes associés.
                   </p>
                 </div>
               </div>
@@ -138,7 +186,7 @@ export default function Home() {
                 Aucune évaluation enregistrée pour le moment.
               </p>
 
-              <Link to="/analyse" className="home-btn">
+              <Link to="/analyse" className="historyLink">
                 Faire ma première évaluation
                 <ArrowRight
                   size={20}
@@ -149,6 +197,10 @@ export default function Home() {
             </div>
           )}
         </section>
+
+        <p className="home-disclaimer">
+          Informations générales, ne remplacent pas un avis médical.
+        </p>
       </main>
     </>
   );

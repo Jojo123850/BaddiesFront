@@ -123,9 +123,13 @@ img {
 
 // MESSAGES
 
-.answer,
+.answer{
+   color: var(--color-btn);
+
+}
 .answerPain {
   color: var(--color-btn);
+  font-weight: bold;
 }
 
 // BOUTON RETOUR
@@ -137,7 +141,7 @@ img {
 
   width: 42px;
   height: 42px;
-
+  margin-left: 20px;
   background: var(--color-card-soft);
   color: var(--color-text);
 
@@ -210,4 +214,88 @@ img {
 :focus-visible {
   outline: 2px solid var(--color-btn);
   outline-offset: 3px;
+}
+// lecteurd'écran
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.loading1 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.container {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 100%;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+
+  .heart-rate {
+    width: 150px;
+    height: 73px;
+    position: relative;
+    margin: 20px auto;
+
+    svg polyline {
+      stroke: var(--color-accent);
+    }
+
+    // Les deux masques doivent avoir la même couleur que le fond
+    .fade-in,
+    .fade-out {
+      position: absolute;
+      height: 100%;
+      top: 0;
+      background-color: var(--color-bg);
+    }
+
+    .fade-in {
+      width: 100%;
+      right: 0;
+      animation: heartRateIn 2.5s linear infinite;
+    }
+
+    .fade-out {
+      width: 120%;
+      right: -120%;
+      animation: heartRateOut 2.5s linear infinite;
+    }
+  }
+}
+
+@keyframes heartRateIn {
+  0%   { width: 100%; }
+  50%  { width: 0; }
+  100% { width: 0; }
+}
+
+@keyframes heartRateOut {
+  0%   { left: -120%; }
+  30%  { left: -120%; }
+  100% { left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container .heart-rate {
+    .fade-in,
+    .fade-out {
+      animation: none;
+      width: 0;
+    }
+  }
 }

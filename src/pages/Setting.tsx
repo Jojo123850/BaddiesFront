@@ -1,20 +1,6 @@
-
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import {
-  // Settings as SettingsIcon,
-  ArrowRight,
-  UserRound,
-  ChevronRight,
-  Globe,
-  HeartPulse,
-  UserRoundCheck,
-  Pencil,
-  Plus,
-  ShieldCheck,
-  LogOut,
-} from "lucide-react";
+import { ArrowRight, UserRound, ChevronRight, Globe, HeartPulse, UserRoundCheck, Pencil, Plus, ShieldCheck, LogOut } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import defaultProfile from "../assets/images/IM(.webp";
@@ -33,6 +19,11 @@ type EmergencyContact = {
   phone: string;
 };
 
+type SettingsProps = {
+  embedded?: boolean;
+  onClose?: () => void;
+};
+
 function getStoredUser(): User | null {
   const token = localStorage.getItem("token");
   const storedUser = localStorage.getItem("user");
@@ -43,6 +34,7 @@ function getStoredUser(): User | null {
     const parsed = JSON.parse(storedUser);
 
     if (
+      !parsed ||
       typeof parsed.pseudo !== "string" ||
       typeof parsed.email !== "string"
     ) {
@@ -55,6 +47,16 @@ function getStoredUser(): User | null {
   }
 }
 
+function getStoredCountry(): string {
+  const stored = localStorage.getItem("country");
+
+  if (stored === "MG" || stored === "Mada" || stored === "Madagascar") {
+    return "Mada";
+  }
+
+  return "France";
+}
+
 function getStoredContact(): EmergencyContact {
   const stored = localStorage.getItem("emergencyContact");
 
@@ -63,35 +65,29 @@ function getStoredContact(): EmergencyContact {
       const parsed = JSON.parse(stored);
 
       return {
-        name: parsed.name || "",
-        phone: parsed.phone || "",
+        name: typeof parsed?.name === "string" ? parsed.name : "",
+        phone: typeof parsed?.phone === "string" ? parsed.phone : ""
       };
     } catch {
-      // On utilise les valeurs par défaut.
+      return { name: "", phone: "" };
     }
   }
 
   return { name: "", phone: "" };
 }
 
-export default function Settings() {
+export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState<User | null>(
-    getStoredUser
-  );
-
-  const [country, setCountry] = useState(() =>
-    localStorage.getItem("country") || "FR"
-  );
-
-  const [contact, setContact] = useState<EmergencyContact>(
-    getStoredContact
-  );
-
+  const [user, setUser] = useState<User | null>(getStoredUser);
+  const [country, setCountry] = useState(getStoredCountry);
+  const [contact, setContact] = useState<EmergencyContact>(getStoredContact);
   const [editingContact, setEditingContact] = useState(false);
-
   const [contactMessage, setContactMessage] = useState("");
+  const [contactError, setContactError] = useState(false);
+
+  const hasContact = Boolean(contact.name.trim() && contact.phone.trim());
+  const Container = embedded ? "div" : "main";
 
   const handleCountryChange = (value: string) => {
     setCountry(value);
@@ -105,22 +101,19 @@ export default function Settings() {
     const phone = contact.phone.trim();
 
     if (!name || !phone) {
-      setContactMessage(
-        "Remplissez le nom et le téléphone."
-      );
+      setContactMessage("Remplissez le nom et le téléphone.");
+      setContactError(true);
       return;
     }
 
     const savedContact = { name, phone };
 
-    localStorage.setItem(
-      "emergencyContact",
-      JSON.stringify(savedContact)
-    );
+    localStorage.setItem("emergencyContact", JSON.stringify(savedContact));
 
     setContact(savedContact);
     setEditingContact(false);
     setContactMessage("Contact enregistré.");
+    setContactError(false);
   };
 
   const handleDeleteContact = () => {
@@ -129,50 +122,33 @@ export default function Settings() {
     setContact({ name: "", phone: "" });
     setEditingContact(false);
     setContactMessage("Contact supprimé.");
+    setContactError(false);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem("user");
     localStorage.removeItem("login");
 
     setUser(null);
+    onClose?.();
     navigate("/Home");
   };
 
-  const hasContact = Boolean(contact.name && contact.phone);
-
   return (
     <>
-      <Navbar />
+      {!embedded && <Navbar />}
 
-      <main className="settings-page">
-        {/* EN-TÊTE */}
+      <Container className="settings-page">
+        {!embedded && <h1>Paramètres</h1>}
 
-        {/* <div className="settings-heading">
-          <div>
-          
-          <h1>Paramètres</h1>
-          
-          </div>
-          
-          <SettingsIcon
-          className="settings-heading-icon"
-          size={24}
-          />
-          </div> */}
-{/* 
-        <p className="paraSetting">Personnalisez votre compte selon votre préference</p> */}
-
-        <section className="settings-profile">
-          <img
-            src={user?.avatar_url || defaultProfile}
-            alt="Photo de profil"
-            className="settings-avatar"
-            onError={(event) => {
+        <section className="settings-profile" aria-label="Profil utilisateur">
+          <img src={user?.avatar_url || defaultProfile} alt="Photo de profil" className="settings-avatar" onError={(event) => {
+            if (event.currentTarget.getAttribute("src") !== defaultProfile) {
               event.currentTarget.src = defaultProfile;
-            }}
-          />
+            }
+          }} />
 
           <div className="settings-profile-info">
             {user ? (
@@ -181,98 +157,69 @@ export default function Settings() {
                 <p className="paraSetting">{user.email}</p>
 
                 <span className="setting-login">
-                  Status: Connecté 
+                  Statut : Connecté
                 </span>
               </>
             ) : (
               <>
-                <h2 className="pseudo">BIENVENUE SUR  BADDIES</h2>
-
+                <h2 className="pseudo">BIENVENUE SUR BADDIES</h2>
                 <p className="paraSetting">Utilisation sans compte</p>
 
-                <Link
-                  to="/Login"
-                  className="home-btn"
-                >
+                <Link to="/Login" className="home-btn">
                   Se connecter
-                  <ArrowRight size={16} />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </>
             )}
-        
           </div>
         </section>
-        <h2 className="settings-eyebrow">
-          MON ESPACE
-        </h2>
-         <p className="paraSetting">Personnalisez votre compte selon votre préference</p>
+
+        <h2 className="settings-eyebrow">MON ESPACE</h2>
+
+        <p className="paraSetting">
+          Personnalisez votre compte selon vos préférences.
+        </p>
+
         {user && (
           <section className="settings-section">
             <h2>Mon compte</h2>
-            <Link
-              to="/EditProfile"
-              className="settings-item"
-            >
+
+            <Link to="/EditProfile" className="settings-item">
               <span className="settings-item-icon">
-                <UserRound size={20} />
+                <UserRound size={20} aria-hidden="true" />
               </span>
 
               <span className="settings-item-text">
-                <strong>
-                  Informations personnelles
-                </strong>
-                <Link to="EditProfile"> Modifier mon profile</Link>
+                <strong>Informations personnelles</strong>
+                <small>Modifier mon profil</small>
               </span>
 
-              <ChevronRight
-                className="settings-arrow"
-                size={18}
-              />
+              <ChevronRight className="settings-arrow" size={18} aria-hidden="true" />
             </Link>
           </section>
         )}
-       
-
-
-        {/* MON COMPTE */}
-
-        {/* PRÉFÉRENCES */}
 
         <section className="settings-section">
           <h2>Préférences</h2>
 
           <div className="settings-field">
-            <label
-              htmlFor="settings-country"
-              className="settings-field-title"
-            >
+            <label htmlFor="settings-country" className="settings-field-title">
               <span className="settings-item-icon">
-                <Globe size={20} />
+                <Globe size={20} aria-hidden="true" />
               </span>
 
               <span>
                 <strong>Pays</strong>
-                <small>
-                  Pour adapter les informations locales
-                </small>
+                <small>Pour adapter les informations locales</small>
               </span>
             </label>
 
-            <select
-              id="settings-country"
-              value={country}
-              onChange={(event) =>
-                handleCountryChange(event.target.value)
-              }
-              className="settings-select"
-            >
-              <option value="FR">France</option>
-              <option value="MG">Madagascar</option>
+            <select id="settings-country" value={country} onChange={(event) => handleCountryChange(event.target.value)} className="settings-select">
+              <option value="France">France</option>
+              <option value="Mada">Madagascar</option>
             </select>
           </div>
         </section>
-
-        {/* SÉCURITÉ */}
 
         <section className="settings-section">
           <h2>Sécurité</h2>
@@ -280,21 +227,18 @@ export default function Settings() {
           <div className="settings-field">
             <div className="settings-field-title">
               <span className="settings-item-icon">
-                <HeartPulse size={20} />
+                <HeartPulse size={20} aria-hidden="true" />
               </span>
 
               <div>
                 <strong>Contact d'urgence</strong>
-
-                <small>
-                  Un proche à contacter en cas de besoin
-                </small>
+                <small>Un proche à contacter en cas de besoin</small>
               </div>
             </div>
 
             {hasContact && !editingContact && (
               <div className="settings-contact-preview">
-                <UserRoundCheck size={21} />
+                <UserRoundCheck size={21} aria-hidden="true" />
 
                 <div>
                   <strong>{contact.name}</strong>
@@ -304,81 +248,40 @@ export default function Settings() {
             )}
 
             {!editingContact ? (
-              <button
-                type="button"
-                className="settings-secondary-btn"
-                onClick={() => {
-                  setEditingContact(true);
-                  setContactMessage("");
-                }}
-              >
+              <button type="button" className="settings-secondary-btn" onClick={() => {
+                setEditingContact(true);
+                setContactMessage("");
+                setContactError(false);
+              }}>
                 {hasContact ? (
-                  <Pencil size={17} />
+                  <Pencil size={17} aria-hidden="true" />
                 ) : (
-                  <Plus size={18} />
+                  <Plus size={18} aria-hidden="true" />
                 )}
 
-                {hasContact
-                  ? "Modifier mon contact"
-                  : "Ajouter un contact"}
+                {hasContact ? "Modifier mon contact" : "Ajouter un contact"}
               </button>
             ) : (
-              <form
-                className="settings-contact-form"
-                onSubmit={handleSaveContact}
-              >
-                <label htmlFor="emergency-name">
-                  Nom du proche
-                </label>
+              <form className="settings-contact-form" onSubmit={handleSaveContact}>
+                <label htmlFor="emergency-name">Nom du proche</label>
 
-                <input
-                  id="emergency-name"
-                  type="text"
-                  value={contact.name}
-                  onChange={(event) =>
-                    setContact((prev) => ({
-                      ...prev,
-                      name: event.target.value,
-                    }))
-                  }
-                  placeholder="Marie"
-                  required
-                />
+                <input id="emergency-name" name="emergency-name" type="text" autoComplete="name" value={contact.name} onChange={(event) => setContact((prev) => ({ ...prev, name: event.target.value }))} placeholder="Marie" required />
 
-                <label htmlFor="emergency-phone">
-                  Numéro de téléphone
-                </label>
+                <label htmlFor="emergency-phone">Numéro de téléphone</label>
 
-                <input
-                  id="emergency-phone"
-                  type="tel"
-                  value={contact.phone}
-                  onChange={(event) =>
-                    setContact((prev) => ({
-                      ...prev,
-                      phone: event.target.value,
-                    }))
-                  }
-                  placeholder="+33 6 ..."
-                  required
-                />
+                <input id="emergency-phone" name="emergency-phone" type="tel" autoComplete="tel" value={contact.phone} onChange={(event) => setContact((prev) => ({ ...prev, phone: event.target.value }))} placeholder="+33 6 ..." required />
 
                 <div className="settings-form-actions">
-                  <button
-                    type="button"
-                    className="settings-cancel-btn"
-                    onClick={() => {
-                      setContact(getStoredContact());
-                      setEditingContact(false);
-                    }}
-                  >
+                  <button type="button" className="settings-cancel-btn" onClick={() => {
+                    setContact(getStoredContact());
+                    setEditingContact(false);
+                    setContactMessage("");
+                    setContactError(false);
+                  }}>
                     Annuler
                   </button>
 
-                  <button
-                    type="submit"
-                    className="settings-save-btn"
-                  >
+                  <button type="submit" className="settings-save-btn">
                     Enregistrer
                   </button>
                 </div>
@@ -386,40 +289,29 @@ export default function Settings() {
             )}
 
             {hasContact && !editingContact && (
-              <button
-                type="button"
-                className="settings-delete-btn"
-                onClick={handleDeleteContact}
-              >
+              <button type="button" className="settings-delete-btn" onClick={handleDeleteContact}>
                 Supprimer le contact
               </button>
             )}
 
             {contactMessage && (
-              <p
-                className="settings-feedback"
-                role="status"
-              >
+              <p className="settings-feedback" role={contactError ? "alert" : "status"}>
                 {contactMessage}
               </p>
             )}
           </div>
         </section>
 
-        {/* CONFIDENTIALITÉ */}
-
         <section className="settings-section">
           <h2>Confidentialité</h2>
 
           <div className="settings-item settings-static-item">
             <span className="settings-item-icon">
-              <ShieldCheck size={20} />
+              <ShieldCheck size={20} aria-hidden="true" />
             </span>
 
             <span className="settings-item-text">
-              <strong>
-                Données enregistrées
-              </strong>
+              <strong>Données enregistrées</strong>
 
               <small>
                 Vos préférences et votre contact d'urgence
@@ -429,15 +321,9 @@ export default function Settings() {
           </div>
         </section>
 
-        {/* DÉCONNEXION */}
-
         {user && (
-          <button
-            type="button"
-            className="settings-logout"
-            onClick={handleLogout}
-          >
-            <LogOut size={19} />
+          <button type="button" className="settings-logout" onClick={handleLogout}>
+            <LogOut size={19} aria-hidden="true" />
             Se déconnecter
           </button>
         )}
@@ -445,7 +331,7 @@ export default function Settings() {
         <p className="settings-footer">
           BADDIES · Prenez soin de vous
         </p>
-      </main>
+      </Container>
     </>
   );
 }

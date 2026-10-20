@@ -1,207 +1,148 @@
 
 import { Link } from "react-router-dom";
-import {
-  Phone,
-//   MapPin,
-  UserRound,
-  Plus
-} from "lucide-react";
+import { Phone, UserRound, Plus } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import "../styles/emergencyContact.scss";
 
-// TYPES
-
 type EmergencyContact = {
-  name: string;
-  phone: string;
+    name: string;
+    phone: string;
 };
 
 type Country = "FR" | "MG";
 
-// RÉCUPÉRER LE PAYS
-
 function getStoredCountry(): Country {
-  const savedCountry = localStorage.getItem("country");
-
-  if (
-    savedCountry === "MG" ||
-    savedCountry === "Madagascar"
-  ) {
-    return "MG";
-  }
-
-  return "FR";
-}
-
-// RÉCUPÉRER LE CONTACT D'URGENCE
-
-function getContact(): EmergencyContact | null {
-  const stored = localStorage.getItem("emergencyContact");
-
-  if (!stored) return null;
-
-  try {
-    const parsed: unknown = JSON.parse(stored);
+    const savedCountry = localStorage.getItem("country");
 
     if (
-      typeof parsed === "object" &&
-      parsed !== null &&
-      "name" in parsed &&
-      "phone" in parsed &&
-      typeof parsed.name === "string" &&
-      typeof parsed.phone === "string" &&
-      parsed.name.trim() &&
-      parsed.phone.trim()
+        savedCountry === "Mada" ||
+        savedCountry === "MG" ||
+        savedCountry === "Madagascar"
     ) {
-      return {
-        name: parsed.name,
-        phone: parsed.phone
-      };
+        return "MG";
     }
-  } catch {
-    return null;
-  }
 
-  return null;
+    return "FR";
 }
 
-// COMPOSANT URGENCE
+function getContact(): EmergencyContact | null {
+    const stored = localStorage.getItem("emergencyContact");
+
+    if (!stored) return null;
+
+    try {
+        const parsed: unknown = JSON.parse(stored);
+
+        if (
+            typeof parsed === "object" &&
+            parsed !== null &&
+            "name" in parsed &&
+            "phone" in parsed &&
+            typeof parsed.name === "string" &&
+            typeof parsed.phone === "string" &&
+            parsed.name.trim() &&
+            parsed.phone.trim()
+        ) {
+            return {
+                name: parsed.name,
+                phone: parsed.phone
+            };
+        }
+    } catch {
+        return null;
+    }
+
+    return null;
+}
 
 export default function Urgency() {
+    const country = getStoredCountry();
+    const contact = getContact();
+    const isFrance = country === "FR";
 
-  // Récupérer le pays et le contact
-  const country = getStoredCountry();
-  const contact = getContact();
+    return (
+        <>
+            <Navbar />
 
-  // Vérifier si le pays est la France
-  const isFrance = country === "FR";
+            <main className="urgence-page">
+                <span className="urgence-eyebrow">ASSISTANCE</span>
 
-  return (
-    <>
-      <Navbar />
+                <h1>Besoin d'aide ?</h1>
 
-      <main className="urgence-page">
+                <p className="urgence-description">
+                    En cas de douleur intense ou de situation préoccupante,
+                    contactez les secours ou une personne de confiance.
+                </p>
 
-        {/* TITRE */}
+                <section className="urgence-medical" aria-labelledby="urgence-medical-title">
+                    <div className="urgence-section-heading">
+                        <h2 id="urgence-medical-title">Urgence médicale</h2>
+                    </div>
 
-        <span className="urgence-eyebrow">
-          ASSISTANCE
-        </span>
+                    {isFrance ? (
+                        <>
+                            <p className="samu">SAMU — France</p>
 
-        <h1>Besoin d'aide ?</h1>
+                            <a href="tel:15" className="urgence-call" aria-label="Appeler le SAMU au 15">
+                                <Phone size={20} aria-hidden="true" />
+                                Appeler le SAMU
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <p>Secours — Madagascar</p>
 
-        <p className="urgence-description">
-          En cas de douleur intense ou de situation
-          préoccupante, contactez les secours ou une
-          personne de confiance.
-        </p>
+                            <p className="urgence-note">
+                                En cas d'urgence médicale, contactez les secours locaux
+                                ou rendez-vous dans un établissement de santé.
+                            </p>
 
-        {/* PAYS SÉLECTIONNÉ */}
-{/* 
-        <div className="urgence-country">
-          <MapPin size={19} />
+                            <p className="urgence-note">
+                                Le numéro d'urgence médical local doit être vérifié
+                                avant de proposer un appel direct.
+                            </p>
+                        </>
+                    )}
+                </section>
 
-          <span>Pays sélectionné</span>
+                <section className="urgence-contact" aria-labelledby="urgence-contact-title">
+                    <div className="urgence-section-heading">
+                        <UserRound size={22} aria-hidden="true" />
+                        <h2 id="urgence-contact-title">Mon contact d'urgence</h2>
+                    </div>
 
-          <strong>
-            {isFrance
-              ? "🇫🇷 France"
-              : "🇲🇬 Madagascar"}
-          </strong>
-        </div> */}
+                    {contact ? (
+                        <>
+                            <div className="urgence-contact-info">
+                                <strong>{contact.name}</strong>
+                                <span>{contact.phone}</span>
+                            </div>
 
+                            <a href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`} className="urgence-call">
+                                <Phone size={19} aria-hidden="true" />
+                                Appeler mon contact
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <p>Aucun contact d'urgence enregistré.</p>
 
-        <section className="urgence-medical">
+                            <Link to="/Setting" className="urgence-add-contact">
+                                <Plus size={18} aria-hidden="true" />
+                                Ajouter un contact
+                            </Link>
+                        </>
+                    )}
+                </section>
 
-          <div className="urgence-section-heading">
-            <h2>Urgence médicale</h2>
-          </div>
-
-          {isFrance ? (
-            <>
-              <p className="samu">SAMU — France</p>
-
-              <a
-                href="tel:15"
-                className="urgence-call"
-              >
-                <Phone size={20} />
-                Appeler le SAMU
-              </a>
-            </>
-          ) : (
-            <>
-              
-
-              <p>Secours — Madagascar</p>
-
-              <p className="urgence-note">
-                En cas d'urgence médicale, contactez
-                les secours locaux ou rendez-vous
-                dans un établissement de santé.
-              </p>
-
-              <p className="urgence-note">
-                Le numéro d'urgence médical local
-                doit être vérifié avant de proposer
-                un appel direct.
-              </p>
-            </>
-          )}
-
-        </section>
-        <section className="urgence-contact">
-
-          <div className="urgence-section-heading">
-            <UserRound size={22} />
-
-            <h2>Mon contact d'urgence</h2>
-          </div>
-
-          {contact ? (
-            <>
-              <div className="urgence-contact-info">
-                <strong>{contact.name}</strong>
-                <span>{contact.phone}</span>
-              </div>
-
-              <a
-                href={`tel:${contact.phone}`}
-                className="urgence-call"
-              >
-                <Phone size={19} />
-                Appeler mon contact
-              </a>
-            </>
-          ) : (
-            <>
-              <p>
-                Aucun contact d'urgence enregistré.
-              </p>
-
-              <Link
-                to="/Setting"
-                className="urgence-add-contact"
-              >
-                <Plus size={18} />
-                Ajouter un contact
-              </Link>
-            </>
-          )}
-
-        </section>
-
-        {/* RAPPEL */}
-
-        <div className="urgence-reminder">
-          <p>
-            BADDIES ne remplace pas un professionnel
-            de santé ni un service d'urgence.
-          </p>
-        </div>
-
-      </main>
-    </>
-  );
+                <div className="urgence-reminder">
+                    <p>
+                        BADDIES ne remplace pas un professionnel
+                        de santé ni un service d'urgence.
+                    </p>
+                </div>
+            </main>
+        </>
+    );
 }

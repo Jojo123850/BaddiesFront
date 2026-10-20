@@ -226,7 +226,7 @@ async updateProfile(profile: ProfileUpdate): Promise<ProfileUser> {
 
     if (
         !user ||
-        !Number.isInteger(user.id) ||
+        !Number.isSafeInteger(Number(user.id)) ||
         typeof user.pseudo !== "string" ||
         typeof user.email !== "string" ||
         !(user.avatar_url === null || typeof user.avatar_url === "string")

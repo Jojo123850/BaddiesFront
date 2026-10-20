@@ -92,6 +92,9 @@ const IntensityPain = () => {
                     Vous devez cliquer avant de continuer
                 </p>
             )}
+            <p className="analyseAlert">
+                Maintenez pour sélectionner votre niveau de douleur.
+            </p>
 
             <div
                 className="hand-circle"
@@ -119,9 +122,7 @@ const IntensityPain = () => {
                 </button>
             </div>
 
-            <p className="analyse">
-                Maintenez pour sélectionner votre niveau de douleur.
-            </p>
+            
         </>
     );
 };

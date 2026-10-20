@@ -1,122 +1,230 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import type { HistoryEvaluation } from "../services/localStorageService";
-import { useNavigate } from "react-router-dom";
-import { getHistoryById } from "../services/historyService";
-import { Link } from "react-router-dom";
 
+import Navbar from "../components/Navbar";
+import type { HistoryEvaluation } from "../services/localStorageService";
+import {
+    getHistoryById,
+    deleteHistory
+} from "../services/historyService";
+
+import "../styles/episode.scss";
 
 export default function Episode() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [episode, setEpisode] = useState<HistoryEvaluation | null> (null);
-    
 
-useEffect(() => {
-    const loadEpisode = async () => {
-        try {
-            if (!id) {
-                return;
-            }
+    const [episode, setEpisode] = useState<HistoryEvaluation | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [deleting, setDeleting] = useState(false);
 
-            const token = localStorage.getItem("token");
+    const isConnected = Boolean(localStorage.getItem("token"));
 
-            if (token) {
-                const data = await getHistoryById(id);
-                setEpisode(data);
-            } else {
-                const historiqueStock = localStorage.getItem("historique");
+    useEffect(() => {
+        let active = true;
 
-                if (!historiqueStock) {
+        const loadEpisode = async () => {
+            setLoading(true);
+            setError("");
+            setEpisode(null);
+
+            try {
+                if (!id) {
+                    if (active) {
+                        setError("Identifiant de l'épisode manquant.");
+                    }
                     return;
                 }
 
-                const historique: HistoryEvaluation[] = JSON.parse(historiqueStock);
+                let data: HistoryEvaluation | null = null;
 
-                const episodeLocal = historique.find(
-                    (item) => item.id === id
-                );
+                if (localStorage.getItem("token")) {
+                    data = await getHistoryById(id);
+                } else {
+                    const historiqueStock =
+                        localStorage.getItem("historique");
 
-                if (episodeLocal) {
-                    setEpisode(episodeLocal);
+                    const historique: HistoryEvaluation[] = historiqueStock
+                        ? JSON.parse(historiqueStock)
+                        : [];
+
+                    data =
+                        historique.find(
+                            (item) => String(item.id) === id
+                        ) ?? null;
+                }
+
+                if (active) {
+                    setEpisode(data);
+                }
+            } catch (err) {
+                console.error("Erreur épisode :", err);
+
+                if (active) {
+                    setError("Impossible de charger cet épisode.");
+                }
+            } finally {
+                if (active) {
+                    setLoading(false);
                 }
             }
+        };
 
-        } catch (error) {
-            console.error("Erreur épisode :", error);
+        loadEpisode();
+
+        return () => {
+            active = false;
+        };
+    }, [id, isConnected]);
+
+    const handleDelete = async () => {
+        if (!id || !episode || deleting) return;
+
+        setDeleting(true);
+        setError("");
+
+        try {
+            if (isConnected) {
+                await deleteHistory(id);
+            } else {
+                const historiqueStock =
+                    localStorage.getItem("historique");
+
+                const historique: HistoryEvaluation[] = historiqueStock
+                    ? JSON.parse(historiqueStock)
+                    : [];
+
+                const nouvelHistorique = historique.filter(
+                    (item) => String(item.id) !== id
+                );
+
+                localStorage.setItem(
+                    "historique",
+                    JSON.stringify(nouvelHistorique)
+                );
+            }
+
+            navigate("/Suivi?tab=historique", { replace: true });
+        } catch (err) {
+            console.error("Erreur suppression :", err);
+
+            setError(
+                "Impossible de supprimer cet épisode. Réessaie."
+            );
+        } finally {
+            setDeleting(false);
         }
     };
 
-    loadEpisode();
-}, [id]);
-    if(!episode){
-        return <p>Chargement...</p>
-    }
-    
-const handleDelete = () => {
-    const historiqueStock = localStorage.getItem("historique");
-
-    if (!historiqueStock) return;
-
-    const historique: HistoryEvaluation[] = JSON.parse(historiqueStock);
-
-    const nouvelHistorique = historique.filter(
-        (item) => item.id !== id
-    );
-
-    localStorage.setItem(
-        "historique",
-        JSON.stringify(nouvelHistorique)
-    );
-
-    navigate("/Suivi?tab=historique");
-};
-
     return (
         <>
-            <h2>Mon épisode</h2>
+            <Navbar />
 
-            <p>
-                Date :{" "}
-                {new Date(episode.date).toLocaleDateString("fr-FR")}
-            </p>
+            <main className="episode-page">
+                <h1>Mon épisode</h1>
 
-            <p>
-                Douleur : {episode.evaluation.intensiteValeur}/10
-            </p>
+                {loading ? (
+                    <p role="status">
+                        Chargement de l'épisode...
+                    </p>
+                ) : error && !episode ? (
+                    <p role="alert">{error}</p>
+                ) : !episode ? (
+                    <p>Épisode introuvable.</p>
+                ) : (
+                    <>
+                        <section aria-labelledby="episode-details-title">
+                            <h2 id="episode-details-title">
+                                Détails de mon évaluation
+                            </h2>
 
-            <p>
-                Intensité : {episode.evaluation.intensiteNiveau}
-            </p>
+                            <p>
+                                Date :{" "}
+                                {new Date(episode.date).toLocaleDateString(
+                                    "fr-FR"
+                                )}
+                            </p>
 
-            <p>
-                Localisation :{" "}
-                {episode.evaluation.localisations.join(", ")}
-            </p>
+                            <p>
+                                Douleur :{" "}
+                                {episode.evaluation.intensiteValeur != null
+                                    ? `${episode.evaluation.intensiteValeur}/10`
+                                    : "Non renseignée"}
+                            </p>
 
-            <p>
-                Contexte : {episode.evaluation.contextes}
-            </p>
+                            <p>
+                                Intensité :{" "}
+                                {episode.evaluation.intensiteNiveau ||
+                                    "Non renseignée"}
+                            </p>
 
-            <p>
-                Symptômes :{" "}
-                {episode.evaluation.symptomes.join(", ")}
-            </p>
+                            <p>
+                                Localisation :{" "}
+                                {episode.evaluation.localisations.join(", ") ||
+                                    "Non renseignée"}
+                            </p>
 
-            <p>
-                Caractéristique : {episode.evaluation.option}
-            </p>
-            <h3>Geste conseillé</h3>
-            {episode.solutions.map((solution) => (
-                <article key={solution.id}>
-                    <h4>{solution.label}</h4>
-                    <p>{solution.description}</p>
-                </article>
-            ))}
-            <button onClick={handleDelete} className="btn">
-                        Supprimer cet épisode
-            </button>
-            <Link to="/Home">Retour à l'accueil</Link>
+                            <p>
+                                Contexte :{" "}
+                                {episode.evaluation.contextes ||
+                                    "Non renseigné"}
+                            </p>
+
+                            <p>
+                                Symptômes :{" "}
+                                {episode.evaluation.symptomes.join(", ") ||
+                                    "Aucun symptôme renseigné"}
+                            </p>
+
+                            <p>
+                                Caractéristique :{" "}
+                                {episode.evaluation.option ||
+                                    "Non renseignée"}
+                            </p>
+                        </section>
+
+                        <section aria-labelledby="solutions-title">
+                            <h2 id="solutions-title">
+                                Gestes conseillés
+                            </h2>
+
+                            {episode.solutions.length > 0 ? (
+                                episode.solutions.map((solution) => (
+                                    <article key={solution.id}>
+                                        <h3>{solution.label}</h3>
+                                        <p>{solution.description}</p>
+                                    </article>
+                                ))
+                            ) : (
+                                <p>
+                                    Aucun geste conseillé enregistré pour
+                                    cet épisode.
+                                </p>
+                            )}
+                        </section>
+
+                        {error && (
+                            <p role="alert">{error}</p>
+                        )}
+
+                        <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="btn"
+                            disabled={deleting}
+                        >
+                            {deleting
+                                ? "Suppression..."
+                                : "Supprimer cet épisode"}
+                        </button>
+                    </>
+                )}
+
+                <Link to="/Suivi?tab=historique">
+                    Retour à mon historique
+                </Link>
+            </main>
         </>
     );
 }

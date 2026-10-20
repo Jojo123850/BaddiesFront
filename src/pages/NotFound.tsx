@@ -1,16 +1,15 @@
+
 import { Link } from "react-router-dom";
 
-
-// page affichée quand l'url ne respecte à aucune route,  
-// la page pour les pages inexistantes
+// Page affichée lorsqu'aucune route ne correspond à l'URL
 export default function NotFound() {
-  return (
-    <div className="divP">
+    return (
+        <main className="divP">
+            <h1>404</h1>
 
-      <h1 >404</h1>
-      <p className="pagePC" >Cette page n'existe pas.</p>
-      <Link to="/" className="btn">Retour à l'accueil</Link>
+            <p className="pagePC">Cette page n'existe pas.</p>
 
-    </div>
-  );
+            <Link to="/Home" className="btn">Retour à l'accueil</Link>
+        </main>
+    );
 }

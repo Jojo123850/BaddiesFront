@@ -2,6 +2,10 @@
 @import './_mixins.scss';
 @import './navbar.scss';
 
+h1, p{
+    text-align: center;
+}
+
 
 .loc {
     padding: 20px;
@@ -25,6 +29,13 @@
         background-color: var(--color-pink);
         border-radius: 18px;
         justify-content: center;
+         font: inherit;
+            color: inherit;
+            cursor: pointer;
+        :focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 3px;
+        }
 
         img {
             width: 100px;

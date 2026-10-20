@@ -1,25 +1,29 @@
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
+
 import Navbar from "../components/Navbar";
-import "../styles/navbar.scss";
-import "../styles/localisation.scss";
-import { useNavigate } from "react-router-dom";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { contextImages } from "../data/contextDataImages";
-import { ChevronLeft } from "lucide-react";
+
+import "../styles/navbar.scss";
+import "../styles/localisation.scss";
 
 type Contexte = {
     id: string;
     label: string;
-    img : string;
+    img: string;
 };
 
-export default function Localisation(){
+export default function Localisation() {
     const { evaluation, setEvaluation } = useEvaluation();
     const navigate = useNavigate();
 
+    const contextes: Contexte[] = db.contextes;
+
     const handleContinue = () => {
-        if (!evaluation) return;
+        if (!evaluation.contextes) return;
         navigate("/Recapitulatif");
     };
 
@@ -27,51 +31,39 @@ export default function Localisation(){
         setEvaluation(prev => ({
             ...prev,
             contextes: id
-     } ))}
-    
-    // données db contextes
-    const contextes: Contexte[] = db.contextes;
+        }));
+    };
 
-    return(
+    return (
         <>
-            <Navbar/>
-            <Link to="/Zone" className="retour">
-                    <ChevronLeft
-                    size={22}
-                    strokeWidth={1.8}
-                    aria-hidden="true"
-                    />
-            </Link>
-            <h2 className="analyse">Localisation</h2>
-            <p  className="analyse">Où êtes-vous actuellement ?</p>
-            <div className=" loc">
+            <Navbar />
 
-                {contextes.map((contexte) => (
-                    <article key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id? "selected" : ""}`} onClick={() =>handleLocation(contexte.id)}
-                        >
-                            <img
-                                src={contextImages[contexte.id]}
-                                alt={contexte.label}
-                            />
-                            <p>{contexte.label}</p>
-                    </article>
-                
-                ))}
-            </div> 
+            <main>
+                <Link to="/Zone" className="retour" aria-label="Retour à l'étape précédente">
+                    <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
+                </Link>
 
-            <div className="btn-container">
+                <h1 className="analyse">Localisation</h1>
+                <p className="analyse">Où êtes-vous actuellement ?</p>
 
-             <button
-                disabled={!evaluation}
-                onClick={handleContinue}
-                className="btn"
-            >
-                Continuer à analyser
-            </button>
-            </div>
+                <div className="loc" role="group" aria-label="Choisissez votre contexte actuel">
+                    {contextes.map((contexte) => (
+                        <button type="button" key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id ? "selected" : ""}`} onClick={() => handleLocation(contexte.id)} aria-pressed={evaluation.contextes === contexte.id}>
+                            <img src={contextImages[contexte.id]} alt="" />
+                            <span>{contexte.label}</span>
+                        </button>
+                    ))}
+                </div>
 
-            <p className="answer"> C’est indispensable pour analyser le plan d’action personnalisé par rapport à votre douleur</p>
+                <div className="btn-container">
+                    <button type="button" disabled={!evaluation.contextes} onClick={handleContinue} className="btn">Continuer à analyser</button>
+                </div>
+
+                <p className="answer">
+                    C'est indispensable pour adapter les gestes proposés
+                    à votre situation actuelle.
+                </p>
+            </main>
         </>
-        
-    )
+    );
 }

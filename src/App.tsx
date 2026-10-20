@@ -1,6 +1,5 @@
-﻿
-import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+﻿import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { EvaluationProvider } from "./evaluation/evaluationContext";
 import NotFound from "./pages/NotFound";
 
@@ -48,41 +47,48 @@ const Settings = lazy(() => import("./pages/Setting"));
 const EditProfile = lazy(() => import("./pages/EditProfle"));
 const Urgency = lazy(() => import("./pages/EmergencyContact"));
 
+function RequireCountry() {
+  const country = localStorage.getItem("country");
+  const hasCountry = country === "Mada" || country === "France";
+
+  return hasCountry ? <Outlet /> : <Navigate to="/Country" replace />;
+}
+
 export default function App() {
   return (
     <EvaluationProvider>
-      <Suspense
-        fallback={
-          <div className="loading1" role="status">
-            Chargement...
-          </div>
-        }
-      >
+      <Suspense fallback={<div className="loading1" role="status">Chargement...</div>}>
         <Routes>
-          <Route path="/" element={<Country />} />
+          <Route path="/" element={<Navigate to="/Country" replace />} />
+          <Route path="/Country" element={<Country />} />
 
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
 
-          <Route path="/Home" element={<Home />} />
-          <Route path="/analyse" element={<Analyse />} />
-          <Route path="/Zone" element={<ZoneP />} />
-          <Route path="/Localisation" element={<Localisation />} />
-          <Route path="/Recapitulatif" element={<Recap />} />
-          <Route path="/Analyse-reponse" element={<RulesAlert />} />
-          <Route path="/Alerte" element={<MedicalAlert />} />
-          <Route path="/Solution" element={<Solution />} />
-
-          <Route path="/Historique" element={<History />} />
-          <Route path="/Historique/:id" element={<Episode />} />
-          <Route path="/Suivi" element={<Tracking />} />
-
-          <Route path="/Setting" element={<Settings />} />
-          <Route path="/EditProfle" element={<EditProfile />} />
           <Route path="/emergencyContact" element={<Urgency />} />
-            <Route path='*' element={<NotFound />} /> 
+
+          <Route element={<RequireCountry />}>
+            <Route path="/Home" element={<Home />} />
+            <Route path="/analyse" element={<Analyse />} />
+            <Route path="/Zone" element={<ZoneP />} />
+            <Route path="/Localisation" element={<Localisation />} />
+            <Route path="/Recapitulatif" element={<Recap />} />
+            <Route path="/Analyse-reponse" element={<RulesAlert />} />
+            <Route path="/Alerte" element={<MedicalAlert />} />
+            <Route path="/Solution" element={<Solution />} />
+
+            <Route path="/Historique" element={<History />} />
+            <Route path="/Historique/:id" element={<Episode />} />
+            <Route path="/Suivi" element={<Tracking />} />
+
+            <Route path="/Setting" element={<Settings />} />
+            <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/EditProfle" element={<Navigate to="/EditProfile" replace />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </EvaluationProvider>

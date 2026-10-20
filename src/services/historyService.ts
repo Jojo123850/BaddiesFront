@@ -98,3 +98,19 @@ export async function getHistoryById(
         date: data.history.created_at
     };
 }
+export async function deleteHistory(id: string): Promise<void> {
+    if (!localStorage.getItem("token")) {
+        throw new Error("Connecte-toi pour supprimer cet épisode.");
+    }
+
+    const response = await fetchWithAuth(
+        `${API_URL}/${encodeURIComponent(id)}`,
+        {
+            method: "DELETE"
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Impossible de supprimer cet épisode.");
+    }
+}

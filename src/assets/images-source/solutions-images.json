@@ -1,0 +1,15 @@
+{
+  "activite_physique_reguliere": "activite_physique_reguliere.png",
+  "alimentation_equilibree": "alimentation_equilibree.png",
+  "alimentation_pauvre_en_graisses": "alimentation_pauvre_en_graisses.png",
+  "bain_douche_chaude": "bain_douche_chaude.png",
+  "chaleur": "chaleur.png",
+  "eviter_tabac": "eviter_tabac.png",
+  "exercice_doux": "exercice_doux.png",
+  "hydratation": "hydratation.png",
+  "massage_doux": "massage_doux.png",
+  "reduction_stress": "reduction_stress.png",
+  "relaxation": "relaxation.png",
+  "repos": "repos.png",
+  "sommeil": "sommeil.png"
+}

@@ -2,185 +2,215 @@
 @import './_variables.scss';
 @import './_mixins.scss';
 
-
-
 .medicalAlertPage {
-  min-height: 100dvh;
-  padding: 20px 16px 110px;
-  box-sizing: border-box;
-  background-color: var(--color-card-soft);
+    min-height: 100dvh;
+    padding: 20px 16px 110px;
+    box-sizing: border-box;
+    background-color: var(--color-card-soft);
 
-  .retour {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    background-color:var(--color-bg);
-    color: #741d2d;
-    border: 1px solid var(  --color-border);
-    border-radius: 12px;
-    text-decoration: none;
+    .retour {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        background-color: var(--color-bg);
+        color: #741d2d;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        text-decoration: none;
 
-    &:hover {
-      background-color:   var(--color-border);
+        &:hover {
+            background-color: var(--color-border);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 3px;
+        }
     }
-
-    &:focus-visible {
-      outline: 2px solid var(  --color-accent);
-      outline-offset: 3px;
-    }
-  }
 }
 
 .medicalAlert {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  width: 100%;
-  margin: 24px auto 0;
-  padding: 24px 20px;
-  box-sizing: border-box;
-  background-color: var( --color-bg);
-  border: 1px solid var(  --color-border);
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(116, 29, 45, 0.05);
-
-  h2 {
-    margin: 0;
-    color:var(--color-accent);
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  > p {
-    margin: 0;
-    color: #66565d;
-    font-size: 14px;
-    line-height: 1.7;
-    text-align: start;
-  }
-
-  .medicalAlert-urgence {
-    margin-top: 8px;
-    padding: 16px;
-
-    background-color:var( --color-rec);
-    border: 1px solid var( --color-fond);
-    border-left: 4px solid #b45353;
-     border-right: 4px solid #b45353;
-    border-radius: 14px;
-
-    h3 {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-
-      margin: 0 0 12px;
-      color: #963f3f;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.4;
-
-      svg {
-        flex-shrink: 0;
-        margin-top: 3px;
-      }
-    }
-    .paraContact{
-        color: var(--color-text);
-        font-weight: bold;
-    }
-    p {
-      margin: 0 0 12px;
-      color: #654c4c;
-      font-size: 14px;
-      line-height: 1.7;
-      text-align: start;
-
-      &:last-child {
-        margin-bottom: 0;
-        font-weight: 600;
-      }
-    }
-  }
-
-  > .btn {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
 
     width: 100%;
-    min-height: 48px;
-    margin-top: 12px;
-    padding: 12px 20px;
+    margin: 24px auto 0;
+    padding: 24px 20px;
     box-sizing: border-box;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(116, 29, 45, 0.05);
 
-    background-color: #741d2d;
-    color: #ffffff;
-    border: none;
-    border-radius: 14px;
-
-    font-size: 15px;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #5e1725;
+    h1 {
+        margin: 0;
+        color: var(--color-accent);
+        font-size: 23px;
+        font-weight: 700;
+        line-height: 1.35;
     }
 
-    &:focus-visible {
-      outline: 3px solid #b96a80;
-      outline-offset: 3px;
+    > p {
+        margin: 0;
+        color: #66565d;
+        font-size: 14px;
+        line-height: 1.7;
+        text-align: start;
     }
-  }
+
+    .medicalAlert-urgence {
+        margin-top: 8px;
+        padding: 16px;
+        background-color: var(--color-rec);
+        border: 1px solid var(--color-fond);
+        border-left: 4px solid #b45353;
+        border-right: 4px solid #b45353;
+        border-radius: 14px;
+
+        h2 {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            margin: 0 0 12px;
+            color: #963f3f;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+
+            svg {
+                flex-shrink: 0;
+                margin-top: 3px;
+            }
+        }
+
+        .paraContact {
+            color: var(--color-text);
+            font-weight: bold;
+        }
+
+        p {
+            margin: 0 0 12px;
+            color: #654c4c;
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: start;
+
+            &:last-child {
+                margin-bottom: 0;
+                font-weight: 600;
+            }
+        }
+
+        .urgence-call {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 16px;
+            box-sizing: border-box;
+
+            background-color: var(--color-bg);
+            color: var(--color-accent);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+
+            &:hover {
+                background-color: var(--color-border);
+            }
+
+            &:focus-visible {
+                outline: 2px solid var(--color-accent);
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    > .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 48px;
+        margin-top: 12px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+
+        background-color: #741d2d;
+        color: #ffffff;
+        border: none;
+        border-radius: 14px;
+
+        font-size: 15px;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #5e1725;
+        }
+
+        &:focus-visible {
+            outline: 3px solid #b96a80;
+            outline-offset: 3px;
+        }
+    }
 }
 
 // TABLETTE ET ORDINATEUR
 @media (min-width: 768px) {
-  .medicalAlertPage {
-    padding: 32px 40px 80px;
+    .medicalAlertPage {
+        padding: 32px 40px 80px;
 
-    .retour {
-      width: 46px;
-      height: 46px;
-    }
-  }
-
-  .medicalAlert {
-    max-width: 650px;
-    margin-top: 40px;
-    padding: 36px 40px;
-    gap: 20px;
-    border-radius: 24px;
-
-    h2 {
-      font-size: 28px;
+        .retour {
+            width: 46px;
+            height: 46px;
+        }
     }
 
-    > p {
-      font-size: 16px;
+    .medicalAlert {
+        max-width: 650px;
+        margin-top: 40px;
+        padding: 36px 40px;
+        gap: 20px;
+        border-radius: 24px;
+
+        h1 {
+            font-size: 28px;
+        }
+
+        > p {
+            font-size: 16px;
+        }
+
+        .medicalAlert-urgence {
+            padding: 22px;
+
+            h2 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 15px;
+            }
+        }
+
+        > .btn {
+            max-width: 300px;
+            align-self: center;
+        }
     }
-
-    .medicalAlert-urgence {
-      padding: 22px;
-
-      h3 {
-        font-size: 18px;
-      }
-
-      p {
-        font-size: 15px;
-      }
-    }
-
-    > .btn {
-      max-width: 300px;
-      align-self: center;
-    }
-  }
 }

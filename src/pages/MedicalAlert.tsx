@@ -1,19 +1,20 @@
+import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { ChevronLeft, TriangleAlert, Phone } from "lucide-react";
+
 import "../styles/alert.scss";
-import { ChevronLeft } from "lucide-react";
+
 export default function MedicalAlert() {
     return (
         <>
-            <Link to="/Localisation" className="retour">
-                <ChevronLeft
-                size={22}
-                strokeWidth={1.8}
-                aria-hidden="true"
-                />
+        <Navbar/>
+        <main className="medicalAlertPage">
+            <Link to="/Localisation" className="retour" aria-label="Retour à l'étape précédente">
+                <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
             </Link>
 
-            <section className="medicalAlert">
-                <h2>Une consultation médicale est recommandée</h2>
+            <section className="medicalAlert" aria-labelledby="medical-alert-title">
+                <h1 id="medical-alert-title">Une consultation médicale est recommandée</h1>
 
                 <p>
                     D'après vos réponses, votre situation mérite
@@ -26,10 +27,10 @@ export default function MedicalAlert() {
                 </p>
 
                 <div className="medicalAlert-urgence">
-                    <h3>
-                        <i className="fa-solid fa-triangle-exclamation"></i>
+                    <h2>
+                        <TriangleAlert size={22} aria-hidden="true" />
                         {" "}Quand demander une aide urgente ?
-                    </h3>
+                    </h2>
 
                     <p>
                         En cas de douleur soudaine et très intense,
@@ -42,12 +43,16 @@ export default function MedicalAlert() {
                     <p className="paraContact">
                         Contactez les services d'urgence de votre pays.
                     </p>
+
+                    <Link to="/emergencyContact" className="urgence-call">
+                        <Phone size={20} aria-hidden="true" />
+                        Voir les contacts d'urgence
+                    </Link>
                 </div>
 
-                <Link to="/Home" className="btn">
-                    Retour à l'accueil
-                </Link>
+                <Link to="/Home" className="btn">Retour à l'accueil</Link>
             </section>
+        </main>
         </>
     );
 }

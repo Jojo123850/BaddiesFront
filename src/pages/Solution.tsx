@@ -11,6 +11,37 @@ import {jsPDF} from 'jspdf';
 import { ChevronLeft } from "lucide-react";
 import { Share2 } from "lucide-react";
 
+import chaleur from "../assets/images/chaleur.webp";
+import bain from "../assets/images/bain_douche_chaude.webp";
+import massage from "../assets/images/massage_doux.webp";
+import exercice from "../assets/images/exercice_doux.webp";
+import activite from "../assets/images/activite_physique_reguliere.webp";
+import sommeil from "../assets/images/sommeil.webp";
+import repos from "../assets/images/repos.webp";
+import relaxation from "../assets/images/relaxation.webp";
+import alimentation from "../assets/images/alimentation_equilibree.webp";
+import alimentationLegere from "../assets/images/alimentation_pauvre_en_graisses.webp";
+import stress from "../assets/images/reduction_stress.webp";
+import hydratation from "../assets/images/hydratation.webp";
+import tabac from "../assets/images/eviter_tabac.webp";
+import { CheckCircle2} from "lucide-react";
+
+const imagesSolutions: Record<string, string> = {
+    chaleur,
+    bain_douche_chaude: bain,
+    massage_doux: massage,
+    exercice_doux: exercice,
+    activite_physique_reguliere: activite,
+    sommeil,
+    repos,
+    relaxation,
+    alimentation_equilibree: alimentation,
+    alimentation_pauvre_en_graisses: alimentationLegere,
+    reduction_stress: stress,
+    hydratation,
+    eviter_tabac: tabac,
+};
+
 export default function Solution() {
     const { evaluation } = useEvaluation();
     const [saved, setSaved] = useState(false);
@@ -184,7 +215,7 @@ const handleDownloadPDF = () => {
         pdf.setFontSize(22);
         pdf.setTextColor(...colors.pink);
 
-        const intensity = evaluation.intensiteNiveau;
+        const intensity = evaluation.intensiteValeur;
 
         pdf.text(
             intensity == null
@@ -448,72 +479,112 @@ const handleDownloadPDF = () => {
 
 
 
-    return (
-        <>
-            <Navbar />
+  
+return (
+    <>
+        <Navbar />
+
+        <main className="solutionPage">
             <div className="switch">
-                <Link to="/Localisation" className="retour">
-                <ChevronLeft
-                size={22}
-                strokeWidth={1.8}
-                aria-hidden="true"
-                />
+                <Link
+                    to="/Localisation"
+                    className="retour"
+                    aria-label="Retour à l'étape précédente"
+                >
+                    <ChevronLeft
+                        size={22}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                    />
                 </Link>
-                 <button className="btn" onClick={handleDownloadPDF}>Télécharger le fichier</button>
+
+                <button
+                    type="button"
+                    className="btn"
+                    onClick={handleDownloadPDF}
+                >
+                    Télécharger le fichier
+                </button>
             </div>
 
-            
+            <section aria-labelledby="solution-title">
+                <h1 id="solution-title" className="titleSolution">
+                    Gestes conseillés
+                </h1>
 
-            <section>
-                    <h2 className="titleSolution">Geste conseillé</h2>
-                   
+                <div id="solution">
+                    {solutionsFiltre.length > 0 ? (
+                        solutionsFiltre.map((item) => (
+                            <article
+                                className="contentSolution"
+                                key={item.id}
+                            >
+                                <div className="solutionImage">
+                                    <img
+                                        src={imagesSolutions[item.id]}
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                </div>
 
-                <article id="solution">
-                    {solutionsFiltre.map((item) => (
-                        <article
-                            className="contentSolution"
-                            key={item.id}
-                        >
-                            <h3>{item.label}</h3>
+                                <div className="solutionTexte">
+                                    <h2>{item.label}</h2>
 
-                            <p className="solutionPara">
-                                {item.description}
-                            </p>
-                        </article>
-                    ))}
-                </article>
+                                    <p className="solutionPara">
+                                        {item.description}
+                                    </p>
+                                </div>
+                            </article>
+                        ))
+                    ) : (
+                        <p>
+                            Aucun geste correspondant à votre évaluation.
+                        </p>
+                    )}
+                </div>
             </section>
 
-            <section>
+            <section aria-label="Actions sur votre évaluation">
+                <p className="collapse-note">
+                    <CheckCircle2 size={18} />
+                    Évaluation terminée
+                </p>
                 <div className="btnSolution">
                     <button
+                        type="button"
                         className="btn"
                         onClick={handleSave}
-                        disabled={saved}>
+                        disabled={saved}
+                    >
                         {saved
                             ? "Épisode enregistré"
                             : "+ Enregistrer"}
                     </button>
 
                     <button
+                        type="button"
                         className="btn"
                         onClick={shareSummary}
                     >
-                        <Share2 size={20} strokeWidth={1.8} aria-hidden="true" />
-                        Partager 
+                        <Share2
+                            size={20}
+                            strokeWidth={1.8}
+                            aria-hidden="true"
+                        />
+                        Partager
                     </button>
                 </div>
 
-                {message && <p>{message}</p>}
+                {message && <p role="status">{message}</p>}
+
                 
-                <Link to="/Home" className="btn-container">
-                    Evaluation terminé
-                </Link>
 
                 <p>
-                    Information générale, ne remplace pas un avis médical
+                    Informations générales, ne remplacent pas un avis médical.
                 </p>
             </section>
-        </>
-    );
+        </main>
+    </>
+);
 }
+

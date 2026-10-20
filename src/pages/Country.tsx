@@ -53,7 +53,7 @@ export default function Country() {
 
     return (
         <>
-            <header>
+            <header  className="country-header">
                 <div>
                     <span>Écouter</span>
                     <span>Comprendre</span>
@@ -61,7 +61,7 @@ export default function Country() {
                 </div>
             </header>
 
-            <main>
+            <main className="country-page">
                 <h1>Choisissez votre pays</h1>
 
                 <p>

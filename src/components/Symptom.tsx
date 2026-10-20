@@ -1,3 +1,4 @@
+
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 
@@ -9,51 +10,47 @@ export type Symptom = {
 export default function Symptom() {
     const { evaluation, setEvaluation } = useEvaluation();
 
-    const handleChange = (id: string) => {
+
+const handleChange = (id: string) => {
+    setEvaluation((prev) => {
         if (id === "aucun") {
-            setEvaluation(prev => ({
+            return {
                 ...prev,
-                symptomes: ["aucun"]
-            }));
-            return;
+                symptomes: prev.symptomes.includes("aucun") ? [] : ["aucun"]
+            };
         }
 
-        setEvaluation(prev => ({
+        const symptomesSansAucun = prev.symptomes.filter(
+            (item) => item !== "aucun"
+        );
+
+        return {
             ...prev,
-            symptomes: [
-                ...prev.symptomes.filter(item => item !== "aucun"),
-                ...(prev.symptomes.includes(id) ? [] : [id])
-            ]
-        }));
-    };
+            symptomes: symptomesSansAucun.includes(id)
+                ? symptomesSansAucun.filter((item) => item !== id)
+                : [...symptomesSansAucun, id]
+        };
+    });
+};
+
 
     return (
-        <>
-            <h2 className="analyse">Avez-vous également</h2>
+        <section aria-labelledby="symptoms-title">
+            <h2 id="symptoms-title" className="analyse">
+                Avez-vous également d'autres symptômes ?
+            </h2>
 
             <div className="intensity-btn">
                 {db.evaluation_douleur.symptomes.map((item) => (
                     <div key={item.id}>
-                        <input
-                            type="checkbox"
-                            id={item.id}
-                            checked={evaluation.symptomes.includes(item.id)}
-                            onChange={() => handleChange(item.id)}
-                        />
+                        <input type="checkbox" id={`symptom-${item.id}`} name="symptomes" value={item.id} checked={evaluation.symptomes.includes(item.id)} onChange={() => handleChange(item.id)} />
 
-                        <label
-                            htmlFor={item.id}
-                            className={
-                                evaluation.symptomes.includes(item.id)
-                                    ? "selected"
-                                    : ""
-                            }
-                        >
+                        <label htmlFor={`symptom-${item.id}`} className={evaluation.symptomes.includes(item.id) ? "selected" : ""}>
                             {item.label}
                         </label>
                     </div>
                 ))}
             </div>
-        </>
+        </section>
     );
 }
