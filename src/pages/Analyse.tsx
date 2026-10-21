@@ -17,7 +17,7 @@ export default function Analyse(){
             {!isAsking ?(
                 <>
                 <div className="switch">
-                    <Link to="/Zone" className="retour">
+                    <Link to="/Home" className="retour">
                           <ChevronLeft
                                 size={22}
                                 strokeWidth={1.8}
@@ -31,7 +31,7 @@ export default function Analyse(){
         ):(
                 <>
                 <div className="switchIntensity">
-                    <Link to="/Home" className="retour">
+                    <Link to="/Zone" className="retour">
                           <ChevronLeft
                                 size={22}
                                 strokeWidth={1.8}

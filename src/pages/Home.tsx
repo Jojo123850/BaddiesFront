@@ -9,8 +9,10 @@ import type { HistoryEvaluation } from "../services/localStorageService";
 
 import "../styles/navbar.scss";
 import "../styles/home.scss";
+import { useEvaluation } from "../evaluation/useEvaluation";
 
 export default function Home() {
+  const { resetEvaluation } = useEvaluation();
   const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
   const [loading, setLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
@@ -79,7 +81,7 @@ export default function Home() {
             et découvrez des gestes adaptés pour vous soulager.
           </p>
 
-          <Link to="/analyse" className="home-btn">
+          <Link to="/analyse"  onClick={resetEvaluation} className="home-btn">
             Commencer mon évaluation
           </Link>
 

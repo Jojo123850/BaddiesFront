@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 
@@ -9,6 +10,7 @@ export type Symptom = {
 
 export default function Symptom() {
     const { evaluation, setEvaluation } = useEvaluation();
+    const [isOpen, setIsOpen] = useState(false);
 
 
 const handleChange = (id: string) => {
@@ -39,18 +41,27 @@ const handleChange = (id: string) => {
             <h2 id="symptoms-title" className="analyse">
                 Avez-vous également d'autres symptômes ?
             </h2>
+            <button onClick={() => setIsOpen(!isOpen)}>Oui</button>
+            <button>Non</button>
 
-            <div className="intensity-btn">
-                {db.evaluation_douleur.symptomes.map((item) => (
-                    <div key={item.id}>
-                        <input type="checkbox" id={`symptom-${item.id}`} name="symptomes" value={item.id} checked={evaluation.symptomes.includes(item.id)} onChange={() => handleChange(item.id)} />
 
-                        <label htmlFor={`symptom-${item.id}`} className={evaluation.symptomes.includes(item.id) ? "selected" : ""}>
-                            {item.label}
-                        </label>
-                    </div>
-                ))}
-            </div>
+            {isOpen && (
+                <div className="intensity-btn">
+                    {db.evaluation_douleur.symptomes.map((item) => (
+                        <div key={item.id}>
+                            <input type="checkbox" id={`symptom-${item.id}`} name="symptomes" value={item.id} checked={evaluation.symptomes.includes(item.id)} onChange={() => handleChange(item.id)} />
+
+                            <label htmlFor={`symptom-${item.id}`} className={evaluation.symptomes.includes(item.id) ? "selected" : ""}>
+                                {item.label}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+
+            )
+             }
+
+            
         </section>
     );
 }

@@ -86,15 +86,10 @@ const IntensityPain = () => {
             <p className="answerPain">
                 {niveau?.label}
             </p>
-
-            {evaluation.intensiteValeur === 0 && (
-                <p className="answer">
-                    Vous devez cliquer avant de continuer
-                </p>
-            )}
-            <p className="analyseAlert">
+            {evaluation.intensiteValeur === null &&  < p className="analyseAlert">
                 Maintenez pour sélectionner votre niveau de douleur.
-            </p>
+            </p>}
+           
 
             <div
                 className="hand-circle"

@@ -1,20 +1,22 @@
+
 import { createContext } from "react";
 
-// les infos à conserver
+// Les informations de l'évaluation
 export type Evaluation = {
-    intensiteNiveau: string | null,
-    intensiteValeur: number | null,
-    localisations: string[],
-    contextes: string | null,
-    symptomes: string[],
-    option: string | null
-}
+    intensiteNiveau: string | null;
+    intensiteValeur: number | null;
+    localisations: string[];
+    contextes: string | null;
+    symptomes: string[];
+    option: string | null;
+};
 
-// définir ce que le contexte va fournir aux composants,setEval reçoit Evaluation
+// Ce que le contexte fournit aux composants
 export type EvaluationContextType = {
-    evaluation: Evaluation
+    evaluation: Evaluation;
     setEvaluation: React.Dispatch<React.SetStateAction<Evaluation>>;
-}
+    resetEvaluation: () => void;
+};
 
-// création contexte 
+// Création du contexte
 export const EvalContext = createContext<EvaluationContextType | null>(null);

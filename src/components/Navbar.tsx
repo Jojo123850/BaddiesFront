@@ -8,6 +8,7 @@ import "../styles/navbar.scss";
 
 import logo from "../assets/images/logo-nav.webp";
 import defaultProfile from "../assets/images/IM(.webp";
+import { useEvaluation } from "../evaluation/useEvaluation";
 
 function getProfileImage(): string {
   const token = localStorage.getItem("token");
@@ -33,6 +34,7 @@ function handleImageError(event: SyntheticEvent<HTMLImageElement>) {
 }
 
 export default function Navbar() {
+  const { resetEvaluation } = useEvaluation();
   const profileImage = getProfileImage();
   const settingsRef = useRef<HTMLDialogElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -88,7 +90,7 @@ export default function Navbar() {
             </li>
 
             <li>
-              <NavLink to="/analyse" className="nav-item">
+              <NavLink to="/analyse" onClick= {resetEvaluation} className="nav-item">
                 <ClipboardList size={23} strokeWidth={1.7} aria-hidden="true" />
                 <span>Analyse</span>
               </NavLink>
