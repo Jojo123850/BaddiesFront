@@ -1,11 +1,4 @@
-// const browserUrl = window.location.href
-// const isLocalHost = browserUrl.includes('localhost')
 
-
-
-// const BASE_URL = isLocalHost 
-// ? 'https://localhost:3000/api/v1/'
-// : 'https://jsonplaceholder.typicode.com/'
 
 export const BASE_URL = 'http://localhost:3001'
 

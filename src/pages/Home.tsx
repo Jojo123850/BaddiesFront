@@ -83,17 +83,7 @@ export default function Home() {
             Commencer mon évaluation
           </Link>
 
-          {!isConnected && (
-            <>
-             <span className="home-badge">
-            À ton rythme
-          </span>
-            <p className="home-login">
-              Déjà un compte ?{" "}
-              <Link to="/Login">Se connecter</Link>
-            </p>
-            </>
-          )}
+          
         </section>
 
         {!isConnected && (
@@ -101,6 +91,9 @@ export default function Home() {
             className="home-account"
             aria-labelledby="home-account-title"
           >
+                <span className="home-badge">
+            À ton rythme
+          </span>
             <div className="home-account-card">
               <Bookmark
                 className="home-account-icon"
@@ -122,6 +115,15 @@ export default function Home() {
                 Créer mon compte
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
+            
+           
+         
+            <p className="home-login">
+              Déjà un compte ?{" "}
+              <Link to="/Login">Se connecter</Link>
+            </p>
+            
+         
             </div>
 
             <p className="home-local-note">
