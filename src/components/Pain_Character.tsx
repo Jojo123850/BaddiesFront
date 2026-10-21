@@ -25,25 +25,11 @@ export default function Character() {
             <article className="intensity-btn">
                 {db.evaluation_douleur.caractere_habituel.options.map((item) => (
                     <div key={item.id}>
-                        <input
-                            type="radio"
-                            id={item.id}
-                            name="character"
-                            value={item.id}
-                            checked={evaluation.option === item.id}
-                            onChange={() => handleChange(item.id)}
-                        />
-
-                        <label
-                            htmlFor={item.id}
-                            className={
-                                evaluation.option === item.id
-                                    ? "selected"
-                                    : ""
-                            }
-                        >
+                        <input  type="radio" id={item.id}  name="character" 
+                            value={item.id}  checked={evaluation.option === item.id}  onChange={() => handleChange(item.id)}  />
+                        <label htmlFor={item.id}  className={ evaluation.option === item.id ? "selected" : ""}  >  
                             {item.label}
-                        </label>
+                        </label> 
                     </div>
                 ))}
             </article>

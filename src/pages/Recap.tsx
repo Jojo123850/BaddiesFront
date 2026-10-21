@@ -95,11 +95,7 @@ export default function Recap() {
 
               <div className="intensityComponent">
                 {intensityImage && (
-                  <img
-                    className="intensityImg"
-                    src={intensityImage}
-                    alt=""
-                  />
+                  <img className="intensityImg"src={intensityImage}alt="" /> 
                 )}
 
                 {evaluation.intensiteValeur !== null && (
@@ -121,11 +117,7 @@ export default function Recap() {
             </h2>
 
             <div className="recap-card__visual">
-                <img
-                src={silhouette}
-                className="recap-card__silhouette"
-                alt=""
-                />
+                <img  src={silhouette} className="recap-card__silhouette"alt="" />
             </div>
             </article>
 

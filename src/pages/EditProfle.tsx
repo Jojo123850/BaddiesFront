@@ -11,6 +11,7 @@ import MochiCol1 from "../assets/images/MochiCol.webp";
 import MochiHeureux from "../assets/images/MochiHeureux.webp";
 import MochiSom from "../assets/images/MochiSom.webp";
 import MochiSupris from "../assets/images/MociSurpris.webp";
+import "../styles/editProfile.scss";
 
 import "../styles/setting.scss";
 

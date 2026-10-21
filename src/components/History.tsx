@@ -109,7 +109,8 @@ export function History() {
 
             {loading ? (
                 <p role="status">Chargement de l'historique...</p>
-            ) : history.length === 0 ? (
+            ) : history.length === 0 ? 
+            (
                 <p>
                     Aucune évaluation actuellement.
                     <span> Commencez une évaluation pour pouvoir l'enregistrer.</span>
@@ -119,30 +120,18 @@ export function History() {
             ) : (
                 <div className="historyList">
                     {historyFiltree.map((item) => (
-                        <article key={item.id} className="historyArticle">
-                            <div className="historyContent">
-                                <div className="blocHistory">
-                                    <p className="date">
-                                        {new Date(item.date).toLocaleDateString("fr-FR", {
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric"
-                                        })}
-                                    </p>
-
-                                    <p className="paraHistory">
-                                        {item.evaluation.intensiteNiveau}
-                                    </p>
-                                </div>
-
-                                <div className="zone">
+                    <article key={item.id} className="historyArticle">
+                        <div className="historyContent">
+                            <div className="blocHistory">
+                                <p className="date">{new Date(item.date).toLocaleDateString("fr-FR",{ day: "numeric", month: "long", year: "numeric" })}              
+                                </p>
+                                <p className="paraHistory">{item.evaluation.intensiteNiveau} </p>
+                            </div>
+                            <div className="zone">
                                     <MapPin className="map" aria-hidden="true" />
                                     <p>{item.evaluation.localisations.join(", ") || "Non renseignée"}</p>
-                                </div>
-
-                                <p className="intensity">
-                                    {item.evaluation.intensiteValeur ?? "?"}/10
-                                </p>
+                            </div>
+                                <p className="intensity"> {item.evaluation.intensiteValeur ?? "?"}/10  </p>
                             </div>
 
                             <button type="button" className="btnEpisode" onClick={() => navigate(`/Historique/${item.id}`)}>

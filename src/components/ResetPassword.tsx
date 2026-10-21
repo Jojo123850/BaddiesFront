@@ -61,6 +61,7 @@ export function ResetPassword() {
         }
     };
 
+    // SOURCE UIVERSE.IO
     return (
         <div className="formDiv">
             <form onSubmit={handleSubmit}>
@@ -69,27 +70,14 @@ export function ResetPassword() {
                     Réinitialiser le mot de passe
                 </h2>
 
-                {/* NOUVEAU MOT DE PASSE */}
+            
                 <div className="wave-group">
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="input"
-                        autoComplete="new-password"
-                        required
-                        minLength={8}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <input type="password" name="password"   id="password"  className="input"  autoComplete="new-password" required  minLength={8}  value={password}  onChange={(e) => setPassword(e.target.value)}  />
+                   
 
                     <label className="label" htmlFor="password">
                         {"Nouveau mot de passe".split("").map((lettre, index) => (
-                            <span
-                                key={index}
-                                className="label-char"
-                                style={{ "--index": index } as CSSProperties}
-                            >
+                            <span  key={index}  className="label-char"  style={{ "--index": index } as CSSProperties} >
                                 {lettre === " " ? "\u00A0" : lettre}
                             </span>
                         ))}
@@ -98,18 +86,7 @@ export function ResetPassword() {
 
               
                 <div className="wave-group">
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        id="confirmPassword"
-                        className="input"
-                        autoComplete="new-password"
-                        required
-                        minLength={8}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-
+                    <input type="password" name="confirmPassword"id="confirmPassword"  className="input"  autoComplete="new-password" required  minLength={8}  value={confirmPassword}      onChange={(e) => setConfirmPassword(e.target.value)} />
                     <label className="label" htmlFor="confirmPassword">
                         {"Confirmer le mot de passe".split("").map((lettre, index) => (
                             <span
@@ -123,14 +100,13 @@ export function ResetPassword() {
                     </label>
                 </div>
 
-                {/* MESSAGE */}
                 {message && (
                     <p className={messageType} role="alert">
                         {message}
                     </p>
                 )}
 
-                {/* BOUTON */}
+               
                 <button type="submit" className="btn" disabled={loading || !token}>
                     {loading ? "Réinitialisation..." : "Réinitialiser"}
                 </button>

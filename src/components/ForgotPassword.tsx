@@ -21,12 +21,8 @@ export function ForgotPassword() {
                         email,
                         controller.signal
                     )
-
-                    
                     setMessage(datas.message)
                     setMessageType("success")
-
-
                 } catch (err) {
                     if (err instanceof Error && err.name !== "AbortError") {
                         setMessage(err.message)
@@ -40,32 +36,17 @@ export function ForgotPassword() {
                     Entrez votre Email :
                 </label>
                 <div className="wave-group">
-                                                        <input
-                                                            type="email"
-                                                            name="email"
-                                                            id="email"
-                                                            className="input"
-                                                            required
-                                                            value={email}
-                                                            onChange={(e) => setEmail(e.target.value)}
-                                                        />
-                                
-                                                        <label className="label" htmlFor="email">
-                                                            {"Email".split("").map((lettre, index) => (
-                                                                <span
-                                                                    key={index}
-                                                                    className="label-char"
-                                                                    style={{ "--index": index } as CSSProperties}
-                                                                >
-                                                                    {lettre}
-                                                                </span>
-                                                            ))}
-                                                        </label>
+                    <input name="email"  id="email"  className="input" required  value={email} onChange={(e) => setEmail(e.target.value)}  />
+                    <label className="label"htmlFor="email">                                           {"Email".split("").map (
+                            (lettre, index) => (
+                                 <span  key={index}  className="label-char"   style={{ "--index":    index } as CSSProperties} >
+                                        {lettre}
+                                 </span>
+                              ))}
+                    </label>                              
                 </div>
                 {message && (
-                    <p className={messageType}>
-                        {message}
-                </p>
+                    <p className={messageType}>{message}</p>
                 )}
 
                 <button type="submit" className="btn">

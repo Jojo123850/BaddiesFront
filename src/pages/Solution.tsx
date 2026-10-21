@@ -550,23 +550,14 @@ return (
                     Évaluation terminée
                 </p>
                 <div className="btnSolution">
-                    <button
-                        type="button"
-                        className="btn"
-                        onClick={handleSave}
-                        disabled={saved}
-                    >
+                    <button type="button"  className="btn"  onClick={handleSave}   disabled={saved} >
                         {saved
                             ? "Épisode enregistré"
                             : "+ Enregistrer"}
                     </button>
 
-                    <button
-                        type="button"
-                        className="btn"
-                        onClick={shareSummary}
-                    >
-                        <Share2
+                    <button type="button"className="btn" onClick={shareSummary} >  
+                      <Share2
                             size={20}
                             strokeWidth={1.8}
                             aria-hidden="true"

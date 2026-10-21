@@ -85,34 +85,20 @@ const IntensityPain = () => {
 
             <p className="answerPain">
                 {niveau?.label}
-            </p>
-            {evaluation.intensiteValeur === null &&  < p className="analyseAlert">
+            </p>   
+             
+            {evaluation.intensiteValeur === null &&  
+            < p className="analyseAlert"> 
                 Maintenez pour sélectionner votre niveau de douleur.
             </p>}
            
 
-            <div
-                className="hand-circle"
-                onPointerDown={startIncrementing}
-                onPointerUp={stopIncrementing}
-                onPointerLeave={stopIncrementing}
-            >
-               <Pointer 
-                className="hand-icon"
-                size={35}
-                strokeWidth={1.8}
-                aria-hidden="true"
-                />
-
+            <div  className="hand-circle"  onPointerDown={startIncrementing}            onPointerUp={stopIncrementing} onPointerLeave={stopIncrementing}  >
+               <Pointer  className="hand-icon"  size={35}  strokeWidth={1.8}  aria-hidden="true"  />
                 {evaluation.intensiteValeur === 0 ? "Appuie" : " "}
-            </div>
+            </div> 
             <div className="btn-container">
-
-                <button
-                    disabled={evaluation.intensiteValeur === 0}
-                    onClick={handleContinue}
-                    className="btn"
-                >
+                <button disabled={evaluation.intensiteValeur === 0}  onClick=         {handleContinue}  className="btn" >
                     Continuer à analyser
                 </button>
             </div>
