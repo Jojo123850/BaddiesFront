@@ -2,6 +2,7 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { EvaluationProvider } from "./evaluation/evaluationContext";
 import NotFound from "./pages/NotFound";
+import Notice from "./pages/legaleNotice";
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -105,6 +106,7 @@ export default function App() {
             <Route path="/EditProfle" element={<Navigate to="/EditProfile" replace />} />
           </Route>
           <Route path="*" element={<NotFound />} />
+          <Route path="/LegaleNotice" element={<Notice />} />
         </Routes>
       </Suspense>
     </EvaluationProvider>

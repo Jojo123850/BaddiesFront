@@ -5,6 +5,7 @@ import { ArrowRight, UserRound, ChevronRight, Globe, HeartPulse, UserRoundCheck,
 import Navbar from "../components/Navbar";
 import defaultProfile from "../assets/images/IM(.webp";
 
+
 import "../styles/setting.scss";
 
 type User = {
@@ -304,15 +305,26 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
 
         <section className="settings-section">
           <h2>Confidentialité</h2>
-
+            
+              <Link to="/LegaleNotice" className="settings-item settings-static-item" >
+                <span className="settings-item-icon">
+                    <ShieldCheck size={20} aria-hidden="true" />
+                </span>
+                <span className="settings-item-text">
+                    <strong> Mentions légales</strong>
+                     <small>
+                         Vos préférences et votre contact d'urgence
+                        sont enregistrés sur cet appareil.
+                    </small>
+                </span>
+              </Link>
+           
           <div className="settings-item settings-static-item">
             <span className="settings-item-icon">
               <ShieldCheck size={20} aria-hidden="true" />
             </span>
-
             <span className="settings-item-text">
               <strong>Données enregistrées</strong>
-
               <small>
                 Vos préférences et votre contact d'urgence
                 sont enregistrés sur cet appareil.
