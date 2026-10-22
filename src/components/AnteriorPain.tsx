@@ -50,14 +50,29 @@ const AnteriorPain = () => {
                     : `${evaluation.localisations.length} zone(s) sélectionnée(s).`}
             </p>
 
-            <img src={silhouette} className="silhouette" alt="Silhouette du corps vue de face" />
+<div className="silhouette-container">
+    <img
+        src={silhouette}
+        className="silhouette"
+        alt="Silhouette du corps vue de face"
+    />
 
-            {localisations.map((localisation) => (
-                <button type="button" key={localisation.id} onClick={() => handleZoneClick(localisation.id)} aria-pressed={evaluation.localisations.includes(localisation.id)} className={`btn2 ${localisation.id} ${evaluation.localisations.includes(localisation.id) ? "selected" : ""}`}>
-                    {localisation.label}
-                </button>
-            ))}
-
+    {localisations.map((localisation) => (
+        <button
+            type="button"
+            key={localisation.id}
+            onClick={() => handleZoneClick(localisation.id)}
+            aria-pressed={evaluation.localisations.includes(localisation.id)}
+            className={`btn2 ${localisation.id} ${
+                evaluation.localisations.includes(localisation.id)
+                    ? "selected"
+                    : ""
+            }`}
+        >
+            {localisation.label}
+        </button>
+    ))}
+</div>
             <div className="btn-container">
                 <button type="button" disabled={evaluation.localisations.length === 0} onClick={handleContinue} className="btn">
                     Continuer à analyser
