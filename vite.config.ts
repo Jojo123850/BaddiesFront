@@ -7,7 +7,7 @@ export default defineConfig({
 
   plugins: [
     react(),
-
+// généeration de service worker
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icon-192.png', 'icon-512.png'],
@@ -33,9 +33,9 @@ export default defineConfig({
           },
         ],
       },
-
+// Demander à Workbox de mettre en cache les fichiers nécessaires à l' interface : HTML, JavaScript, CSS, images et polices.
       workbox: {
-        navigateFallback: 'index.html',
+        navigateFallback: '/index.html',
         cleanupOutdatedCaches: true,
         globPatterns: [
           '**/*.{html,js,css,ico,png,svg,webp,jpg,jpeg,woff2,json}',

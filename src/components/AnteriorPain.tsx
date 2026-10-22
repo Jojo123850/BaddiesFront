@@ -53,7 +53,7 @@ const AnteriorPain = () => {
             <img src={silhouette} className="silhouette" alt="Silhouette du corps vue de face" />
 
             {localisations.map((localisation) => (
-                <button type="button" key={localisation.id} onClick={() => handleZoneClick(localisation.id)} aria-pressed={evaluation.localisations.includes(localisation.id)} className={`btn1 ${localisation.id} ${evaluation.localisations.includes(localisation.id) ? "selected" : ""}`}>
+                <button type="button" key={localisation.id} onClick={() => handleZoneClick(localisation.id)} aria-pressed={evaluation.localisations.includes(localisation.id)} className={`btn2 ${localisation.id} ${evaluation.localisations.includes(localisation.id) ? "selected" : ""}`}>
                     {localisation.label}
                 </button>
             ))}

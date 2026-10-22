@@ -19,14 +19,23 @@
 //   gap: 20px;
 }
 
-.switch,
-.switchIntensity {
+// .switch
+//  {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     gap: 16px;
+//     width: 100%;
+//     padding: 16px 24px;
+// }
+.switch{
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 16px;
-    width: 100%;
-    padding: 16px 24px;
+    .btn-switch{
+        margin-right: 20px;
+    }
+
 }
 
 //  .retour{

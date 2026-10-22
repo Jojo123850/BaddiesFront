@@ -500,7 +500,7 @@ return (
 
                 <button
                     type="button"
-                    className="btn"
+                    className="btn-switch"
                     onClick={handleDownloadPDF}
                 >
                     Télécharger le fichier

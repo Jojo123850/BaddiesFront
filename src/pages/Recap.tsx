@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronLeft,  Car } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import silhouette from "../assets/images/silohouette-Photoroom.webp";
 import Navbar from "../components/Navbar";
 import Symptom from "../components/Symptom";
@@ -11,6 +11,7 @@ import db from "../data/db.json";
 import legere from "../assets/images/legere.webp";
 import moderee from "../assets/images/moderee.webp";
 import intense from "../assets/images/intense.webp";
+import { contextImages } from "../data/contextDataImages";
 
 import "../styles/navbar.scss";
 import "../styles/recap.scss";
@@ -27,10 +28,13 @@ const intensityLabels: Record<string, string> = {
   intense: "Douleur intense",
 };
 
+
 export default function Recap() {
   const { evaluation } = useEvaluation();
   const navigate = useNavigate();
-
+  const contextImage = evaluation.contextes
+    ? contextImages[evaluation.contextes]
+    : null;
   const intensityImage = evaluation.intensiteNiveau
     ? intensityImages[evaluation.intensiteNiveau]
     : null;
@@ -121,21 +125,17 @@ export default function Recap() {
             </div>
             </article>
 
-            <article className="recap-card recap-card--context">
-              <h2 className="recap-card__title">
-                <span className="recap-sr-only">
-                  Contexte :
-                </span>
-                {contexteLabel}
-              </h2>
+           <article className="recap-card recap-card--context">
+                <h2 className="recap-card__title">
+                    <span className="recap-sr-only">Contexte :</span>
+                    {contexteLabel}
+                </h2>
 
-              <div className="recap-card__visual">
-                <Car
-                  className="recap-card__icon"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-              </div>
+                <div className="recap-card__visual">
+                    {contextImage && (
+                        <img src={contextImage} alt="" className="recap-card__context-image" />
+                    )}
+                </div>
             </article>
           </div>
         </section>

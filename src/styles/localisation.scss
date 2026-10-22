@@ -26,8 +26,9 @@ h1, p{
         box-sizing: border-box;
 
         padding: 15px;
-        background-color: var(--color-pink);
-        border-radius: 18px;
+        background: var(--color-pink);
+        border: 1px solid var(--color-border);
+        border-radius: 1.25rem;
         justify-content: center;
          font: inherit;
             color: inherit;
@@ -43,7 +44,7 @@ h1, p{
             flex-shrink: 0;
             object-fit: contain;
 
-            background-color: var(--color-rec);
+            // background-color: var(--color-rec);
             border-radius: 50%;
         }
     }

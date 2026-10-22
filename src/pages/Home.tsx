@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Bookmark } from "lucide-react";
+import { ArrowRight} from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import Collapse from "../components/Collapse";
@@ -93,17 +93,10 @@ export default function Home() {
             className="home-account"
             aria-labelledby="home-account-title"
           >
-                <span className="home-badge">
+          {/* <span className="home-badge">
             À ton rythme
-          </span>
+          </span> */}
             <div className="home-account-card">
-              <Bookmark
-                className="home-account-icon"
-                size={32}
-                strokeWidth={1.6}
-                aria-hidden="true"
-              />
-
               <h2 id="home-account-title">
                 Ton historique, avec toi
               </h2>
@@ -112,6 +105,9 @@ export default function Home() {
                 Crée ton compte pour retrouver tes prochaines
                 évaluations sur plusieurs appareils.
               </p>
+              <p className="home-local-note">
+                Sans compte, ton historique reste sur cet appareil.
+              </p>
 
               <Link to="/Register" className="home-account-btn">
                 Créer mon compte
@@ -119,18 +115,15 @@ export default function Home() {
               </Link>
             
            
-         
+{/*          
             <p className="home-login">
               Déjà un compte ?{" "}
               <Link to="/Login">Se connecter</Link>
-            </p>
+            </p> */}
             
          
             </div>
 
-            <p className="home-local-note">
-              Sans compte, ton historique reste sur cet appareil.
-            </p>
           </section>
         )}
 

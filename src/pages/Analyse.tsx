@@ -30,7 +30,7 @@ export default function Analyse(){
         </>
         ):(
                 <>
-                <div className="switchIntensity">
+                <div className="switch">
                     <Link to="/Zone" className="retour">
                           <ChevronLeft
                                 size={22}

@@ -29,10 +29,17 @@ const IntensityPain = () => {
 
     const niveau = getIntensity(evaluation.intensiteValeur);
     
-   const startIncrementing = () => {
+const startIncrementing = () => {
+    if (intervalRef.current !== null) return;
+    // stopIncrementing();
+
     setEvaluation((prev) => ({
         ...prev,
-        intensiteValeur: Math.min((prev.intensiteValeur ?? 0) + 1, 10)
+        intensiteValeur:
+            prev.intensiteValeur === 10
+                ? 1
+                : Math.min((prev.intensiteValeur ?? 0) + 1, 10),
+        intensiteNiveau: null
     }));
 
     intervalRef.current = setInterval(() => {
@@ -41,14 +48,14 @@ const IntensityPain = () => {
 
             if (current >= 10) {
                 stopIncrementing();
-                return { 
-                    ...prev,
-                    intensiteValeur: 10 };
+                return prev;
             }
 
-            return { 
-                ...prev, 
-                intensiteValeur: current + 1 };
+            return {
+                ...prev,
+                intensiteValeur: current + 1,
+                intensiteNiveau: null
+            };
         });
     }, 400);
 };
@@ -86,19 +93,24 @@ const IntensityPain = () => {
             <p className="answerPain">
                 {niveau?.label}
             </p>   
-             
-            {evaluation.intensiteValeur === null &&  
+
+             {evaluation.intensiteValeur === null &&  
             < p className="analyseAlert"> 
                 Maintenez pour sélectionner votre niveau de douleur.
-            </p>}
-           
+            </p>} 
+            <p className="analyseAlert">
+                {evaluation.intensiteValeur === 10 
+                    ? "Intensité maximale. Appuyez à nouveau pour recommencer à la douleur légère."
+                    : ""}
+            </p>
+                    
 
             <div  className="hand-circle"  onPointerDown={startIncrementing}            onPointerUp={stopIncrementing} onPointerLeave={stopIncrementing}  >
                <Pointer  className="hand-icon"  size={35}  strokeWidth={1.8}  aria-hidden="true"  />
-                {evaluation.intensiteValeur === 0 ? "Appuie" : " "}
+               {evaluation.intensiteValeur === null ? "Appuie" : `${evaluation.intensiteValeur}/10`}
             </div> 
             <div className="btn-container">
-                <button disabled={evaluation.intensiteValeur === 0}  onClick=         {handleContinue}  className="btn" >
+                <button disabled={evaluation.intensiteValeur === 0 || evaluation.intensiteValeur === null}  onClick=         {handleContinue}  className="btn" >
                     Continuer à analyser
                 </button>
             </div>

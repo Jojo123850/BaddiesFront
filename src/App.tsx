@@ -57,8 +57,7 @@ function RequireCountry() {
 export default function App() {
   return (
     <EvaluationProvider>
-      <Suspense fallback={
-       
+      <Suspense fallback={ 
           <main className="loading1" role="status" aria-label="Connexion en cours">
         <div className="container">
             <div className="content">
@@ -98,11 +97,9 @@ export default function App() {
             <Route path="/Analyse-reponse" element={<RulesAlert />} />
             <Route path="/Alerte" element={<MedicalAlert />} />
             <Route path="/Solution" element={<Solution />} />
-
             <Route path="/Historique" element={<History />} />
             <Route path="/Historique/:id" element={<Episode />} />
             <Route path="/Suivi" element={<Tracking />} />
-
             <Route path="/Setting" element={<Settings />} />
             <Route path="/EditProfile" element={<EditProfile />} />
             <Route path="/EditProfle" element={<Navigate to="/EditProfile" replace />} />
