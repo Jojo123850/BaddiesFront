@@ -3,6 +3,7 @@ import db from "../data/db.json";
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import silhouette from "../assets/images/silohouette-Photoroom.webp";
+import "../styles/localisation.scss";
 
 type Localisation = {
     id: string;
@@ -43,42 +44,50 @@ const AnteriorPain = () => {
     };
 
     return (
-        <div className="body-container">
-            <p className="answer" aria-live="polite">
-                {evaluation.localisations.length === 0
-                    ? "Vous devez sélectionner au moins une zone."
-                    : `${evaluation.localisations.length} zone(s) sélectionnée(s).`}
-            </p>
+        
 
-<div className="silhouette-container">
-    <img
-        src={silhouette}
-        className="silhouette"
-        alt="Silhouette du corps vue de face"
-    />
+<div className="body-container">
+    <p className="answer" aria-live="polite">
+        {evaluation.localisations.length === 0
+            ? "Vous devez sélectionner au moins une zone."
+            : `${evaluation.localisations.length} zone(s) sélectionnée(s).`}
+    </p>
 
-    {localisations.map((localisation) => (
+    <div className="silhouette-container">
+        <img
+            src={silhouette}
+            className="silhouette"
+            alt="Silhouette du corps vue de face"
+        />
+
+        {localisations.map((localisation) => (
+            <button
+                type="button"
+                key={localisation.id}
+                onClick={() => handleZoneClick(localisation.id)}
+                aria-pressed={evaluation.localisations.includes(localisation.id)}
+                className={`btn2 ${localisation.id} ${
+                    evaluation.localisations.includes(localisation.id)
+                        ? "selected"
+                        : ""
+                }`}
+            >
+                {localisation.label}
+            </button>
+        ))}
+    </div>
+
+    <div className="btn-container">
         <button
             type="button"
-            key={localisation.id}
-            onClick={() => handleZoneClick(localisation.id)}
-            aria-pressed={evaluation.localisations.includes(localisation.id)}
-            className={`btn2 ${localisation.id} ${
-                evaluation.localisations.includes(localisation.id)
-                    ? "selected"
-                    : ""
-            }`}
+            disabled={evaluation.localisations.length === 0}
+            onClick={handleContinue}
+            className="btn"
         >
-            {localisation.label}
+            Continuer à analyser
         </button>
-    ))}
+    </div>
 </div>
-            <div className="btn-container">
-                <button type="button" disabled={evaluation.localisations.length === 0} onClick={handleContinue} className="btn">
-                    Continuer à analyser
-                </button>
-            </div>
-        </div>
     );
 };
 

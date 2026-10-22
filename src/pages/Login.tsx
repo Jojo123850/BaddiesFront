@@ -120,12 +120,13 @@ export default function Login() {
                     <Link to="/ForgotPassword">Mot de passe oublié ?</Link>
                 </div>
 
-                <p className="paraRegister">
-                    Pas encore de compte ? <Link to="/Register" className="login">S'inscrire</Link>
-                </p>
+               
 
                 <button type="submit" className="btn" disabled={loading}>Connexion</button>
             </form>
+             <p className="paraRegister">
+                    Pas encore de compte ? <Link to="/Register" className="login">S'inscrire</Link>
+            </p>
         </main>
     );
 }
