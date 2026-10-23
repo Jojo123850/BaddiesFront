@@ -104,9 +104,12 @@ export default function Navbar() {
 
       <header className="app-header">
 
+
+
         {/* HEADER COMMUN MOBILE ET DESKTOP */}
 
         <div className="topNav">
+
 
           {/* LOGO AVEC TEXTE AU SURVOL */}
 
@@ -128,6 +131,8 @@ export default function Navbar() {
               BADDIES
             </span>
           </Link>
+
+
 
           {/* NAVIGATION DESKTOP */}
 
@@ -152,6 +157,7 @@ export default function Navbar() {
             </NavLink>
           </nav>
 
+
           {/* AVATAR */}
 
           <button
@@ -174,8 +180,8 @@ export default function Navbar() {
 
         </div>
 
-        {/* NAVIGATION MOBILE */}
 
+        {/* NAVIGATION MOBILE */}
         <nav
           className="bottomNav"
           aria-label="Navigation principale mobile"
