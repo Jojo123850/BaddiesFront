@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import "../styles/register.scss";
 
 
+
 export function ForgotPassword() {
     const [email, setEmail] = useState<string>("")
     const [message, setMessage] = useState<string>("")
@@ -21,7 +22,7 @@ export function ForgotPassword() {
                         email,
                         controller.signal
                     )
-                    setMessage(datas.message)
+                    setMessage(datas.detail)
                     setMessageType("success")
                 } catch (err) {
                     if (err instanceof Error && err.name !== "AbortError") {
@@ -36,7 +37,7 @@ export function ForgotPassword() {
                     Entrez votre Email :
                 </label>
                 <div className="wave-group">
-                    <input name="email"  id="email"  className="input" required  value={email} onChange={(e) => setEmail(e.target.value)}  />
+                    <input name="email"  id="email"   type="email" className="input" required  value={email} onChange={(e) => setEmail(e.target.value)}  />
                     <label className="label"htmlFor="email">                                           {"Email".split("").map (
                             (lettre, index) => (
                                  <span  key={index}  className="label-char"   style={{ "--index":    index } as CSSProperties} >

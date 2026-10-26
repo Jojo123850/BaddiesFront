@@ -1,232 +1,405 @@
 
+import {  SESSION_EXPIRED_MESSAGE,  notifySessionExpired  } from "./sessionService"
 
 export const BASE_URL = 'http://localhost:3001'
 
 export type ProfileUser = {
-    id: number;
-    pseudo: string;
-    email: string;
-    avatar_url: string | null;
-};
+    id: number
+    pseudo: string
+    email: string
+    avatar_url: string | null
+}
+export type ApiMessageResponse = {
+    title: string
+    status: number
+    detail: string
+}
+export type ProfileUpdate = {
+    pseudo?: string
+    email?: string
+    avatar_url?: string
+    password?: string
+}
 
-type ProfileUpdate = {
-    pseudo: string;
-    email: string;
-    avatar_url: string;
-};
+type ApiError = {
+    title?: string
+    detail?: string
+    message?: string
+    error?: string
+}
 
-const refreshAccessToken = async (): Promise<string> => {
-    const refreshToken = localStorage.getItem("refreshToken");
+type AuthResponse = {
+    accessToken: string
+    refreshToken: string
+    user: ProfileUser
+}
 
-    if (!refreshToken) {
-        throw new Error("Session expirée. Veuillez vous reconnecter.");
-    }
+type RegisterResponse = {
+    token: string
+    user: ProfileUser
+}
 
-    const response = await fetch(`${BASE_URL}/api/v1/auth/refresh`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ token: refreshToken })
-    });
+type RefreshResponse = {
+    accessToken: string
+    refreshToken: string
+}
+
+// Extraire les messages d'erreur du backend
+const getErrorMessage = (
+    data: ApiError | null,
+    status: number
+): string => {
+    return (
+        data?.detail ||
+        data?.title ||
+        data?.message ||
+        data?.error ||
+        `Erreur HTTP : ${status}`
+    )
+}
+
+// Lire une réponse JSON
+const readJson = async <T>(
+    response: Response
+): Promise<T> => {
+    const data = await response.json().catch(() => null)
 
     if (!response.ok) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
-        throw new Error("Session expirée. Veuillez vous reconnecter.");
+        throw new Error(
+            getErrorMessage(data as ApiError | null, response.status)
+        )
     }
 
-    const data = await response.json();
-    localStorage.setItem("token", data.accessToken);
+    return data as T
+}
 
-    return data.accessToken;
-};
+// Enregistrer les tokens
+const saveTokens = (
+    accessToken: string,
+    refreshToken: string
+): void => {
+    localStorage.setItem('token', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+}
 
+// Effacer la session locale
+const clearSession = (): void => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+}
+
+const sessionExpired = (): Error => {
+    clearSession()
+    notifySessionExpired()
+
+    return new Error(SESSION_EXPIRED_MESSAGE)
+}
+
+
+// Une seule opération de refresh à la fois
+let refreshPromise: Promise<string> | null = null
+
+const refreshAccessToken = async (): Promise<string> => {
+    if (refreshPromise) {
+        return refreshPromise
+    }
+
+    refreshPromise = (async () => {
+        const refreshToken = localStorage.getItem('refreshToken')
+
+       if (!refreshToken) {
+            throw sessionExpired()
+        }
+
+        let response: Response
+
+        try {
+            response = await fetch(
+                `${BASE_URL}/api/v1/auth/refresh`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: refreshToken
+                    })
+                }
+            )
+        } catch {
+            throw new Error(
+                'Impossible de contacter le serveur.'
+            )
+        }
+
+if (!response.ok) {
+    if (response.status === 400 || response.status === 401) {
+        throw sessionExpired()
+    }
+
+    const data = await response.json().catch(() => null)
+
+    throw new Error(
+        getErrorMessage(data, response.status)
+    )
+}
+
+        const data = await response.json() as RefreshResponse
+
+        if (
+            typeof data.accessToken !== 'string' ||
+            typeof data.refreshToken !== 'string'
+        ) {
+            throw new Error(
+                'Réponse de renouvellement invalide.'
+            )
+        }
+
+        // IMPORTANT : sauvegarder les DEUX nouveaux tokens
+        saveTokens(data.accessToken, data.refreshToken)
+
+        return data.accessToken
+    })()
+
+    try {
+        return await refreshPromise
+    } finally {
+        refreshPromise = null
+    }
+}
+
+// Envoyer une requête authentifiée
 export const fetchWithAuth = async (
     url: string,
     options: RequestInit = {}
 ): Promise<Response> => {
-    let accessToken = localStorage.getItem("token");
+    let accessToken = localStorage.getItem('token')
 
     if (!accessToken) {
-        throw new Error("Veuillez vous connecter.");
+        throw new Error('Veuillez vous connecter.')
     }
 
-    const sendRequest = (token: string) => {
-        const headers = new Headers(options.headers);
-        headers.set("Authorization", `Bearer ${token}`);
+    const sendRequest = (token: string): Promise<Response> => {
+        const headers = new Headers(options.headers)
+
+        headers.set('Authorization', `Bearer ${token}`)
 
         return fetch(url, {
             ...options,
             headers
-        });
-    };
+        })
+    }
 
-    let response = await sendRequest(accessToken);
+    let response = await sendRequest(accessToken)
 
     if (response.status === 401) {
-        accessToken = await refreshAccessToken();
-        response = await sendRequest(accessToken);
+        // Une autre requête a peut-être déjà renouvelé
+        // le token entre-temps
+        const currentToken = localStorage.getItem('token')
+
+        if (currentToken && currentToken !== accessToken) {
+            accessToken = currentToken
+        } else {
+            accessToken = await refreshAccessToken()
+        }
+
+        // Réessayer une seule fois
+        response = await sendRequest(accessToken)
     }
 
-    return response;
-};
+    return response
+}
 
+// SERVICES API
 export const apiService = {
-    async getPosts(signal:AbortSignal) {
 
-            const req = await fetch(`${BASE_URL}/posts`, {
-                signal
-            })
+    // POSTS
+    async getPosts(signal: AbortSignal) {
+        const response = await fetch(
+            `${BASE_URL}/posts`,
+            { signal }
+        )
 
-            if(!req.ok){
-                throw new Error(`Error HTTP:${req.status}`)
-            }
-
-            return await req.json()
-            
-      
+        return readJson(response)
     },
 
-async login(email: string, password: string, signal: AbortSignal) {
-    const req = await fetch(`${BASE_URL}/api/v1/auth/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password }),
-        signal
-    })
-
-    const data = await req.json()
-
-    if (!req.ok) {
-        throw new Error(
-            data.message ||
-            data.error ||
-            `Erreur HTTP : ${req.status}`
+    // CONNEXION
+    async login(
+        email: string,
+        password: string,
+        signal: AbortSignal
+    ): Promise<AuthResponse> {
+        const response = await fetch(
+            `${BASE_URL}/api/v1/auth/login`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                }),
+                signal
+            }
         )
-    }
 
-    return data
-},
+        const data = await readJson<AuthResponse>(response)
 
+        if (
+            typeof data.accessToken !== 'string' ||
+            typeof data.refreshToken !== 'string'
+        ) {
+            throw new Error('Réponse de connexion invalide.')
+        }
 
- async register(email: string, password: string, pseudo:string, signal: AbortSignal) {
-    const req = await fetch(`${BASE_URL}/api/v1/auth/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ pseudo, email, password }),
-        signal
-    })
+        saveTokens(data.accessToken, data.refreshToken)
 
-    if (!req.ok) {
-        const errorData = await req.json()
+        return data
+    },
 
-          throw new Error(
-            errorData.detail ||
-            errorData.title ||
-            errorData.error ||
-            errorData.message ||
-            `Error HTTP: ${req.status}`
-    )
-    }
-
-    return await req.json()
-},
-
-
-async forgotPassword(email: string, signal: AbortSignal) {
-    const req = await fetch(`${BASE_URL}/api/v1/auth/forgotPassword`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email}),
-        signal
-    })
-
-    if (!req.ok) {
-        const errorData = await req.json()
-
-        throw new Error(
-            errorData.error || errorData.message || `Error HTTP: ${req.status}`
+    // INSCRIPTION
+    async register(
+        email: string,
+        password: string,
+        pseudo: string,
+        signal: AbortSignal
+    ): Promise<RegisterResponse> {
+        const response = await fetch(
+            `${BASE_URL}/api/v1/auth/register`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pseudo,
+                    email,
+                    password
+                }),
+                signal
+            }
         )
-    }
 
-    return await req.json()
-},
+        const data = await readJson<RegisterResponse>(response)
 
+        // Le backend retourne un JWT mais pas de refresh token
+        // Il est préférable de rediriger vers la connexion
+        // après inscription.
+        return data
+    },
 
-
-async resetPassword(
-    token: string,
-    newPassword: string,
+    // MOT DE PASSE OUBLIÉ
+    async forgotPassword(
+    email: string,
     signal: AbortSignal
-) {
-    const req = await fetch(
-        `${BASE_URL}/api/v1/auth/resetPassword`,
+): Promise<ApiMessageResponse> {
+    const response = await fetch(
+        `${BASE_URL}/api/v1/auth/forgotPassword`,
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                token,
-                newPassword
-            }),
+            body: JSON.stringify({ email }),
             signal
         }
     )
 
-    if (!req.ok) {
-        const errorData = await req.json()
-
-        throw new Error(
-            errorData.error ||
-            errorData.message ||
-            `Error HTTP: ${req.status}`
-        )
-    }
-
-    return await req.json()
+    return readJson<ApiMessageResponse>(response)
 },
-async updateProfile(profile: ProfileUpdate): Promise<ProfileUser> {
-    const response = await fetchWithAuth(
-        `${BASE_URL}/api/v1/user/profile`,
-        {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(profile)
-        }
-    );
 
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(
-            data?.message ||
-            data?.error ||
-            `Erreur HTTP : ${response.status}`
-        );
-    }
-
-    const user = data?.user;
-
-    if (
-        !user ||
-        !Number.isSafeInteger(Number(user.id)) ||
-        typeof user.pseudo !== "string" ||
-        typeof user.email !== "string" ||
-        !(user.avatar_url === null || typeof user.avatar_url === "string")
+    // RÉINITIALISATION DU MOT DE PASSE
+    async resetPassword(
+        token: string,
+        newPassword: string,
+        signal: AbortSignal
     ) {
-        throw new Error("Réponse du serveur invalide.");
-    }
+        const response = await fetch(
+            `${BASE_URL}/api/v1/auth/resetPassword`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token,
+                    newPassword
+                }),
+                signal
+            }
+        )
 
-    return user;
-}
+        return readJson(response)
+    },
+
+    // MODIFICATION DU PROFIL
+    async updateProfile(
+        profile: ProfileUpdate
+    ): Promise<ProfileUser> {
+        const response = await fetchWithAuth(
+            `${BASE_URL}/api/v1/user/profile`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(profile)
+            }
+        )
+
+        const data = await readJson<{
+            user: ProfileUser
+        }>(response)
+
+        const user = data?.user
+
+        if (
+            !user ||
+            !Number.isSafeInteger(Number(user.id)) ||
+            typeof user.pseudo !== 'string' ||
+            typeof user.email !== 'string' ||
+            !(
+                user.avatar_url === null ||
+                typeof user.avatar_url === 'string'
+            )
+        ) {
+            throw new Error(
+                'Réponse du serveur invalide.'
+            )
+        }
+
+        // Un changement de mot de passe révoque
+        // les refresh tokens côté backend.
+        if (profile.password !== undefined) {
+            clearSession()
+        }
+
+        return user
+    },
+
+    // DÉCONNEXION
+    async logout(): Promise<void> {
+        const refreshToken =
+            localStorage.getItem('refreshToken')
+
+        try {
+            if (refreshToken) {
+                await fetch(
+                    `${BASE_URL}/api/v1/auth/logout`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            token: refreshToken
+                        })
+                    }
+                )
+            }
+        } finally {
+            clearSession()
+        }
+    }
 }

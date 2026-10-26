@@ -26,6 +26,8 @@ import hydratation from "../assets/images/hydratation.webp";
 import tabac from "../assets/images/eviter_tabac.webp";
 import { CheckCircle2} from "lucide-react";
 
+
+
 const imagesSolutions: Record<string, string> = {
     chaleur,
     bain_douche_chaude: bain,
@@ -461,19 +463,31 @@ const handleDownloadPDF = () => {
 
         setSaved(true);
     } catch (error) {
-        console.error("Erreur pendant la sauvegarde :", error);
+    console.error("Échec de sauvegarde API History :", error)
 
-        try {
-            saveEvaluation(evaluation, solutionsFiltre);
-            setSaved(true);
+    try {
+        saveEvaluation(evaluation, solutionsFiltre)
+        setSaved(true)
+
+        if (
+            error instanceof Error &&
+            error.message ===
+                "Session expirée. Veuillez vous reconnecter."
+        ) {
             setMessage(
-                "Le serveur ne répond pas : enregistré sur cet appareil."
-            );
-        } catch (localError) {
-            console.error("Erreur de sauvegarde locale :", localError);
-            setMessage("Impossible d'enregistrer. Réessaie.");
+                "Session expirée. Veuillez vous reconnecter. " +
+                "Votre évaluation a été conservée sur cet appareil."
+            )
+        } else {
+            setMessage(
+                "Enregistrement sur le compte impossible. " +
+                "Votre évaluation a été conservée sur cet appareil."
+            )
         }
+    } catch {
+        setMessage("Impossible d'enregistrer. Réessaie.")
     }
+}
 };
 
 

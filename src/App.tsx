@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { EvaluationProvider } from "./evaluation/evaluationContext";
 import NotFound from "./pages/NotFound";
 import Notice from "./pages/legaleNotice";
+import SessionExpiredModal from "./components/SessionExpiredModal"
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -58,6 +59,7 @@ function RequireCountry() {
 export default function App() {
   return (
     <EvaluationProvider>
+      <SessionExpiredModal/>
       <Suspense fallback={ 
           <main className="loading1" role="status" aria-label="Connexion en cours">
         <div className="container">
