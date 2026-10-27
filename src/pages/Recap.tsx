@@ -22,11 +22,6 @@ const intensityImages: Record<string, string> = {
   intense,
 };
 
-const intensityLabels: Record<string, string> = {
-  legere: "Douleur légère",
-  moderee: "Douleur modérée",
-  intense: "Douleur intense",
-};
 
 
 export default function Recap() {
@@ -42,7 +37,7 @@ export default function Recap() {
 const intensityLabel =
     db.evaluation_douleur.echelle_intensite.niveaux.find(
         (niveau) => niveau.id === evaluation.intensiteNiveau
-    )?.label ?? "Intensité non renseignée";;
+    )?.label ?? "Intensité non renseignée";
 
   const localisationLabel =
     evaluation.localisations

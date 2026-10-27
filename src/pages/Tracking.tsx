@@ -7,6 +7,7 @@ import { History } from "../components/History";
 
 import type { HistoryEvaluation } from "../services/localStorageService";
 import { getHistory } from "../services/historyService";
+import db from "../data/db.json";
 
 import "../styles/tracking.scss";
 
@@ -57,11 +58,12 @@ export default function Tracking() {
     }, []);
 
     // Repères visuels uniquement : les réponses enregistrées ne sont pas modifiées.
-    const niveauxQuestionnaire: Record<string, number> = {
-        legere: 2,
-        moderee: 5,
-        intense: 8,
-    };
+    const niveauxQuestionnaire: Record<string, number> = Object.fromEntries(
+        db.evaluation_douleur.echelle_intensite.niveaux.map((niveau) => [
+            niveau.id,
+            Math.floor((niveau.min + niveau.max) / 2),
+        ])
+    );
 
     const evaluations = [...history]
         .filter((item) => !Number.isNaN(new Date(item.date).getTime()))
