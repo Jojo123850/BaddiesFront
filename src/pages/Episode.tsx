@@ -171,8 +171,11 @@ export default function Episode() {
 
                             <p>
                                 Contexte :{" "}
-                                {episode.evaluation.contextes ||
-                                    "Non renseigné"}
+                                {db.contextes.find(
+                                    (contexte) =>
+                                        contexte.id.replace(/\//g, "_") ===
+                                        episode.evaluation.contextes?.replace(/\//g, "_")
+                                )?.label ?? "Contexte non renseigné"}
                             </p>
 
                             <p>

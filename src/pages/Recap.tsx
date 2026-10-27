@@ -39,9 +39,10 @@ export default function Recap() {
     ? intensityImages[evaluation.intensiteNiveau]
     : null;
 
-  const intensityLabel = evaluation.intensiteNiveau
-    ? intensityLabels[evaluation.intensiteNiveau] ?? "Douleur"
-    : "Intensité non renseignée";
+const intensityLabel =
+    db.evaluation_douleur.echelle_intensite.niveaux.find(
+        (niveau) => niveau.id === evaluation.intensiteNiveau
+    )?.label ?? "Intensité non renseignée";;
 
   const localisationLabel =
     evaluation.localisations

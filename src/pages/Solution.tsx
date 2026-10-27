@@ -218,36 +218,77 @@ const handleDownloadPDF = () => {
         pdf.setTextColor(...colors.pink);
 
         const intensity = evaluation.intensiteValeur;
+        const intensityLabel =
+            db.evaluation_douleur.echelle_intensite.niveaux.find(
+                (niveau) => niveau.id === evaluation.intensiteNiveau
+            )?.label ?? "Non renseignée";
 
         pdf.text(
-            intensity == null
-                ? "Non renseignée"
-                : `${intensity}/10`,
+            intensity == null ? intensityLabel : `${intensity}/10`,
             margin + 9,
             y + 27
         );
 
         y += 47;
 
-        // Symptômes
-        pdf.setFontSize(10);
-        pdf.setFont("helvetica", "bold");
-        pdf.setTextColor(...colors.black);
-        pdf.text("SYMPTÔMES RENSEIGNÉS", margin, y);
+        // Réponses affichées avec les libellés de db.json.
+        const localisationLabel = evaluation.localisations
+            .map((id) =>
+                db.evaluation_douleur.localisations.find(
+                    (localisation) => localisation.id === id
+                )?.label ?? "Zone indisponible"
+            )
+            .join(", ") || "Non renseignée";
 
-        y += 7;
+        const contexteLabel = db.contextes.find(
+            (contexte) =>
+                contexte.id.replace(/\//g, "_") ===
+                evaluation.contextes?.replace(/\//g, "_")
+        )?.label ?? "Contexte non renseigné";
 
-        pdf.setFont("helvetica", "normal");
-        pdf.setTextColor(...colors.gray);
-        pdf.setFontSize(10);
+        const caractereLabel =
+            db.evaluation_douleur.caractere_habituel.options.find(
+                (option) => option.id === evaluation.option
+            )?.label ?? "Non renseigné";
 
-        const symptoms = pdf.splitTextToSize(
-            evaluation.symptomes.join(", ") || "Aucun symptôme renseigné",
-            contentWidth
-        );
+        const symptomesLabel = evaluation.symptomes
+            .map((id) =>
+                db.evaluation_douleur.symptomes.find(
+                    (symptome) => symptome.id === id
+                )?.label ?? "Symptôme indisponible"
+            )
+            .join(", ") || "Aucun symptôme renseigné";
 
-        pdf.text(symptoms, margin, y);
-        y += symptoms.length * 5 + 17;
+        // Passe à une nouvelle page si nécessaire pour éviter les débordements.
+        const addResponse = (title: string, value: string) => {
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            const lines: string[] = pdf.splitTextToSize(value, contentWidth);
+
+            if (y + 12 > bottomLimit) newPage();
+
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(10);
+            pdf.setTextColor(...colors.black);
+            pdf.text(title, margin, y);
+            y += 7;
+
+            lines.forEach((line) => {
+                if (y + 5 > bottomLimit) newPage();
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(10);
+                pdf.setTextColor(...colors.gray);
+                pdf.text(line, margin, y);
+                y += 5;
+            });
+
+            y += 10;
+        };
+
+        addResponse("LOCALISATION DE LA DOULEUR", localisationLabel);
+        addResponse("CONTEXTE", contexteLabel);
+        addResponse("CARACTÈRE DE LA DOULEUR", caractereLabel);
+        addResponse("SYMPTÔMES RENSEIGNÉS", symptomesLabel);
 
         // Section solutions
         if (y > bottomLimit - 35) {
