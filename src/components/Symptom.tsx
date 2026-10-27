@@ -15,7 +15,7 @@ export default function Symptom() {
     );
 
     const isYesSelected = isOpen;
-    const isNoSelected = !isOpen;
+    const isNoSelected = evaluation.symptomes.includes("aucun");
 
 
     const handleYes = () => {

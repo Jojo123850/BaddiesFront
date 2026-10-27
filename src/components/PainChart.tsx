@@ -13,6 +13,7 @@ import "../styles/painChart.scss";
 type ChartEvaluation = {
   date: string;
   intensite: number;
+  questionnaire?: boolean;
 };
 
 type PainChartProps = {
@@ -31,14 +32,30 @@ export function PainChart({ evaluations }: PainChartProps) {
   return (
     <div className="Pain-chart">
       <ResponsiveContainer width="100%" height="100%">
-          <LineChart   data={evaluations}  margin={{top:10, right:10, left:0, bottom:5,}} >
-          <CartesianGrid  strokeDasharray="3 3"   className="chart-grid"/>
+        <LineChart data={evaluations} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
           <XAxis dataKey="date" />
-          <YAxis domain={[0, 10]} allowDecimals={false}  width={28}/>
-          <Tooltip />
-          <Line type="monotone" dataKey="intensite" stroke="#741D2D" strokeWidth={3}  dot={{ r: 5, fill: "#741D2D" }} activeDot={{ r: 7 }} />
+          <YAxis domain={[0, 10]} allowDecimals={false} width={28} />
+          <Tooltip
+            formatter={(value, _name, item) => {
+              if (item.payload?.questionnaire) {
+                const niveau = value === 2 ? "Légère" : value === 5 ? "Modérée" : "Intense";
+                return [`Douleur ${niveau}`];
+              }
+               return [` ${value}/10`, "Intensité"];
+            }}
+          />
+          <Line
+            type="monotone"
+            dataKey="intensite"
+            stroke="#741D2D"
+            strokeWidth={3}
+            dot={{ r: 5, fill: "#741D2D" }}
+            activeDot={{ r: 7 }}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
 }
+

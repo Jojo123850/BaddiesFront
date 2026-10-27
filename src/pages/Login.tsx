@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import type { CSSProperties, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { apiService } from "../services/apiService";
 import "../styles/register.scss";
@@ -14,6 +14,15 @@ export default function Login() {
     const [messageType, setMessageType] = useState<"error" | "success" | "">("");
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Ce code récupère la page d'origine et vérifie que c'est un chemin interne valide.
+    const from =
+    typeof location.state?.from === "string" &&
+    location.state.from.startsWith("/") &&
+    !location.state.from.startsWith("//")
+        ? location.state.from
+        : "/Home";
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -36,7 +45,10 @@ export default function Login() {
             const country = localStorage.getItem("country");
             const hasCountry = country === "Mada" || country === "France";
 
-            navigate(hasCountry ? "/Home" : "/Country", { replace: true });
+            navigate(hasCountry ? from : "/Country", {
+                replace: true
+            });
+            
         } catch (err) {
             if (err instanceof Error && err.name !== "AbortError") {
                 setMessage(err.message);

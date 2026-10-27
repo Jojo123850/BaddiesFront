@@ -4,6 +4,7 @@ import type { HistoryEvaluation } from "../services/localStorageService";
 import { useNavigate } from "react-router-dom";
 import { getHistory } from "../services/historyService";
 import { MapPin } from "lucide-react";
+import db from "../data/db.json";
 
 import "../styles/tracking.scss";
 
@@ -125,13 +126,21 @@ export function History() {
                             <div className="blocHistory">
                                 <p className="date">{new Date(item.date).toLocaleDateString("fr-FR",{ day: "numeric", month: "long", year: "numeric" })}              
                                 </p>
-                                <p className="paraHistory">{item.evaluation.intensiteNiveau} </p>
+                               <p className="paraHistory">
+                                    {db.evaluation_douleur.echelle_intensite.niveaux.find(
+                                        (niveau) => niveau.id === item.evaluation.intensiteNiveau
+                                    )?.label ?? "Intensité non renseignée"}
+                                </p>
                             </div>
                             <div className="zone">
                                     <MapPin className="map" aria-hidden="true" />
                                     <p>{item.evaluation.localisations.join(", ") || "Non renseignée"}</p>
                             </div>
-                                <p className="intensity"> {item.evaluation.intensiteValeur ?? "?"}/10  </p>
+                                {item.evaluation.intensiteValeur != null && (
+                                    <p className="intensity">
+                                        {item.evaluation.intensiteValeur}/10
+                                    </p>
+                                )}
                             </div>
 
                             <button type="button" className="btnEpisode" onClick={() => navigate(`/Historique/${item.id}`)}>

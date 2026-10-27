@@ -21,12 +21,15 @@ export default function IntensityPainB () {
         <h2 className="analyse">Intensité de la douleur</h2>
         <p className="analyse">Quelle est l’intensité de votre douleur ?</p>
         {evaluation.intensiteNiveau === null && <p className="answer"> Vous devez cliquer avant de continuer</p>}
+       
         <div className="intensity-btn">
             {db.evaluation_douleur.echelle_intensite.niveaux.map((item) => (
                     <button  key={item.id}   className={`btnIntensity ${  evaluation.   intensiteNiveau === item.id  ? "selected" : ""  }`}  onClick={() =>
                     setEvaluation((prev) => ({
-                            ...prev,
-                            intensiteNiveau: item.id }))}>
+                        ...prev,
+                        intensiteNiveau: item.id,
+                        intensiteValeur: null
+                    }))}>
                         {item.label}
                     </button>
                 ))}

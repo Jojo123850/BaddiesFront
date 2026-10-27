@@ -1,8 +1,8 @@
-import { useEffect, useState,  } from "react"
+import { useEffect, useState  } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import {
-    SESSION_EXPIRED_EVENT
-} from "../services/sessionService"
+import { SESSION_EXPIRED_EVENT} from "../services/sessionService"
+    
+
 
 export default function SessionExpiredModal() {
     const [isOpen, setIsOpen] = useState(false)
@@ -28,13 +28,7 @@ export default function SessionExpiredModal() {
         }
     }, [])
 
-    // Fermer la fenêtre lorsque l'utilisateur arrive
-    // sur la page de connexion.
-    useEffect(() => {
-        if (location.pathname.toLowerCase() === "/login") {
-            setIsOpen(false)
-        }
-    }, [location.pathname])
+
 
     const handleReconnect = () => {
         setIsOpen(false)

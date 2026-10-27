@@ -9,6 +9,7 @@ import {
 } from "../services/historyService";
 
 import "../styles/episode.scss";
+import db from "../data/db.json";
 
 export default function Episode() {
     const { id } = useParams();
@@ -138,6 +139,21 @@ export default function Episode() {
                             <h2 id="episode-details-title">
                                 Détails de mon évaluation
                             </h2>
+                            <p>
+                            {" "}
+                            {db.evaluation_douleur.echelle_intensite.niveaux.find(
+                                (niveau) => niveau.id === episode.evaluation.intensiteNiveau
+                            )?.label ?? (
+                                episode.evaluation.intensiteValeur != null
+                                    ? "Intensité renseignée"
+                                    : "Non renseignée"
+                            )}
+
+                            {episode.evaluation.intensiteValeur != null && (
+                                <> ({episode.evaluation.intensiteValeur}/10)</>
+                            )}
+                        </p>
+
 
                             <p>
                                 Date :{" "}
@@ -146,19 +162,7 @@ export default function Episode() {
                                 )}
                             </p>
 
-                            <p>
-                                Douleur :{" "}
-                                {episode.evaluation.intensiteValeur != null
-                                    ? `${episode.evaluation.intensiteValeur}/10`
-                                    : "Non renseignée"}
-                            </p>
-
-                            <p>
-                                Intensité :{" "}
-                                {episode.evaluation.intensiteNiveau ||
-                                    "Non renseignée"}
-                            </p>
-
+                            
                             <p>
                                 Localisation :{" "}
                                 {episode.evaluation.localisations.join(", ") ||

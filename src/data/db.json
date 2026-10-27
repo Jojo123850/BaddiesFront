@@ -14,22 +14,22 @@
       "max": 10,
       "niveaux": [
         {
-          "id": "legere",
+          "id": "légère",
           "min": 1,
           "max": 3,
-          "label": "DOULEUR LÉGÈRE"
+          "label": "Douleur légère"
         },
         {
           "id": "moderee",
           "min": 4,
           "max": 6,
-          "label": "DOULEUR MODÉRÉE"
+          "label": "Douleur modérée"
         },
         {
           "id": "intense",
           "min": 7,
           "max": 10,
-          "label": "DOULEUR MAXIMALE"
+          "label": "Douleur maximale"
         }
       ]
     },
@@ -132,7 +132,6 @@
         "id": "aucun",
         "label": "Aucun"
       }
-
     ],
     "impact_quotidien": {
       "question": "Quel est l'impact de ta douleur sur ta journée ?",
@@ -230,125 +229,213 @@
       "img": "../src/assets/images/car.webp"
     }
   ],
-"solutions": [
-  {
-    "id": "chaleur",
-    "label": "Source de chaleur",
-    "description": "Appliquer une source de chaleur sur le bas du ventre ou le dos si cela apporte du soulagement.",
-    "image": "/images/chaleur.webp",
-    "contextes": ["maison", "travail_ecole"],
-    "localisations": ["pelvis", "dos"],
-    "intensites": ["legere", "moderee", "intense"],
-    "source": "ameli"
-  },
-  {
-    "id": "bain_douche_chaude",
-    "label": "Bain ou douche chaude",
-    "description": "Prendre un bain ou une douche chaude à domicile pour favoriser la détente et diminuer l'inconfort.",
-    "image": "/images/bain_douche_chaude.webp",
-    "contextes": ["maison"],
-    "localisations": ["pelvis", "dos", "cuisses"],
-    "source": "ameli"
-  },
-  {
-    "id": "massage_doux",
-    "label": "Massage doux",
-    "description": "Masser doucement le ventre ou la zone douloureuse si cela apporte du confort.",
-    "image": "/images/massage_doux.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "localisations": ["pelvis", "dos", "cuisses"],
-    "source": "ameli"
-  },
-  {
-    "id": "exercice_doux",
-    "label": "Exercice doux",
-    "description": "Pratiquer une activité physique douce comme la marche ou la natation, selon ce qui est confortable et possible.",
-    "image": "/images/exercice_doux.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "localisations": ["pelvis", "dos", "cuisses"],
-    "source": "ameli"
-  },
-  {
-    "id": "activite_physique_reguliere",
-    "label": "Activité physique régulière",
-    "description": "Maintenir une activité physique régulière peut contribuer à réduire les symptômes menstruels chez certaines personnes.",
-    "image": "/images/activite_physique_reguliere.webp",
-    "contextes": ["maison", "travail_ecole", "exterieur"],
-    "source": "msd"
-  },
-  {
-    "id": "sommeil",
-    "label": "Favoriser un bon sommeil",
-    "description": "Dormir suffisamment et conserver autant que possible un rythme de sommeil régulier peut aider à mieux gérer les symptômes.",
-    "image": "/images/sommeil.webp",
-    "contextes": ["maison"],
-    "symptomes_cibles": ["fatigue", "irritabilite", "nervosite", "anxiete"],
-    "source": "msd"
-  },
-  {
-    "id": "repos",
-    "label": "Repos et position confortable",
-    "description": "S'installer dans une position confortable et prendre un moment de repos lorsque la douleur ou la fatigue le nécessite.",
-    "image": "/images/repos.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "symptomes_cibles": ["fatigue", "malaise"],
-    "source": "msd"
-  },
-  {
-    "id": "relaxation",
-    "label": "Relaxation et respiration",
-    "description": "Prendre quelques minutes pour respirer lentement, se détendre ou pratiquer une activité de relaxation peut aider à gérer le stress et l'anxiété associés.",
-    "image": "/images/relaxation.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "symptomes_cibles": ["anxiete", "nervosite", "irritabilite"],
-    "source": "msd"
-  },
-  {
-    "id": "alimentation_equilibree",
-    "label": "Alimentation équilibrée",
-    "description": "Maintenir une alimentation variée et équilibrée peut contribuer au bien-être général pendant les règles.",
-    "image": "/images/alimentation_equilibree.webp",
-    "contextes": ["maison", "travail_ecole", "exterieur"],
-    "source": "soutien_general",
-    "note": "L'application ne doit pas présenter l'alimentation comme un traitement médical de la dysménorrhée."
-  },
-  {
-    "id": "alimentation_pauvre_en_graisses",
-    "label": "Alimentation pauvre en graisses",
-    "description": "Une alimentation globalement moins riche en graisses a été étudiée pour les douleurs menstruelles, mais les preuves de son efficacité restent limitées.",
-    "image": "/images/alimentation_pauvre_en_graisses.webp",
-    "contextes": ["maison"],
-    "source": "msd",
-    "note": "À présenter comme une piste de mode de vie et non comme un traitement garanti."
-  },
-  {
-    "id": "reduction_stress",
-    "label": "Réduire le stress",
-    "description": "Prendre des moments de pause et utiliser des techniques de relaxation peut aider lorsque le stress ou l'anxiété accompagnent les symptômes menstruels.",
-    "image": "/images/reduction_stress.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "symptomes_cibles": ["anxiete", "nervosite", "irritabilite"],
-    "source": "msd"
-  },
-  {
-    "id": "hydratation",
-    "label": "Boire régulièrement",
-    "description": "Boire régulièrement de l'eau et rester correctement hydratée participe au bien-être général.",
-    "image": "/images/hydratation.webp",
-    "contextes": ["maison", "travail_ecole", "transport", "exterieur"],
-    "symptomes_cibles": ["fatigue", "malaise"],
-    "source": "soutien_general",
-    "note": "Cette recommandation ne constitue pas un traitement spécifique de la dysménorrhée."
-  },
-  {
-    "id": "eviter_tabac",
-    "label": "Éviter le tabac",
-    "description": "Le tabagisme peut être un facteur aggravant des douleurs menstruelles. Réduire ou arrêter le tabac peut donc être bénéfique pour la santé générale.",
-    "image": "/images/eviter_tabac.webp",
-    "contextes": ["maison", "exterieur"],
-    "source": "ameli"
-  }
-],
+  "solutions": [
+    {
+      "id": "chaleur",
+      "label": "Source de chaleur",
+      "description": "Appliquer une source de chaleur sur le bas du ventre ou le dos si cela apporte du soulagement.",
+      "image": "/images/chaleur.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos"
+      ],
+      "intensites": [
+        "légère",
+        "moderee",
+        "intense"
+      ],
+      "source": "ameli"
+    },
+    {
+      "id": "bain_douche_chaude",
+      "label": "Bain ou douche chaude",
+      "description": "Prendre un bain ou une douche chaude à domicile pour favoriser la détente et diminuer l'inconfort.",
+      "image": "/images/bain_douche_chaude.webp",
+      "contextes": [
+        "maison"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+    {
+      "id": "massage_doux",
+      "label": "Massage doux",
+      "description": "Masser doucement le ventre ou la zone douloureuse si cela apporte du confort.",
+      "image": "/images/massage_doux.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+    {
+      "id": "exercice_doux",
+      "label": "Exercice doux",
+      "description": "Pratiquer une activité physique douce comme la marche ou la natation, selon ce qui est confortable et possible.",
+      "image": "/images/exercice_doux.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "localisations": [
+        "pelvis",
+        "dos",
+        "cuisses"
+      ],
+      "source": "ameli"
+    },
+    {
+      "id": "activite_physique_reguliere",
+      "label": "Activité physique régulière",
+      "description": "Maintenir une activité physique régulière peut contribuer à réduire les symptômes menstruels chez certaines personnes.",
+      "image": "/images/activite_physique_reguliere.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "exterieur"
+      ],
+      "source": "msd"
+    },
+    {
+      "id": "sommeil",
+      "label": "Favoriser un bon sommeil",
+      "description": "Dormir suffisamment et conserver autant que possible un rythme de sommeil régulier peut aider à mieux gérer les symptômes.",
+      "image": "/images/sommeil.webp",
+      "contextes": [
+        "maison"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "irritabilite",
+        "nervosite",
+        "anxiete"
+      ],
+      "source": "msd"
+    },
+    {
+      "id": "repos",
+      "label": "Repos et position confortable",
+      "description": "S'installer dans une position confortable et prendre un moment de repos lorsque la douleur ou la fatigue le nécessite.",
+      "image": "/images/repos.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "malaise"
+      ],
+      "source": "msd"
+    },
+    {
+      "id": "relaxation",
+      "label": "Relaxation et respiration",
+      "description": "Prendre quelques minutes pour respirer lentement, se détendre ou pratiquer une activité de relaxation peut aider à gérer le stress et l'anxiété associés.",
+      "image": "/images/relaxation.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "anxiete",
+        "nervosite",
+        "irritabilite"
+      ],
+      "source": "msd"
+    },
+    {
+      "id": "alimentation_equilibree",
+      "label": "Alimentation équilibrée",
+      "description": "Maintenir une alimentation variée et équilibrée peut contribuer au bien-être général pendant les règles.",
+      "image": "/images/alimentation_equilibree.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "exterieur"
+      ],
+      "source": "soutien_general",
+      "note": "L'application ne doit pas présenter l'alimentation comme un traitement médical de la dysménorrhée."
+    },
+    {
+      "id": "alimentation_pauvre_en_graisses",
+      "label": "Alimentation pauvre en graisses",
+      "description": "Une alimentation globalement moins riche en graisses a été étudiée pour les douleurs menstruelles, mais les preuves de son efficacité restent limitées.",
+      "image": "/images/alimentation_pauvre_en_graisses.webp",
+      "contextes": [
+        "maison"
+      ],
+      "source": "msd",
+      "note": "À présenter comme une piste de mode de vie et non comme un traitement garanti."
+    },
+    {
+      "id": "reduction_stress",
+      "label": "Réduire le stress",
+      "description": "Prendre des moments de pause et utiliser des techniques de relaxation peut aider lorsque le stress ou l'anxiété accompagnent les symptômes menstruels.",
+      "image": "/images/reduction_stress.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "anxiete",
+        "nervosite",
+        "irritabilite"
+      ],
+      "source": "msd"
+    },
+    {
+      "id": "hydratation",
+      "label": "Boire régulièrement",
+      "description": "Boire régulièrement de l'eau et rester correctement hydratée participe au bien-être général.",
+      "image": "/images/hydratation.webp",
+      "contextes": [
+        "maison",
+        "travail_ecole",
+        "transport",
+        "exterieur"
+      ],
+      "symptomes_cibles": [
+        "fatigue",
+        "malaise"
+      ],
+      "source": "soutien_general",
+      "note": "Cette recommandation ne constitue pas un traitement spécifique de la dysménorrhée."
+    },
+    {
+      "id": "eviter_tabac",
+      "label": "Éviter le tabac",
+      "description": "Le tabagisme peut être un facteur aggravant des douleurs menstruelles. Réduire ou arrêter le tabac peut donc être bénéfique pour la santé générale.",
+      "image": "/images/eviter_tabac.webp",
+      "contextes": [
+        "maison",
+        "exterieur"
+      ],
+      "source": "ameli"
+    }
+  ],
   "correspondance_symptomes_solutions": {
     "fatigue": [
       "sommeil",

@@ -53,7 +53,14 @@ export default function Recap() {
       )
       .join(", ") || "Zone non renseignée";
 
-  const contexteLabel = evaluation.contextes || "Contexte non renseigné";
+  // Les identifiants restent internes ; seul le libellé est affiché.
+  // Accepte aussi l’ancien identifiant « travail/ecole ».
+  const contexteId = evaluation.contextes?.replace(/\//g, "_");
+  const contexteLabel = contexteId
+    ? db.contextes.find(
+        (contexte) => contexte.id.replace(/\//g, "_") === contexteId
+      )?.label ?? "Contexte indisponible"
+    : "Contexte non renseigné";
 
   const isInComplete =
     evaluation.symptomes.length === 0 ||
