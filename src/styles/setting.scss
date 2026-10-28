@@ -467,6 +467,77 @@
   align-items: flex-start;
 }
 
+
+.settings-privacy {
+  .settings-privacy-list {
+    background: #fff;
+    border: 1px solid #eadfe2;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .settings-privacy-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 18px;
+    color: #241e21;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #f0e8eb;
+    }
+
+    svg:first-child {
+      flex-shrink: 0;
+      color: #8b2747;
+    }
+
+    span {
+      flex: 1;
+    }
+
+    svg:last-child {
+      flex-shrink: 0;
+      color: #a39a9e;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: #fff1f5;
+    }
+  }
+
+  .settings-privacy-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 4px;
+
+    strong {
+      font-size: 13px;
+      color: #34272c;
+    }
+
+    small {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #82767c;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .settings-privacy-link {
+      padding: 13px 14px;
+      font-size: 13px;
+    }
+  }
+}
+
+
 // DÉCONNEXION
 
 .settings-logout {

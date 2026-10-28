@@ -4,6 +4,8 @@ import { EvaluationProvider } from "./evaluation/evaluationContext";
 import NotFound from "./pages/NotFound";
 import Notice from "./pages/legaleNotice";
 import SessionExpiredModal from "./components/SessionExpiredModal"
+import Privacy from "./pages/PrivacyPolicy";
+import CGU from "./pages/CGU";
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -109,6 +111,8 @@ export default function App() {
           </Route>
           <Route path="*" element={<NotFound />} />
           <Route path="/LegaleNotice" element={<Notice />} />
+           <Route path="/PrivacyPolicy" element={<Privacy />} />
+           <Route path="/CGU" element={<CGU />} />
         </Routes>
       </Suspense>
     </EvaluationProvider>

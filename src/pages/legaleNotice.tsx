@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function Notice(){
     return(
         <>
@@ -14,22 +16,33 @@ export default function Notice(){
              <h2>EDITION DU SITE</h2>
              <p>L’édition et la direction de la publication du Site est assurée par Madame Giovanie Andrica ANDRIANIRINA, domiciliée 11 place Caramy, dont le numéro de téléphone est 0652979673, et l'adresse e-mail giovanieandrianirina@gmail.com.</p>
              <p>ci-après l'"Editeur".</p>
-            <br />
-             <h2>HEBERGEUR</h2>
-            <p>L'hébergeur du Site est la société Giovanie ANDRIANIRINA, dont le siège social est situé au  11 place Caramy 83170 Brignoles (83) . </p>
-            <br />
-            <h2>ACCES AU SITE</h2>
-            <p>Le Site est normalement accessible, à tout moment, à l'Utilisateur. Toutefois, l'Editeur pourra, à tout moment, suspendre, limiter ou interrompre le Site afin de procéder, notamment, à des mises à jour ou des modifications de son contenu. L'Editeur ne pourra en aucun cas être tenu responsable des conséquences éventuelles de cette indisponibilité sur les activités de l'Utilisateur</p>
-            <p>ci-après l' <span>"Editeur"</span> .</p>
-            <br />
-            <h2>HEBERGEUR</h2>
+      
+            <h2>HÉBERGEMENT DU SITE ET DES SERVICES</h2>
+             <h3>Hébergeur du Frontend</h3>
             <p>
-            L'hébergeur du Site est la société Giovanie ANDRIANIRINA, dont le siège social est situé au  11 place Caramy 83170 Brignoles (83) . Le numéro de téléphone de l'hébergeur est le 0652979673</p>
-            <br />
+                Le site BADDIES est hébergé par Vercel Inc.,440 N Barranca Avenue #4133,  Covina, CA 91723, États-Unis.
+            </p>
+        
+            <p>
+                Site web : <a href="https://vercel.com">vercel.com</a>
+            </p>
+          
+            <h3>Hébergeur du backend</h3>
+            <p>
+                L'API de BADDIES est hébergée par Render.
+            </p>
+            <p>
+                Site web : <a href="https://render.com">render.com</a>
+            </p>
+            
 
-            <h2>ACCES AU SITE</h2>
-            <p>Le Site est normalement accessible, à tout moment, à l'Utilisateur. Toutefois, l'Editeur pourra, à tout moment, suspendre, limiter ou interrompre le Site afin de procéder, notamment, à des mises à jour ou des modifications de son contenu. L'Editeur ne pourra en aucun cas être tenu responsable des conséquences éventuelles de cette indisponibilité sur les activités de l'Utilisateur.</p>
-            <br />
+            <p>
+            La base de données PostgreSQL de BADDIES
+            est hébergée par Supabase.
+            </p>
+            <p>
+            Site web : <a href="https://supabase.com">supabase.com</a>
+            </p>
 
             <h2>COLLECTE DES DONNEES</h2>
             <p>
@@ -42,6 +55,7 @@ export default function Notice(){
             <br />
             <br />
             <p>Rédigé sur http://legalplace.fr</p>
+              <Link to= "/Setting" className="btn">Fermer</Link>
             
         </>
     )

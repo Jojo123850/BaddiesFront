@@ -301,35 +301,39 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
           </div>
         </section>
 
-        <section className="settings-section">
+        
+        <section className="settings-section settings-privacy">
           <h2>Confidentialité</h2>
-            
-              <Link to="/LegaleNotice" className="settings-item settings-static-item" >
-                <span className="settings-item-icon">
-                    <ShieldCheck size={20} aria-hidden="true" />
-                </span>
-                <span className="settings-item-text">
-                    <strong> Mentions légales</strong>
-                     <small>
-                         Vos préférences et votre contact d'urgence
-                        sont enregistrés sur cet appareil.
-                    </small>
-                </span>
-              </Link>
-           
-          <div className="settings-item settings-static-item">
-            <span className="settings-item-icon">
-              <ShieldCheck size={20} aria-hidden="true" />
-            </span>
-            <span className="settings-item-text">
-              <strong>Données enregistrées</strong>
-              <small>
-                Vos préférences et votre contact d'urgence
-                sont enregistrés sur cet appareil.
-              </small>
-            </span>
+
+          <div className="settings-privacy-list">
+            <Link to="/LegaleNotice" className="settings-privacy-link">
+              <ShieldCheck size={19} aria-hidden="true" />
+              <span>Mentions légales</span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </Link>
+
+            <Link to="/PrivacyPolicy" className="settings-privacy-link">
+              <ShieldCheck size={19} aria-hidden="true" />
+              <span>Politique de confidentialité</span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </Link>
+
+            <Link to="/CGU" className="settings-privacy-link">
+              <ShieldCheck size={19} aria-hidden="true" />
+              <span>Conditions générales d'utilisation</span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="settings-privacy-info">
+            <strong>Données enregistrées</strong>
+            <small>
+              Vos préférences, votre contact d'urgence et vos
+              évaluations sont conservés sur cet appareil.
+            </small>
           </div>
         </section>
+
 
         {user && (
           <button type="button" className="settings-logout" onClick={handleLogout}>
