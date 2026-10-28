@@ -49,13 +49,8 @@ function getStoredUser(): User | null {
 }
 
 function getStoredCountry(): string {
-  const stored = localStorage.getItem("country");
-
-  if (stored === "MG" || stored === "Mada" || stored === "Madagascar") {
-    return "Mada";
-  }
-
-  return "France";
+  const country = localStorage.getItem("country") ?? "";
+  return ["MG", "Mada", "Madagascar"].includes(country) ? "Mada" : "France";
 }
 
 function getStoredContact(): EmergencyContact {
@@ -93,6 +88,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const handleCountryChange = (value: string) => {
     setCountry(value);
     localStorage.setItem("country", value);
+    window.dispatchEvent(new Event("settings-updated"));
   };
 
   const handleSaveContact = (event: FormEvent<HTMLFormElement>) => {
@@ -110,6 +106,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
     const savedContact = { name, phone };
 
     localStorage.setItem("emergencyContact", JSON.stringify(savedContact));
+    window.dispatchEvent(new Event("settings-updated"));
 
     setContact(savedContact);
     setEditingContact(false);
@@ -119,6 +116,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
 
   const handleDeleteContact = () => {
     localStorage.removeItem("emergencyContact");
+    window.dispatchEvent(new Event("settings-updated"));
 
     setContact({ name: "", phone: "" });
     setEditingContact(false);
