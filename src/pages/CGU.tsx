@@ -1,11 +1,16 @@
 
 import { Link } from "react-router-dom";
+import "../styles/legalePrivacy.scss";
+import Navbar from "../components/Navbar";
+
 export default function CGU() {
   return (
+    <>
+    <Navbar/>
     <main className="legal-page">
       <h1>CONDITIONS GÉNÉRALES D'UTILISATION</h1>
 
-      <p>Dernière mise à jour : 28 octobre 2026</p>
+      <p>Dernière mise à jour : <span className="date"> 28 octobre 2026</span> </p>
 
       <h2>Article 1 — Objet</h2>
       <p>
@@ -251,5 +256,6 @@ export default function CGU() {
       </p>
         <Link to= "/Setting" className="btn">Fermer</Link>
     </main>
+    </>
   );
 }

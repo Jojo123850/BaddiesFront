@@ -40,6 +40,7 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
 
     return(
         <>
+        <div id="protection">
             <div className="protection-card">
         {/* <ShieldCheck size={40} aria-hidden="true" /> */}
 
@@ -51,12 +52,7 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
           localisation et vos symptômes afin de vous proposer
           des conseils adaptés.
         </p>
-        
-        
-
-        <p>
-            Vos données restent sur cet appareil  
-        </p>
+    
 
       
        
@@ -98,7 +94,9 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
                 Accepter et continuer
             </button>
         </div>
-      </div>
+            </div>
+
+        </div>
     </>
     )
 }

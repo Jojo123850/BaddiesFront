@@ -324,14 +324,6 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
               <ChevronRight size={18} aria-hidden="true" />
             </Link>
           </div>
-
-          <div className="settings-privacy-info">
-            <strong>Données enregistrées</strong>
-            <small>
-              Vos préférences, votre contact d'urgence et vos
-              évaluations sont conservés sur cet appareil.
-            </small>
-          </div>
         </section>
 
 
@@ -341,10 +333,6 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
             Se déconnecter
           </button>
         )}
-
-        <p className="settings-footer">
-          BADDIES · Prenez soin de vous
-        </p>
       </Container>
     </>
   );

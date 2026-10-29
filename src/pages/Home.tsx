@@ -10,6 +10,7 @@ import type { HistoryEvaluation } from "../services/localStorageService";
 import "../styles/navbar.scss";
 import "../styles/home.scss";
 import { useEvaluation } from "../evaluation/useEvaluation";
+import { DataPrivacy } from "../components/Dataprivacy";
 
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
   const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
   const [loading, setLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false)
   const navigate = useNavigate()
 
   const isConnected = Boolean(localStorage.getItem("token"));
@@ -86,13 +88,22 @@ const commencerEvaluation = () => {
     }
   }
 
-  navigate("/DataPrivacy");
+ setShowPrivacy(true);
 };
 
   return (
     <>
       <Navbar />
-
+      {showPrivacy && (
+  <DataPrivacy
+    onAccept={() => {
+      setShowPrivacy(false);
+      resetEvaluation();
+      navigate("/analyse");
+    }}
+    onRefuse={() => setShowPrivacy(false)}
+  />
+)}
       <main className="home-page">
         <Collapse />
 
@@ -201,7 +212,7 @@ const commencerEvaluation = () => {
               <p>
                 Aucune évaluation enregistrée pour le moment.
               </p>
-
+           
               <button type= "button" className="historyLink"  onClick={commencerEvaluation}>
                 Faire ma première évaluation
                 <ArrowRight

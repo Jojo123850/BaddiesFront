@@ -1,11 +1,14 @@
-// import "./Legal.scss";
+import Navbar from "../components/Navbar";
+import "../styles/legalePrivacy.scss";
 import { Link } from "react-router-dom";
 export default function Privacy() {
   return (
+    <>
+    <Navbar/>
     <main className="legal-page">
       <h1>POLITIQUE DE CONFIDENTIALITÉ</h1>
 
-      <p>Dernière mise à jour : 28 octobre 2026.</p>
+      <p>Dernière mise à jour : <span className="date">28 octobre 2026.</span> </p>
 
       <p>
         La présente politique de confidentialité décrit la manière
@@ -259,5 +262,6 @@ export default function Privacy() {
       </p>
       <Link to= "/Setting" className="btn">Fermer</Link>
     </main>
+    </>
   );
 }

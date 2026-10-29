@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom"
-
+import "../styles/legalePrivacy.scss";
+import Navbar from "../components/Navbar";
 export default function Notice(){
     return(
         <>
+        <Navbar/>
+        <main className="legal-page">
          <h1>MENTIONS LEGALES</h1>
-         <p>En vigueur au 22/10/2026</p>
+         <p>En vigueur au  <span className="date">22/10/2026</span></p>
 
        
              <p> Conformément aux dispositions de la loi n°2004-575 du 21 juin 2004 pour la Confiance en l’économie numérique, il est porté à la connaissance des utilisateurs et visiteurs, ci-après l'<span>"Utilisateur"</span> , du site https://baddies-beryl.vercel.app , ci-après le <span> "Site"</span>, les présentes mentions légales.</p>
-            <br /><br />
+           
              <p>La connexion et la navigation sur le Site par l’Utilisateur implique acceptation intégrale et sans réserve des présentes mentions légales.</p>
-             <br />
+            
              <p>Ces dernières sont accessibles sur le Site à la rubrique "Mentions légales".</p>
-            <br />
+         
              <h2>EDITION DU SITE</h2>
              <p>L’édition et la direction de la publication du Site est assurée par Madame Giovanie Andrica ANDRIANIRINA, domiciliée 11 place Caramy, dont le numéro de téléphone est 0652979673, et l'adresse e-mail giovanieandrianirina@gmail.com.</p>
              <p>ci-après l'"Editeur".</p>
@@ -57,6 +60,7 @@ export default function Notice(){
             <p>Rédigé sur http://legalplace.fr</p>
               <Link to= "/Setting" className="btn">Fermer</Link>
             
+        </main>
         </>
     )
 } 
