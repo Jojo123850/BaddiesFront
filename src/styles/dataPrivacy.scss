@@ -1,0 +1,53 @@
+.protection-card{
+    width: 90%;
+    max-width: 420px;
+    margin: 20px auto;
+    padding: 24px 20px;
+    background-color: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 17px;
+    box-shadow: 0 12px 35px rgba(116, 29, 45, 0.18);
+    .errorPara{
+        color: var(--color-btn);
+        margin-top: 20px;
+    }
+    h1{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+    .link{
+        text-decoration: underline;
+        color: var(--color-text);
+        font-weight: bold;
+        padding-top: 10px;
+
+    }
+    .consent-checkbox{
+        padding-top: 40px;
+        background-color: var(--volor-btn);
+           &:checked {
+      background: #741d2d;
+      border-color: #741d2d;
+    }
+
+    &:checked::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      top: 2px;
+      left: 6px;
+    }
+    }
+    .consent-actions{
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+    }
+    
+}

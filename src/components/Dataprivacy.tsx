@@ -1,15 +1,47 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-
-export function DataPrivacy(){
-    const [accepeted, setAccepetd] = useState(false)
+// import { ShieldCheck } from "lucide-react";
+import { useEvaluation } from "../evaluation/useEvaluation";
+import "../styles/dataPrivacy.scss";
+import  { Link, useNavigate } from "react-router-dom";
+type dataPrivacyProps= {
+    onAccept?: ( ) => void;
+    onRefuse?: () => void;
+}
+export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
+    const [accepted, setAccepted] = useState(false)
     const navigate = useNavigate()
+    const { resetEvaluation } = useEvaluation();
+    const [error, setError] = useState("")
+
+    const handleRefuse = ()=> {
+        localStorage.removeItem("consentment-RGPD")
+
+        if(onRefuse){
+            onRefuse();
+        }else{
+            navigate("/Home")
+        }
+    } 
+    const handleAccept = () => {
+        if(!accepted){
+            setError("Veuiilez accepter avant de continuer")
+            return 
+        };
+
+        setError("")
+        localStorage.setItem("consentment-RGPD",JSON.stringify({accepted:true,version: "1.0", date: new Date().toString()}))
+        if(onAccept){
+            onAccept()
+        }else{
+            resetEvaluation()
+            navigate("/analyse")
+        }
+    }
 
     return(
         <>
             <div className="protection-card">
-        <ShieldCheck size={40} aria-hidden="true" />
+        {/* <ShieldCheck size={40} aria-hidden="true" /> */}
 
         <h1>Vos données, votre choix</h1>
 
@@ -19,35 +51,23 @@ export function DataPrivacy(){
           localisation et vos symptômes afin de vous proposer
           des conseils adaptés.
         </p>
+        
+        
 
         <p>
-          Ces informations peuvent constituer des données
-          de santé sensibles.
+            Vos données restent sur cet appareil  
         </p>
 
-        <p>
-          Vos réponses aux évaluations sont actuellement
-          conservées dans le stockage local de votre navigateur
-          (localStorage), sans synchronisation automatique
-          avec notre base de données.
-        </p>
-
-        <p>
-          Vous pouvez retirer votre consentement à tout moment
-          depuis les paramètres de confidentialité et supprimer
-          les données d'évaluation enregistrées sur cet appareil.
-        </p>
-
-        <a href="/PrivacyPolicy">
-          Consulter la politique de confidentialité
-        </a>
+      
+       
 
         <label className="consent-checkbox">
           <input
             type="checkbox"
             checked={accepted}
             onChange={(event) =>
-              setAccepted(event.target.checked)
+              {setAccepted(event.target.checked)
+              setError("")}
             }
           />
 
@@ -56,20 +76,27 @@ export function DataPrivacy(){
             données de santé pour réaliser mon évaluation
             et obtenir des conseils adaptés.
           </span>
+
         </label>
 
-        <div className="consent-actions">
-          <button type="button" onClick={handleRefuse}>
-            Refuser
-          </button>
+          {error && (
+            <p className="errorPara">
+                {error}
+            </p>
 
-          <button
-            type="button"
-            onClick={handleAccept}
-            disabled={!accepted}
-          >
-            Accepter et continuer
-          </button>
+          )}
+             <br />
+          <Link to="/PrivacyPolicy" className="link">
+          Consulter la politique de confidentialité
+        </Link>
+        <div className="consent-actions">
+            <button type="button" onClick={handleRefuse} className="btn">
+                Refuser
+            </button>
+
+            <button type="button" onClick={handleAccept} className="btn" >
+                Accepter et continuer
+            </button>
         </div>
       </div>
     </>

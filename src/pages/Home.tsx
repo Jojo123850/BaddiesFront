@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight} from "lucide-react";
 
 import Navbar from "../components/Navbar";
@@ -11,11 +11,13 @@ import "../styles/navbar.scss";
 import "../styles/home.scss";
 import { useEvaluation } from "../evaluation/useEvaluation";
 
+
 export default function Home() {
   const { resetEvaluation } = useEvaluation();
   const [evaluations, setEvaluations] = useState<HistoryEvaluation[]>([]);
   const [loading, setLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
+  const navigate = useNavigate()
 
   const isConnected = Boolean(localStorage.getItem("token"));
 
@@ -61,6 +63,32 @@ export default function Home() {
 
   const hasHistory = evaluations.length > 0;
 
+const commencerEvaluation = () => {
+  const consent = localStorage.getItem("consentment-RGPD");
+
+   console.log("Bouton cliqué !");
+  console.log("Consentement enregistré :", consent);
+
+  if (consent) {
+    try {
+      const parsed = JSON.parse(consent);
+
+      if (
+        parsed.accepted === true &&
+        parsed.version === "1.0"
+      ) {
+        resetEvaluation();
+        navigate("/Analyse");
+        return;
+      }
+    } catch {
+      // Consentement invalide : on le redemande.
+    }
+  }
+
+  navigate("/DataPrivacy");
+};
+
   return (
     <>
       <Navbar />
@@ -81,9 +109,9 @@ export default function Home() {
             et découvrez des gestes adaptés pour vous soulager.
           </p>
 
-          <Link to="/analyse"  onClick={resetEvaluation} className="home-btn">
+          <button type="button"  onClick={commencerEvaluation} className="home-btn">
             Commencer mon évaluation
-          </Link>
+          </button>
 
           
         </section>
@@ -113,15 +141,6 @@ export default function Home() {
                 Créer mon compte
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
-            
-           
-{/*          
-            <p className="home-login">
-              Déjà un compte ?{" "}
-              <Link to="/Login">Se connecter</Link>
-            </p> */}
-            
-         
             </div>
 
           </section>
@@ -183,14 +202,14 @@ export default function Home() {
                 Aucune évaluation enregistrée pour le moment.
               </p>
 
-              <Link to="/analyse" className="historyLink">
+              <button type= "button" className="historyLink"  onClick={commencerEvaluation}>
                 Faire ma première évaluation
                 <ArrowRight
                   size={20}
                   strokeWidth={1.8}
                   aria-hidden="true"
                 />
-              </Link>
+              </button>
             </div>
           )}
         </section>

@@ -6,6 +6,7 @@ import Notice from "./pages/legaleNotice";
 import SessionExpiredModal from "./components/SessionExpiredModal"
 import Privacy from "./pages/PrivacyPolicy";
 import CGU from "./pages/CGU";
+import { DataPrivacy } from "./components/Dataprivacy";
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -57,6 +58,8 @@ function RequireCountry() {
 
   return hasCountry ? <Outlet /> : <Navigate to="/Country" replace />;
 }
+
+
 
 export default function App() {
   return (
@@ -113,6 +116,7 @@ export default function App() {
           <Route path="/LegaleNotice" element={<Notice />} />
            <Route path="/PrivacyPolicy" element={<Privacy />} />
            <Route path="/CGU" element={<CGU />} />
+            <Route path="/DataPrivacy" element={<DataPrivacy />} />
         </Routes>
       </Suspense>
     </EvaluationProvider>
