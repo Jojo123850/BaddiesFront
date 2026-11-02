@@ -7,6 +7,8 @@ import defaultProfile from "../assets/images/IM(.webp";
 
 
 import "../styles/setting.scss";
+import "../styles/delete.scss";
+
 
 type User = {
   id: number;
@@ -24,6 +26,12 @@ type SettingsProps = {
   embedded?: boolean;
   onClose?: () => void;
 };
+
+type DeleteProps = {
+  onAccept: () => void;
+  onRefuse: () => void;
+};
+
 
 function getStoredUser(): User | null {
   const token = localStorage.getItem("token");
@@ -72,6 +80,32 @@ function getStoredContact(): EmergencyContact {
   return { name: "", phone: "" };
 }
 
+
+
+function Delete({ onAccept, onRefuse }: DeleteProps) {
+
+  return (
+    <div id="delete-overlay">
+      <div className="delete-card"   role="dialog" aria-modal="true"  aria-labelledby="delete-title">
+        <h2 id="delete-title">Supprimer le contact ?</h2>
+
+        <p>
+          Voulez-vous vraiment supprimer votre contact d'urgence ?
+        </p>
+
+        <div className="delete-actions">
+          <button type="button" onClick={onRefuse}>
+            Annuler
+          </button>
+
+          <button type="button" onClick={onAccept}>
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const navigate = useNavigate();
 
@@ -81,9 +115,11 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const [editingContact, setEditingContact] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState(false);
+    const [showDelete, setShowDelete] = useState(false)
 
   const hasContact = Boolean(contact.name.trim() && contact.phone.trim());
   const Container = embedded ? "div" : "main";
+
 
   const handleCountryChange = (value: string) => {
     setCountry(value);
@@ -288,7 +324,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
             )}
 
             {hasContact && !editingContact && (
-              <button type="button" className="settings-delete-btn" onClick={handleDeleteContact}>
+              <button type="button" className="settings-delete-btn" onClick={() => setShowDelete(true)}>
                 Supprimer le contact
               </button>
             )}
@@ -303,7 +339,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
 
         
         <section className="settings-section settings-privacy">
-          <h2>Confidentialité</h2>
+          <h2>Informations</h2>
 
           <div className="settings-privacy-list">
             <Link to="/LegaleNotice" className="settings-privacy-link">
@@ -334,6 +370,16 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
           </button>
         )}
       </Container>
+
+      {showDelete && (
+      <Delete
+      onRefuse={() => setShowDelete(false)}
+      onAccept={() => {
+      handleDeleteContact();
+      setShowDelete(false);
+    }}
+  />
+)}
     </>
   );
 }

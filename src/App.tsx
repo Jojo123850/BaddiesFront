@@ -7,6 +7,8 @@ import SessionExpiredModal from "./components/SessionExpiredModal"
 import Privacy from "./pages/PrivacyPolicy";
 import CGU from "./pages/CGU";
 import { DataPrivacy } from "./components/Dataprivacy";
+import ImmediateHelp from "./pages/ImmediateHelp";
+
 
 // Pages principales
 const Country = lazy(() => import("./pages/Country"));
@@ -20,6 +22,7 @@ const Recap = lazy(() => import("./pages/Recap"));
 const RulesAlert = lazy(() => import("./pages/Rules"));
 const MedicalAlert = lazy(() => import("./pages/MedicalAlert"));
 const Solution = lazy(() => import("./pages/Solution"));
+const Age = lazy(() => import("./pages/AgeContent"));
 
 // Authentification
 const Login = lazy(() => import("./pages/Login"));
@@ -52,11 +55,37 @@ const Settings = lazy(() => import("./pages/Setting"));
 const EditProfile = lazy(() => import("./pages/EditProfle"));
 const Urgency = lazy(() => import("./pages/EmergencyContact"));
 
-function RequireCountry() {
+function RequireCountryAndAge() {
   const country = localStorage.getItem("country");
+  const age = localStorage.getItem("baddies-age")
   const hasCountry = country === "Mada" || country === "France";
+  const hasAge = age === "-12ans" || age ==="12-14ans" || age==="+15ans";
 
-  return hasCountry ? <Outlet /> : <Navigate to="/Country" replace />;
+
+    if (!hasCountry) {
+    return <Navigate to="/Country" replace />;
+  }
+
+  if (!hasAge) {
+    return <Navigate to="/AgeContent" replace />;
+  }
+
+  return <Outlet />;
+}
+
+function StartRedirection(){
+  const country= localStorage.getItem("country")
+  const age = localStorage.getItem("baddies-age")
+
+  if(country !== "Mada" && country !== "France"){
+    return < Navigate to="/Country" replace/>
+  }
+
+  if(!age){
+    return <Navigate to="/AgeContent" replace/>
+  }
+
+  return <Navigate to="/Home" replace/>
 }
 
 
@@ -89,14 +118,15 @@ export default function App() {
         
         }>
         <Routes>
-          <Route path="/" element={<Navigate to="/Country" replace />} />
+          <Route path="/" element={<StartRedirection/>} />
           <Route path="/Country" element={<Country />} />
+          <Route path="/AgeContent" element={<Age />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/emergencyContact" element={<Urgency />} />
-          <Route element={<RequireCountry />}>
+          <Route element={<RequireCountryAndAge />}>
             <Route path="/Home" element={<Home />} />
             <Route path="/analyse" element={<Analyse />} />
             <Route path="/Zone" element={<ZoneP />} />
@@ -112,11 +142,13 @@ export default function App() {
             <Route path="/EditProfile" element={<EditProfile />} />
             <Route path="/EditProfle" element={<Navigate to="/EditProfile" replace />} />
           </Route>
+             <Route path="/ImmediateHelp" element={<ImmediateHelp />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/LegaleNotice" element={<Notice />} />
            <Route path="/PrivacyPolicy" element={<Privacy />} />
            <Route path="/CGU" element={<CGU />} />
             <Route path="/DataPrivacy" element={<DataPrivacy />} />
+           
         </Routes>
       </Suspense>
     </EvaluationProvider>

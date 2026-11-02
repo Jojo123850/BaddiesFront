@@ -36,7 +36,7 @@ export default function Country() {
 
     useEffect(() => {
         if (savedCountry === "Mada" || savedCountry === "France") {
-            navigate("/Home", { replace: true });
+            navigate("/AgeContent", { replace: true });
         }
     }, [savedCountry, navigate]);
 

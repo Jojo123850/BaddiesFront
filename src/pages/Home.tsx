@@ -123,7 +123,26 @@ const commencerEvaluation = () => {
           <button type="button"  onClick={commencerEvaluation} className="home-btn">
             Commencer mon évaluation
           </button>
+          <div className="home-immediate-help">
 
+            
+          <div className="home-immediate-help-content">
+            <h2>Besoin d'aide tout de suite ?</h2>
+
+            <p>
+              Découvre des premiers gestes pour soulager tes douleurs
+              menstruelles, sans compte ni évaluation.
+            </p>
+
+            <Link
+              to="/ImmediateHelp"
+              className="home-immediate-help-link"
+            >
+              Voir les premiers gestes
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
           
         </section>
 
@@ -221,7 +240,9 @@ const commencerEvaluation = () => {
                   aria-hidden="true"
                 />
               </button>
+
             </div>
+
           )}
         </section>
 

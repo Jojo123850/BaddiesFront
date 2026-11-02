@@ -625,7 +625,36 @@
 .hand-icon {
   font-size: 55px;
 }
+.home-immediate-help {
+  margin-top: 25px;
+  padding: 25px;
+  background-color: #f5e7e9;
+  border: 1px solid #eadde0;
+  border-radius: 15px;
+}
 
+.home-immediate-help-content {
+  h2 {
+    font-size: 21px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+}
+
+.home-immediate-help-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: #741d2d;
+  font-weight: bold;
+  text-decoration: none;
+}
 // MOBILES PLUS LARGES
 
 @media (min-width: 361px) {
