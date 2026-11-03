@@ -1,5 +1,5 @@
 ﻿
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import {
   Routes,
   Route,
@@ -19,6 +19,8 @@ import ImmediateHelp from "./pages/ImmediateHelp";
 import AnalyticsConsent from "./components/AnalyticsConsent.tsx";
 
 import {
+  ANALYTICS_CONSENT_CHANGED,
+  hasAnalyticsConsent,
   initAnalytics,
   trackPageView,
 } from "./services/analytics";
@@ -159,9 +161,22 @@ function ConsentManager() {
 // Suivi des pages publiques
 function AnalyticsTracker() {
   const location = useLocation();
+  const lastPage = useRef<string | null>(null);
 
   useEffect(() => {
-    trackPageView(location.pathname);
+    const trackCurrentPage = () => {
+      if (!hasAnalyticsConsent()) {
+        lastPage.current = null;
+        return;
+      }
+      initAnalytics();
+      if (lastPage.current === location.pathname) return;
+      trackPageView(location.pathname);
+      lastPage.current = location.pathname;
+    };
+    trackCurrentPage();
+    window.addEventListener(ANALYTICS_CONSENT_CHANGED, trackCurrentPage);
+    return () => window.removeEventListener(ANALYTICS_CONSENT_CHANGED, trackCurrentPage);
   }, [location.pathname]);
 
   return null;
@@ -204,10 +219,6 @@ function LoadingScreen() {
 }
 
 export default function App() {
-  useEffect(() => {
-    initAnalytics();
-  }, []);
-
   return (
     <EvaluationProvider>
       <SessionExpiredModal />

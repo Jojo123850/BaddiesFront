@@ -1,5 +1,7 @@
 
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const DEBUG_MODE = import.meta.env.VITE_GA_DEBUG_MODE === "true";
+export const ANALYTICS_CONSENT_CHANGED = "analytics-consent-changed";
 
 // Clé utilisée pour mémoriser le choix de l'utilisatrice
 const CONSENT_KEY = "baddies-analytics-consent";
@@ -10,8 +12,9 @@ type Gtag = (...args: unknown[]) => void;
 
 declare global {
   interface Window {
-    dataLayer?: unknown[][];
+    dataLayer?: IArguments[];
     gtag?: Gtag;
+    [key: `ga-disable-${string}`]: boolean | undefined;
   }
 }
 
@@ -29,19 +32,29 @@ export function saveAnalyticsConsent(choice: Consent): void {
   if (choice === "accepted") {
     initAnalytics();
   } else {
-    // Empêche les futurs événements via notre module
-    initialized = false;
+    // Bloque également les collectes automatiques du tag déjà chargé.
+    if (GA_ID) window[`ga-disable-${GA_ID}`] = true;
 
     // Désactive les prochaines collectes via gtag
     window.gtag?.("consent", "update", {
       analytics_storage: "denied",
     });
   }
+  window.dispatchEvent(new Event(ANALYTICS_CONSENT_CHANGED));
 }
 
 // Charge Google Analytics uniquement après consentement
 export function initAnalytics(): void {
-  if (!hasAnalyticsConsent() || initialized || !GA_ID) {
+  if (!hasAnalyticsConsent() || !GA_ID) {
+    return;
+  }
+
+  const wasDisabled = window[`ga-disable-${GA_ID}`] === true;
+  window[`ga-disable-${GA_ID}`] = false;
+  if (initialized) {
+    if (wasDisabled) {
+      window.gtag?.("consent", "update", { analytics_storage: "granted" });
+    }
     return;
   }
 
@@ -49,8 +62,10 @@ export function initAnalytics(): void {
 
   window.dataLayer = window.dataLayer || [];
 
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer?.push(args);
+  window.gtag = function () {
+    // gtag.js attend le format de la fonction gtag officielle.
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer?.push(arguments);
   };
 
   // Consentement limité aux statistiques
@@ -68,6 +83,7 @@ export function initAnalytics(): void {
     send_page_view: false,
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
+    ...(DEBUG_MODE ? { debug_mode: true } : {}),
   });
 
   const script = document.createElement("script");
