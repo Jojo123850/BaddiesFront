@@ -3,10 +3,13 @@ import { useState } from "react";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import "../styles/dataPrivacy.scss";
 import  { Link, useNavigate } from "react-router-dom";
+import {saveHealthConsent,withdrawHealthConsent,} from "../services/healthConsent";
+
 type dataPrivacyProps= {
     onAccept?: ( ) => void;
     onRefuse?: () => void;
 }
+
 export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
     const [accepted, setAccepted] = useState(false)
     const navigate = useNavigate()
@@ -14,7 +17,7 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
     const [error, setError] = useState("")
 
     const handleRefuse = ()=> {
-        localStorage.removeItem("consentment-RGPD")
+        withdrawHealthConsent();
 
         if(onRefuse){
             onRefuse();
@@ -29,7 +32,7 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
         };
 
         setError("")
-        localStorage.setItem("consentment-RGPD",JSON.stringify({accepted:true,version: "1.0", date: new Date().toString()}))
+        saveHealthConsent();
         if(onAccept){
             onAccept()
         }else{

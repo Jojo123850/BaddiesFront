@@ -5,6 +5,10 @@ import { ArrowRight, UserRound, ChevronRight, Globe, HeartPulse, UserRoundCheck,
 import Navbar from "../components/Navbar";
 import defaultProfile from "../assets/images/IM(.webp";
 
+import {hasAnalyticsConsent,saveAnalyticsConsent} from "../services/analytics";
+
+import {  hasHealthConsent, withdrawHealthConsent} from "../services/healthConsent";
+
 
 import "../styles/setting.scss";
 import "../styles/delete.scss";
@@ -116,7 +120,9 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState(false);
     const [showDelete, setShowDelete] = useState(false)
-
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(
+  hasAnalyticsConsent
+);
 
   const hasContact = Boolean(contact.name.trim() && contact.phone.trim());
   const Container = embedded ? "div" : "main";
@@ -124,25 +130,14 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const age = localStorage.getItem("baddies-age");
   const canConnect = age === "+15ans";
 
-  const [hasConsent, setHasConsent] = useState(() => {
-     try {
-        const consent = JSON.parse(
-          localStorage.getItem("consentment-RGPD") || "null"
-        );
+  const [hasConsent, setHasConsent] = useState(
+  hasHealthConsent
+);
 
-        return (
-          consent?.accepted === true &&
-          consent?.version === "1.0"
-        );
-      } catch {
-        return false;
-      }
-    });
-
-    const handleDeleteConsent = () => {
-      localStorage.removeItem("consentment-RGPD");
-      setHasConsent(false);
-    };
+const handleDeleteConsent = () => {
+  withdrawHealthConsent();
+  setHasConsent(false);
+};
 
   const handleCountryChange = (value: string) => {
     setCountry(value);
@@ -366,6 +361,52 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
             )}
           </div>
         </section>
+        <section className="settings-section">
+  <h2>Confidentialité et consentements</h2>
+
+  <div className="settings-field">
+    <label className="consent-option">
+      <input
+        type="checkbox"
+        checked={analyticsEnabled}
+        onChange={(e) => {
+          const enabled = e.target.checked;
+
+          saveAnalyticsConsent(
+            enabled ? "accepted" : "refused"
+          );
+
+          setAnalyticsEnabled(enabled);
+        }}
+      />
+      <span>
+        <strong>Statistiques Google Analytics</strong>
+        <small>
+          Autoriser ou refuser la mesure de fréquentation.
+        </small>
+      </span>
+    </label>
+  </div>
+
+  {canConnect && (
+    <div className="settings-field">
+      <p>
+        Données de santé :
+        {hasConsent ? " Consentement actif" : " Non autorisé"}
+      </p>
+
+      {hasConsent && (
+        <button
+          type="button"
+          className="settings-secondary-btn"
+          onClick={handleDeleteConsent}
+        >
+          Retirer mon consentement de santé
+        </button>
+      )}
+    </div>
+  )}
+</section>
 
        
 
