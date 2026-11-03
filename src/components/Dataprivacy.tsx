@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import "../styles/dataPrivacy.scss";
 import  { Link, useNavigate } from "react-router-dom";
-import {saveHealthConsent,withdrawHealthConsent,} from "../services/healthConsent";
+import {saveHealthConsent,withdrawHealthConsent} from "../services/healthConsent.ts";
 
 type dataPrivacyProps= {
     onAccept?: ( ) => void;
