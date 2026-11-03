@@ -169,3 +169,7 @@ Le fichier `vercel.json` redirige les URL vers `index.html` pour permettre l’a
 ## Ressources tierces
 
 Le fichier `licences-frontend.csv` recense des dépendances et leurs licences. Vérifier également les conditions d’utilisation des images, polices et autres ressources avant toute réutilisation. Ce fichier ne constitue pas une licence globale du projet.
+
+
+# Auteur
+Giovanie ANDRIANIRINA
