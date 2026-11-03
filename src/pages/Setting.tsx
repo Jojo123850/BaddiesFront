@@ -117,9 +117,32 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const [contactError, setContactError] = useState(false);
     const [showDelete, setShowDelete] = useState(false)
 
+
   const hasContact = Boolean(contact.name.trim() && contact.phone.trim());
   const Container = embedded ? "div" : "main";
 
+  const age = localStorage.getItem("baddies-age");
+  const canConnect = age === "+15ans";
+
+  const [hasConsent, setHasConsent] = useState(() => {
+     try {
+        const consent = JSON.parse(
+          localStorage.getItem("consentment-RGPD") || "null"
+        );
+
+        return (
+          consent?.accepted === true &&
+          consent?.version === "1.0"
+        );
+      } catch {
+        return false;
+      }
+    });
+
+    const handleDeleteConsent = () => {
+      localStorage.removeItem("consentment-RGPD");
+      setHasConsent(false);
+    };
 
   const handleCountryChange = (value: string) => {
     setCountry(value);
@@ -186,7 +209,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
           }} />
 
           <div className="settings-profile-info">
-            {user ? (
+            { user ? (
               <>
                 <h2 className="pseudo">{user.pseudo}</h2>
                 <p className="paraSetting">{user.email}</p>
@@ -199,23 +222,30 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
               <>
                 <h2 className="pseudo">BIENVENUE SUR BADDIES</h2>
                 <p className="paraSetting">Utilisation sans compte</p>
-
+              {canConnect && (
                 <Link to="/Login" className="home-btn">
                   Se connecter
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
-              </>
+
+            )}
+            </>
+              
             )}
           </div>
+
+          
         </section>
 
         <h2 className="settings-eyebrow">MON ESPACE</h2>
 
         <p className="paraSetting">
-          Personnalisez votre compte selon vos préférences.
+          {canConnect
+            ? "Utilisation sans compte"
+            : "Accès aux premiers gestes sans compte"}
         </p>
 
-        {user && (
+        {canConnect && user && (
           <section className="settings-section">
             <h2>Mon compte</h2>
 
@@ -282,7 +312,7 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
               </div>
             )}
 
-            {!editingContact ? (
+            { !editingContact ? (
               <button type="button" className="settings-secondary-btn" onClick={() => {
                 setEditingContact(true);
                 setContactMessage("");
@@ -337,7 +367,8 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
           </div>
         </section>
 
-        
+       
+
         <section className="settings-section settings-privacy">
           <h2>Informations</h2>
 
@@ -362,8 +393,33 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
           </div>
         </section>
 
+        {canConnect && (
+      <section className="settings-section" >
+        <h2>Confidentialité et données de santé</h2>
+        <div className="settings-field">
+            <p className="paraHealth">
+              Vous pouvez retirer votre consentement
+              au traitement de vos données de santé.
+            </p>
 
-        {user && (
+            <p className="paraStatus">
+              Statut : {hasConsent ? "Consentement actif" : "Aucun consentement actif"}
+            </p>
+
+            {hasConsent && (
+              <button type="button" className="settings-secondary-btn" onClick={handleDeleteConsent} >
+                Retirer mon consentement
+              </button>
+            )}
+        </div>
+
+      </section>
+)}
+       
+        
+
+
+        {canConnect && user && (
           <button type="button" className="settings-logout" onClick={handleLogout}>
             <LogOut size={19} aria-hidden="true" />
             Se déconnecter

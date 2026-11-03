@@ -16,12 +16,12 @@ const ages: Age[] = [
     },
     {
         id: "12-14ans",
-        age: "Entre 12 à 14ans",
+        age: "Entre 12ans à 14ans",
       
     },
     {
         id: "+15ans",
-        age: "Plus de 15ans",
+        age: "15 ans et plus",
       
     },
 

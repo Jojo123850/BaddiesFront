@@ -537,7 +537,17 @@
   }
 }
 
+.paraHealth{
+  color: var(--color-text);
+  font-size: 13px;
+  text-align: start;
+}
+.paraStatus{
+  color: var(--color-error);
+  font-size: 13px;
+  text-align: start;
 
+}
 // DÉCONNEXION
 
 .settings-logout {

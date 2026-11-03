@@ -17,6 +17,7 @@
 }
 
 .immediate-help-intro {
+
   background-color: #f5e7e9;
   padding: 30px;
   border-radius: 20px;
@@ -32,6 +33,9 @@
 
   p {
     line-height: 1.6;
+  }
+  .immediate-help-disclaimer{
+    text-align: start;
   }
 
   span {
@@ -58,23 +62,34 @@
   gap: 15px;
   padding: 20px;
   margin-bottom: 15px;
-  background-color: white;
-  border: 1px solid #eadde0;
+  background-color: var(--color-card-soft);
+  border: 1px solid  var(--color-bg);
   border-radius: 15px;
-
-  svg {
-    color: #741d2d;
-    flex-shrink: 0;
-  }
 
   h3 {
     margin-bottom: 10px;
     font-size: 19px;
   }
-
-  p {
-    line-height: 1.6;
+  .card{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    img{
+         flex-basis: 7rem;
+            width: 7rem;
+            height: 6rem;
+             border: 1px solid  var( --color-border);
+             border-radius: 50px;
+             background-color: var(--color-bg);
+            
+    }
+    p {
+      line-height: 1.6;
+    }
   }
+
+
+
 }
 
 .immediate-help-warning {

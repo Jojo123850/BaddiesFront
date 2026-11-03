@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import {
   ArrowLeft,
   HeartHandshake,
-  ThermometerSun,
-  BedDouble,
-  GlassWater,
   TriangleAlert,
   PhoneCall,
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";
+import chaleur from "../assets/images/chaleur.webp";
+import repos from "../assets/images/repos.webp";
+import hydratation from "../assets/images/hydratation.webp";
 
 import "../styles/immediateHelp.scss";
 
@@ -28,14 +28,12 @@ export default function ImmediateHelp() {
         <header className="immediate-help-intro">
           <HeartHandshake size={32} aria-hidden="true" />
 
-          <h1>Tu as mal ? On est là pour t'aider.</h1>
+          <h1>Tu as mal ? Baddies est là pour t'aider.</h1>
 
           <p>
             Voici quelques gestes simples que tu peux essayer
             pour soulager tes douleurs menstruelles.
           </p>
-
-          <span>Sans compte · Sans questionnaire · Sans historique</span>
         </header>
 
         <section
@@ -47,43 +45,46 @@ export default function ImmediateHelp() {
           </h2>
 
           <article className="immediate-help-card">
-            <ThermometerSun size={28} aria-hidden="true" />
-
-            <div>
+            <div className="immediateDiv">
               <h3>Essaie la chaleur</h3>
-
+              <div className="card">
+                <img src={chaleur} alt="solution chaleur" />
               <p>
                 Pose une bouillotte tiède enveloppée dans un tissu
                 sur le bas du ventre ou du dos.
                 Ne la pose jamais directement sur la peau.
               </p>
+              </div>
+
             </div>
           </article>
 
           <article className="immediate-help-card">
-            <BedDouble size={28} aria-hidden="true" />
 
-            <div>
+            <div className="immediateDiv">
               <h3>Trouve une position confortable</h3>
-
-              <p>
-                Allonge-toi ou assieds-toi dans une position
-                agréable. Tu peux aussi marcher doucement
-                si cela te soulage.
-              </p>
+              <div className="card">
+                <img src={repos} alt="solution repos" />
+                <p>
+                    Allonge-toi ou assieds-toi dans une position
+                    agréable. Tu peux aussi marcher doucement
+                    si cela te soulage.
+                </p>
+              </div>
             </div>
           </article>
 
           <article className="immediate-help-card">
-            <GlassWater size={28} aria-hidden="true" />
-
-            <div>
+            <div className="immediateDiv">
               <h3>Prends soin de toi</h3>
+              <div className="card">
+                <img src={hydratation} alt="solution hydratation" />
+                <p>
+                    Bois selon ta soif, repose-toi si tu en ressens
+                    le besoin et prends le temps de respirer calmement.
+                </p>
+              </div>
 
-              <p>
-                Bois selon ta soif, repose-toi si tu en ressens
-                le besoin et prends le temps de respirer calmement.
-              </p>
             </div>
           </article>
         </section>
@@ -132,10 +133,7 @@ export default function ImmediateHelp() {
           </p>
         </section>
 
-        <p className="immediate-help-disclaimer">
-          Ces informations ne remplacent pas un avis médical.
-          BADDIES ne pose pas de diagnostic.
-        </p>
+       
       </main>
     </>
   );

@@ -6,6 +6,7 @@ import {
   ClipboardList,
   ChartNoAxesColumnIncreasing,
   HeartPulse,
+  HeartHandshake,
   X
 } from "lucide-react";
 
@@ -50,6 +51,8 @@ export default function Navbar() {
 
   const settingsRef = useRef<HTMLDialogElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const age = localStorage.getItem("baddies-age");
+const canEvaluate = age === "+15ans";
 
   const openSettings = () => {
     setSettingsOpen(true);
@@ -136,26 +139,32 @@ export default function Navbar() {
 
           {/* NAVIGATION DESKTOP */}
 
-          <nav
-            className="desktopNav"
-            aria-label="Navigation desktop"
-          >
-            <NavLink to="/Home" end>
-              Accueil
-            </NavLink>
+              <nav   className="desktopNav" aria-label="Navigation desktop">
+       
+       <NavLink to="/Home" end>
+          Accueil
+        </NavLink>
 
-            <NavLink
-              to="/analyse"
-              onClick={resetEvaluation}
-            >
+        {canEvaluate ? (
+          <>
+            <NavLink to="/analyse" onClick={resetEvaluation}>
               Analyser
             </NavLink>
-            <NavLink
-              to="/Suivi"
-            >
+
+            <NavLink to="/Suivi">
               Suivi
             </NavLink>
-          </nav>
+          </>
+        ) : (
+          <NavLink to="/ImmediateHelp">
+            Premiers gestes
+          </NavLink>
+        )}
+
+        <NavLink to="/emergencyContact">
+          Urgence
+        </NavLink>
+      </nav>
 
 
           {/* AVATAR */}
@@ -182,7 +191,7 @@ export default function Navbar() {
 
 
         {/* NAVIGATION MOBILE */}
-        <nav
+                <nav
           className="bottomNav"
           aria-label="Navigation principale mobile"
         >
@@ -198,31 +207,49 @@ export default function Navbar() {
               </NavLink>
             </li>
 
-            <li>
-              <NavLink
-                to="/analyse"
-                onClick={resetEvaluation}
-                className="nav-item"
-              >
-                <ClipboardList
-                  size={23}
-                  strokeWidth={1.7}
-                  aria-hidden="true"
-                />
-                <span>Analyse</span>
-              </NavLink>
-            </li>
+            {canEvaluate ? (
+              <>
+                <li>
+                  <NavLink
+                    to="/analyse"
+                    onClick={resetEvaluation}
+                    className="nav-item"
+                  >
+                    <ClipboardList
+                      size={23}
+                      strokeWidth={1.7}
+                      aria-hidden="true"
+                    />
+                    <span>Analyse</span>
+                  </NavLink>
+                </li>
 
-            <li>
-              <NavLink to="/Suivi" className="nav-item">
-                <ChartNoAxesColumnIncreasing
-                  size={23}
-                  strokeWidth={1.7}
-                  aria-hidden="true"
-                />
-                <span>Suivi</span>
-              </NavLink>
-            </li>
+                <li>
+                  <NavLink to="/Suivi" className="nav-item">
+                    <ChartNoAxesColumnIncreasing
+                      size={23}
+                      strokeWidth={1.7}
+                      aria-hidden="true"
+                    />
+                    <span>Suivi</span>
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <li>
+                <NavLink
+                  to="/ImmediateHelp"
+                  className="nav-item"
+                >
+                  <HeartHandshake
+                    size={23}
+                    strokeWidth={1.7}
+                    aria-hidden="true"
+                  />
+                  <span>Premiers gestes</span>
+                </NavLink>
+              </li>
+            )}
 
             <li>
               <NavLink
@@ -239,7 +266,6 @@ export default function Navbar() {
             </li>
           </ul>
         </nav>
-
       </header>
     </>
   );

@@ -63,6 +63,9 @@ export default function Home() {
     };
   }, [isConnected]);
 
+  const age = localStorage.getItem("baddies-age");
+  const canEvaluate = age === "+15ans";
+
   const hasHistory = evaluations.length > 0;
 
 const commencerEvaluation = () => {
@@ -107,46 +110,52 @@ const commencerEvaluation = () => {
       <main className="home-page">
         <Collapse />
 
-       <section  className="home-intro"  aria-labelledby="home-title" >
-         
+ <section
+  className="home-intro"
+  aria-labelledby="home-title"
+>
+  <h1 id="home-title">
+    Votre assistant de premiers gestes pour les
+    douleurs menstruelles, utilisable même hors ligne.
+  </h1>
 
-          <h1 id="home-title">
-            Votre assistant de premiers gestes pour les
-            douleurs menstruelles, utilisable même hors ligne.
-          </h1>
+  <p className="home-description">
+    {canEvaluate
+      ? "Évaluez vos douleurs en quelques minutes et découvrez des gestes adaptés pour vous soulager."
+      : "Découvrez des premiers gestes simples pour soulager vos douleurs menstruelles, sans compte ni évaluation."}
+  </p>
 
-          <p className="home-description">
-            Évaluez vos douleurs en quelques minutes
-            et découvrez des gestes adaptés pour vous soulager.
-          </p>
+  {canEvaluate && (
+    <button
+      type="button"
+      onClick={commencerEvaluation}
+      className="home-btn"
+    >
+      Commencer mon évaluation
+    </button>
+  )}
 
-          <button type="button"  onClick={commencerEvaluation} className="home-btn">
-            Commencer mon évaluation
-          </button>
-          <div className="home-immediate-help">
+  <div className="home-immediate-help">
+    <div className="home-immediate-help-content">
+      <h2>Besoin d'aide tout de suite ?</h2>
 
-            
-          <div className="home-immediate-help-content">
-            <h2>Besoin d'aide tout de suite ?</h2>
+      <p>
+        Découvre des premiers gestes pour soulager tes douleurs
+        menstruelles, sans compte ni évaluation.
+      </p>
 
-            <p>
-              Découvre des premiers gestes pour soulager tes douleurs
-              menstruelles, sans compte ni évaluation.
-            </p>
+      <Link
+        to="/ImmediateHelp"
+        className="home-immediate-help-link"
+      >
+        Voir les premiers gestes
+        <ArrowRight size={18} aria-hidden="true" />
+      </Link>
+    </div>
+  </div>
+</section>
 
-            <Link
-              to="/ImmediateHelp"
-              className="home-immediate-help-link"
-            >
-              Voir les premiers gestes
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-          
-        </section>
-
-        {!isConnected && (
+        {canEvaluate &&  !isConnected && (
           <section
             className="home-account"
             aria-labelledby="home-account-title"
@@ -175,6 +184,8 @@ const commencerEvaluation = () => {
 
           </section>
         )}
+
+        {canEvaluate &&(
 
         <section
           className="historyHome"
@@ -245,10 +256,14 @@ const commencerEvaluation = () => {
 
           )}
         </section>
+        )
 
-        <p className="home-disclaimer">
+        }
+
+
+        {/* <p className="home-disclaimer">
           Informations générales, ne remplacent pas un avis médical.
-        </p>
+        </p> */}
       </main>
     </>
   );

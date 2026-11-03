@@ -73,19 +73,38 @@ function RequireCountryAndAge() {
   return <Outlet />;
 }
 
-function StartRedirection(){
-  const country= localStorage.getItem("country")
-  const age = localStorage.getItem("baddies-age")
 
-  if(country !== "Mada" && country !== "France"){
-    return < Navigate to="/Country" replace/>
+function StartRedirection() {
+  const country = localStorage.getItem("country");
+  const age = localStorage.getItem("baddies-age");
+
+  const hasCountry =
+    country === "Mada" || country === "France";
+
+  const hasAge =
+    age === "-12ans" ||
+    age === "12-14ans" ||
+    age === "+15ans";
+
+  if (!hasCountry) {
+    return <Navigate to="/Country" replace />;
   }
 
-  if(!age){
-    return <Navigate to="/AgeContent" replace/>
+  if (!hasAge) {
+    return <Navigate to="/AgeContent" replace />;
   }
 
-  return <Navigate to="/Home" replace/>
+  return <Navigate to="/Home" replace />;
+}
+
+function RequireAge() {
+  const age = localStorage.getItem("baddies-age");
+
+  if (age !== "+15ans") {
+    return <Navigate to="/ImmediateHelp" replace />;
+  }
+
+  return <Outlet />;
 }
 
 
@@ -114,20 +133,35 @@ export default function App() {
             </div>
             <p className="loading-text" aria-hidden="true">Chargement...</p>
         </div>
-      </main>
+          </main>
         
-        }>
+      }>
+
         <Routes>
-          <Route path="/" element={<StartRedirection/>} />
-          <Route path="/Country" element={<Country />} />
-          <Route path="/AgeContent" element={<Age />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/ForgotPassword" element={<ForgotPassword />} />
-          <Route path="/ResetPassword" element={<ResetPassword />} />
-          <Route path="/emergencyContact" element={<Urgency />} />
-          <Route element={<RequireCountryAndAge />}>
-            <Route path="/Home" element={<Home />} />
+        {/* Première ouverture */}
+        <Route path="/" element={<StartRedirection />} />
+        <Route path="/Country" element={<Country />} />
+        <Route path="/AgeContent" element={<Age />} />
+
+        {/* Aide et informations accessibles à tous */}
+        <Route path="/ImmediateHelp" element={<ImmediateHelp />} />
+        <Route path="/emergencyContact" element={<Urgency />} />
+
+        <Route path="/LegaleNotice" element={<Notice />} />
+        <Route path="/PrivacyPolicy" element={<Privacy />} />
+        <Route path="/CGU" element={<CGU />} />
+        <Route path="/DataPrivacy" element={<DataPrivacy />} />
+
+        {/* Vérification du pays et de l'âge */}
+        <Route element={<RequireCountryAndAge />}>
+
+          {/* Accueil accessible à tous les âges */}
+          <Route path="/Home" element={<Home />} />
+
+          {/* Fonctionnalités réservées aux 15 ans et plus */}
+          <Route element={<RequireAge />}>
+
+            {/* Évaluation */}
             <Route path="/analyse" element={<Analyse />} />
             <Route path="/Zone" element={<ZoneP />} />
             <Route path="/Localisation" element={<Localisation />} />
@@ -135,20 +169,29 @@ export default function App() {
             <Route path="/Analyse-reponse" element={<RulesAlert />} />
             <Route path="/Alerte" element={<MedicalAlert />} />
             <Route path="/Solution" element={<Solution />} />
+
+            {/* Historique et suivi */}
             <Route path="/Historique" element={<History />} />
             <Route path="/Historique/:id" element={<Episode />} />
             <Route path="/Suivi" element={<Tracking />} />
+
+            {/* Compte et profil */}
+            <Route path="/Register" element={<Register />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/ForgotPassword" element={<ForgotPassword />} />
+            <Route path="/ResetPassword" element={<ResetPassword />} />
+
             <Route path="/Setting" element={<Settings />} />
             <Route path="/EditProfile" element={<EditProfile />} />
+
             <Route path="/EditProfle" element={<Navigate to="/EditProfile" replace />} />
+             
           </Route>
-             <Route path="/ImmediateHelp" element={<ImmediateHelp />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/LegaleNotice" element={<Notice />} />
-           <Route path="/PrivacyPolicy" element={<Privacy />} />
-           <Route path="/CGU" element={<CGU />} />
-            <Route path="/DataPrivacy" element={<DataPrivacy />} />
-           
+  </Route>
+
+  {/* Page inexistante */}
+  <Route path="*" element={<NotFound />} />
+        
         </Routes>
       </Suspense>
     </EvaluationProvider>
