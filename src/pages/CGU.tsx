@@ -10,7 +10,7 @@ export default function CGU() {
     <main className="legal-page">
       <h1>CONDITIONS GÉNÉRALES D'UTILISATION</h1>
 
-      <p>Dernière mise à jour : <span className="date"> 28 octobre 2026</span> </p>
+      <p>Dernière mise à jour : <span className="date"> 04 Novembre 2026</span> </p>
 
       <h2>Article 1 — Objet</h2>
       <p>
@@ -46,10 +46,10 @@ export default function CGU() {
         </a>
       </p>
       <p>
-        Les informations relatives à l'édition et à
-        l'hébergement de l'application sont disponibles
-        dans les mentions légales.
-      </p>
+        Les informations relatives à l'édition et à l'hébergement
+        de l'application sont disponibles dans les{" "}
+        <Link to="/LegaleNotice">mentions légales</Link>.
+        </p>
 
       <h2>Article 3 — Accès à l'application</h2>
       <p>
@@ -58,11 +58,20 @@ export default function CGU() {
         compatible.
       </p>
       <p>
-        L'application peut également être installée comme
-        application web progressive (PWA) sur certains appareils
-        compatibles et proposer des fonctionnalités hors connexion.
-      </p>
-      <p>
+        L'application peut être installée comme application web
+        progressive (PWA) sur les appareils compatibles.
+        Certaines fonctionnalités restent accessibles hors connexion
+        après un premier chargement des ressources nécessaires.
+        La connexion au compte, l'enregistrement distant et l'envoi
+        d'e-mails nécessitent une connexion Internet.
+        </p>
+        <p>
+            Dans la version actuelle, le parcours d'évaluation et
+            l'accès au compte sont réservés aux personnes âgées
+            de 15 ans et plus. Les personnes plus jeunes sont
+            orientées vers une page d'information et d'aide.
+            </p>
+        <p>
         L'éditrice s'efforce d'assurer le bon fonctionnement
         de l'application. Toutefois, des interruptions peuvent
         survenir, notamment pour des opérations de maintenance,
@@ -154,25 +163,34 @@ export default function CGU() {
         notamment les informations de compte et les
         réponses fournies lors des évaluations.
       </p>
-      <p>
-        Les réponses aux évaluations sont actuellement
-        enregistrées dans le stockage local du navigateur
-        (localStorage). Aucune synchronisation automatique
-        de ces réponses vers la base de données PostgreSQL
-        n'est actuellement mise en place.
-      </p>
+    <p>
+        Lors de l'enregistrement d'une évaluation, les données
+        peuvent être conservées dans le compte lorsque
+        l'utilisatrice est connectée et dispose d'une connexion
+        Internet. Sans compte, hors connexion ou en cas d'échec
+        de l'enregistrement distant, elles peuvent être conservées
+        localement dans le navigateur.
+        Les évaluations enregistrées localement ne sont pas
+        automatiquement synchronisées vers le compte.
+        </p>
       <p>
         Les informations relatives aux douleurs menstruelles
         et aux symptômes peuvent constituer des données
         de santé sensibles au sens du RGPD.
       </p>
       <p>
+        Un consentement explicite au traitement des données
+        de santé est demandé avant l'évaluation.
+        Le choix concernant la mesure d'audience est distinct
+        de ce consentement.
+        </p>
+      <p>
         Pour en savoir plus sur la collecte, l'utilisation,
         la conservation des données et les droits des
         utilisatrices, consultez notre{" "}
-        <a href="/confidentialite">
-          Politique de confidentialité
-        </a>.
+        <Link to="/PrivacyPolicy">
+             Politique de confidentialité
+        </Link>
       </p>
 
       <h2>Article 9 — Informations de santé</h2>

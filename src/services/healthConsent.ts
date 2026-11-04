@@ -1,6 +1,6 @@
 
 const HEALTH_KEY = "consentment-RGPD";
-const VERSION = "1.0";
+const VERSION = "1.1";
 
 export function hasHealthConsent(): boolean {
   try {

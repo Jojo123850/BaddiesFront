@@ -27,7 +27,7 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
     } 
     const handleAccept = () => {
         if(!accepted){
-            setError("Veuiilez accepter avant de continuer")
+            setError("Veuillez cocher la case de consentement pour continuer.");
             return 
         };
 
@@ -50,18 +50,30 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
         <h1>Vos données, votre choix</h1>
 
         <p>
-          BADDIES utilise les informations relatives à vos
-          douleurs menstruelles, leur intensité, leur
-          localisation et vos symptômes afin de vous proposer
-          des conseils adaptés.
+            BADDIES utilise vos réponses sur vos douleurs et symptômes
+            pour vous proposer des conseils adaptés.
         </p>
-    
+
+        <p>
+            Si vous sauvegardez l'évaluation, elle est enregistrée sur
+            cet appareil ou sur votre compte selon votre connexion.
+        </p>
+
+        <p>
+            Vous pouvez refuser ou retirer votre accord dans les paramètres,
+            sans suppression automatique des évaluations enregistrées.
+            Votre choix Analytics est indépendant.
+        </p>
+
+     
 
       
        
 
         <label className="consent-checkbox">
           <input
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "health-consent-error" : undefined}
             type="checkbox"
             checked={accepted}
             onChange={(event) =>
@@ -71,19 +83,21 @@ export function DataPrivacy({onAccept, onRefuse}:dataPrivacyProps){
           />
 
           <span>
-            Je consens explicitement au traitement de mes
-            données de santé pour réaliser mon évaluation
-            et obtenir des conseils adaptés.
-          </span>
+            Je consens explicitement au traitement de mes données
+            de santé pour réaliser mon évaluation et recevoir
+            des conseils adaptés.
+        </span>
 
         </label>
-
-          {error && (
-            <p className="errorPara">
+            {error && (
+            <p
+                id="health-consent-error"
+                className="errorPara"
+                role="alert"
+            >
                 {error}
             </p>
-
-          )}
+            )}
              <br />
           <Link to="/PrivacyPolicy" className="link">
           Consulter la politique de confidentialité

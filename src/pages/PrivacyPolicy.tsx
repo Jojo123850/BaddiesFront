@@ -8,7 +8,7 @@ export default function Privacy() {
     <main className="legal-page">
       <h1>POLITIQUE DE CONFIDENTIALITÉ</h1>
 
-      <p>Dernière mise à jour : <span className="date">28 octobre 2026.</span> </p>
+      <p>Dernière mise à jour : <span className="date">4 novembre 2026</span> </p>
 
       <p>
         La présente politique de confidentialité décrit la manière
@@ -53,6 +53,15 @@ export default function Privacy() {
           Historique des évaluations enregistrées.
         </li>
         <li>
+          Préférences et choix : pays, tranche d'âge déclarée et
+          consentements. Si vous ajoutez un contact d'urgence,
+          son nom et son numéro de téléphone sont enregistrés sur l'appareil.
+        </li>
+        <li>
+          Données de mesure d'audience lorsque vous acceptez Google Analytics :
+          informations de navigation et données techniques associées.
+        </li>
+        <li>
           Données techniques nécessaires au fonctionnement
           et à la sécurité de l'application.
         </li>
@@ -85,6 +94,10 @@ export default function Privacy() {
           Envoyer des e-mails nécessaires à la gestion du compte.
         </li>
         <li>
+          Mesurer la fréquentation des pages suivies pour comprendre
+          l'utilisation du service, uniquement avec votre accord pour Analytics.
+        </li>
+        <li>
           Assurer la sécurité et le bon fonctionnement
           de l'application.
         </li>
@@ -108,81 +121,260 @@ export default function Privacy() {
         sur un intérêt légitime, sous réserve des conditions
         applicables.
       </p>
+        <p>
+            Le traitement des réponses à l'évaluation et des données
+            de santé associées repose sur votre consentement,
+            conformément à l'article 6, paragraphe 1, point a,
+            et sur votre consentement explicite conformément
+            à l'article 9, paragraphe 2, point a, du RGPD.
+            Cet accord est demandé avant l'évaluation.
+        </p>
+
       <p>
-        Les données relatives aux douleurs menstruelles et
-        aux symptômes nécessitent également une condition
-        particulière prévue par l'article 9 du RGPD.
-        Lorsque le consentement explicite est retenu,
-        il doit être recueilli avant le traitement concerné
-        et pouvoir être retiré.
+        Le consentement aux statistiques Google Analytics est distinct de celui
+        concernant les données de santé. Vous pouvez refuser les statistiques
+        sans renoncer à l'évaluation. Les réglages correspondants sont décrits
+        dans la section 7.
       </p>
 
       <h2>5. Durée de conservation</h2>
 
-        <p>
-        Les réponses aux évaluations enregistrées dans le
-        localStorage du navigateur sont conservées jusqu'à
-        leur suppression par l'application, par l'utilisatrice
-        ou par le navigateur.
-        </p>
-
-        <p>
-        Les données liées aux comptes utilisateurs sont
-        conservées pendant la durée nécessaire à la gestion
-        du compte, selon les règles de conservation
-        applicables.
-        </p>
-
-      <h2>6. Hébergement et prestataires</h2>
+      <h3>Données conservées sur votre appareil</h3>
       <p>
-        BADDIES utilise les services techniques suivants :
+        Les évaluations sauvegardées localement, les préférences,
+        les choix de consentement et les coordonnées d'un éventuel
+        contact d'urgence restent dans le stockage du navigateur
+        jusqu'à leur suppression par les fonctions disponibles
+        dans l'application ou par l'effacement des données du site.
+        Le navigateur peut également supprimer ces données selon
+        ses propres règles.
+      </p>
+      <p>
+        La fermeture du navigateur ou la déconnexion ne supprime
+        pas automatiquement l'ensemble de ces informations.
+        Effacer les données locales ne supprime pas celles déjà
+        enregistrées sur le compte.
+      </p>
+
+      <h3>Compte et évaluations enregistrées en ligne</h3>
+      <p>
+        Les informations de compte et les évaluations enregistrées
+        en ligne restent conservées tant qu'elles n'ont pas été
+        supprimées. La version actuelle ne prévoit pas de suppression
+        automatique des comptes inactifs.
+        Vous pouvez demander l'effacement de votre compte et des
+        données associées au contact indiqué dans la section 9.
+        La suppression du compte n'est pas proposée par un bouton dédié.
+      </p>
+      {/* À FINALISER AVANT PUBLICATION : définir et appliquer les durées
+          maximales des comptes et des évaluations, y compris en cas
+          d'inactivité. Le constat ci-dessus ne remplace pas cette règle. */}
+
+      <h3>Authentification et réinitialisation du mot de passe</h3>
+      <p>
+        Le jeton d'accès est valable 15 minutes. Le jeton de
+        renouvellement est valable 7 jours et peut être remplacé
+        ou révoqué avant son expiration. Un lien de réinitialisation
+        du mot de passe est valable une heure et ne peut plus être
+        utilisé après une réinitialisation réussie.
+      </p>
+      <p>
+        Ces durées concernent la validité des jetons. Leur expiration
+        ne correspond pas nécessairement à la suppression immédiate
+        de leurs enregistrements dans la base de données.
+      </p>
+      {/* À FINALISER AVANT PUBLICATION : vérifier et documenter le nettoyage
+          des jetons expirés, utilisés ou révoqués. */}
+
+      <h3>Google Analytics</h3>
+      <p>
+        Lorsque vous acceptez Google Analytics, les données d'événements
+        concernées par ses paramètres de conservation sont conservées
+        pendant 2 mois et les données utilisateur concernées pendant
+        14 mois. Ces paramètres ne déterminent pas la durée de
+        conservation de la plupart des rapports standards fondés sur
+        des données agrégées, ni la durée de vie des cookies.
+      </p>
+      {/* À VÉRIFIER AVANT PUBLICATION : état de l'option de réinitialisation
+          de la conservation à chaque nouvelle activité, et durées des cookies. */}
+
+      <h3>Journaux techniques et sauvegardes</h3>
+      <p>
+        Les services techniques peuvent conserver des journaux de
+        fonctionnement et des copies de sauvegarde. La suppression
+        d'une donnée dans l'application ne signifie pas son effacement
+        immédiat de toutes les sauvegardes.
+      </p>
+      {/* À FINALISER AVANT PUBLICATION : vérifier l'existence des sauvegardes,
+          leurs durées et cycles de rotation ainsi que la conservation des
+          journaux de BADDIES et des prestataires ; préciser ici les valeurs. */}
+
+      <h3>Copies téléchargées ou partagées</h3>
+      <p>
+        Un PDF téléchargé ou un résumé partagé constitue une copie
+        distincte. Supprimer une évaluation dans BADDIES ne supprime
+        pas les fichiers présents sur votre appareil ni les copies
+        déjà transmises à des tiers.
+      </p>
+
+      <h2>6. Hébergement, destinataires et prestataires</h2>
+      <p>
+        Les données sont traitées par la responsable du traitement
+        et, dans la mesure nécessaire à leurs missions respectives,
+        par les prestataires techniques suivants :
       </p>
       <ul>
         <li>
-          <strong>Vercel :</strong> hébergement de
-          l'interface web.
+          <strong>Vercel :</strong> hébergement et diffusion de
+          l'interface web.{' '}
+          <a href="https://vercel.com/legal/privacy-notice">
+            Politique de confidentialité de Vercel
+          </a>.
         </li>
         <li>
-          <strong>Render :</strong> hébergement de
-          l'API backend.
+          <strong>Render :</strong> hébergement de l'API backend,
+          qui traite notamment l'authentification et les évaluations
+          transmises pour un enregistrement sur le compte.{' '}
+          <a href="https://render.com/privacy">
+            Politique de confidentialité de Render
+          </a>.
         </li>
         <li>
-          <strong>Supabase :</strong> hébergement de
-          la base de données PostgreSQL.
+          <strong>Supabase :</strong> hébergement de la base PostgreSQL
+          contenant les données de compte, les éléments nécessaires
+          à l'authentification et les évaluations enregistrées en ligne.{' '}
+          <a href="https://supabase.com/privacy">
+            Politique de confidentialité de Supabase
+          </a>.
         </li>
         <li>
-          <strong>Brevo :</strong> envoi d'e-mails
-          transactionnels liés aux comptes utilisateurs.
+          <strong>Brevo :</strong> envoi des e-mails transactionnels,
+          notamment de réinitialisation du mot de passe. Les informations
+          traitées pour cet envoi comprennent l'adresse du destinataire
+          et le contenu du message, dont le lien de réinitialisation.{' '}
+          <a href="https://www.brevo.com/fr/legal/privacypolicy/">
+            Politique de confidentialité de Brevo
+          </a>.
+        </li>
+        <li>
+          <strong>Google Analytics 4 :</strong> mesure d'audience
+          facultative après votre accord, selon les modalités
+          de la section 7.{' '}
+          <a href="https://policies.google.com/privacy">
+            Politique de confidentialité de Google
+          </a>.
         </li>
       </ul>
+
+      <h3>Localisation et transferts de données</h3>
       <p>
-        Les régions d'hébergement et les éventuels transferts
-        de données hors de l'Espace économique européen
-        doivent être vérifiés afin de préciser les garanties
-        applicables.
+        L'API backend est hébergée par Render dans la région
+        Oregon (US West), aux États-Unis. La base PostgreSQL
+        est hébergée par Supabase dans la région eu-west-1,
+        en Irlande, dans l'Union européenne.
+      </p>
+      <p>
+        Les données envoyées à l'API sont traitées par le backend
+        situé aux États-Unis, même lorsque leur stockage en base
+        de données est effectué en Irlande. L'hébergement européen
+        de la base ne signifie donc pas que tous les traitements
+        sont réalisés dans l'Espace économique européen.
+      </p>
+      <p>
+        Les services de diffusion, de support, d'envoi d'e-mails et
+        de mesure d'audience peuvent également impliquer des traitements
+        ou des accès en dehors de l'Espace économique européen.
+      </p>
+      {/* À FINALISER AVANT PUBLICATION : identifier les autres destinations
+          effectives et vérifier les garanties applicables aux transferts
+          (décision d'adéquation applicable à l'entité concernée, ou clauses
+          contractuelles types et mesures complémentaires si nécessaires).
+          Ne pas présenter une garantie comme acquise sans cette vérification. */}
+      <p>
+        Pour toute question sur les destinataires et les transferts
+        de vos données, vous pouvez contacter la responsable
+        du traitement à l'adresse indiquée dans la section 9.
+      </p>
+      <h2>7. Stockage des données et choix de consentement</h2>
+
+      <h3>Historique sur cet appareil</h3>
+      <p>
+        Sans compte, lorsque vous enregistrez une évaluation, son contenu
+        et les conseils associés sont conservés dans le stockage local
+        du navigateur (localStorage). Cet historique n'est pas envoyé
+        à la base de données du compte par cette action de sauvegarde locale.
+      </p>
+      <p>
+        Le stockage local peut persister après la fermeture du navigateur.
+        Sur un appareil partagé, d'autres personnes utilisant le même
+        profil de navigateur peuvent accéder aux informations qui y restent.
+        La suppression des données du site dans le navigateur efface les
+        informations locales, mais pas celles déjà enregistrées sur un compte.
       </p>
 
-     <h2>7. Cookies et stockage local</h2>
+      <h3>Historique enregistré sur le compte</h3>
+      <p>
+        Lorsque vous êtes connectée et que vous enregistrez une évaluation
+        avec un accès réseau disponible, l'application transmet l'évaluation
+        et les conseils associés à l'API afin de les enregistrer dans
+        PostgreSQL et de permettre leur consultation depuis le compte.
+      </p>
+      <p>
+        Si l'enregistrement sur le compte échoue, ou si vous utilisez le
+        parcours sans connexion réseau, l'application peut conserver
+        l'évaluation sur cet appareil et vous en informer. Cette sauvegarde
+        locale n'est pas automatiquement synchronisée vers le compte au
+        retour du réseau. Il faut distinguer les copies locales des
+        enregistrements distants pour les consulter ou les supprimer.
+      </p>
 
-        <p>
-        BADDIES utilise le localStorage du navigateur
-        pour enregistrer les réponses aux évaluations
-        des douleurs menstruelles.
-        </p>
+      <h3>Préférences et session</h3>
+      <p>
+        Le navigateur conserve également des préférences, les choix de
+        consentement et, lors d'une connexion, des informations de profil
+        et des jetons de session. La déconnexion retire les informations
+        locales de session ; elle n'efface pas à elle seule l'historique
+        local, les préférences ou les épisodes enregistrés sur le compte.
+      </p>
 
-        <p>
-        Ces réponses restent sur l'appareil de
-        l'utilisatrice. Aucune synchronisation automatique
-        vers la base de données PostgreSQL n'est
-        actuellement mise en place.
-        </p>
+      <h3>Statistiques Google Analytics</h3>
+      <p>
+        Le tag Google Analytics est chargé après votre acceptation des
+        statistiques. Il peut utiliser des cookies et des identifiants
+        techniques pour mesurer la fréquentation. Le suivi manuel prévu
+        dans le code porte sur l'accueil et la page des premiers gestes.
+        Les réponses au questionnaire, les symptômes et le contenu des
+        historiques ne sont pas des paramètres prévus par ce suivi manuel.
+      </p>
+      <p>
+        Vous pouvez modifier ce choix dans les <Link to="/Setting">paramètres</Link>,
+        rubrique « Confidentialité et consentements », avec le réglage
+        « Statistiques Google Analytics ». Le refus empêche le chargement
+        initial du tag. Après une acceptation, le retrait désactive les
+        collectes suivantes via le module Analytics ; il n'efface pas
+        automatiquement les données déjà transmises ni les cookies déjà déposés.
+      </p>
+      <p>
+        Pour en savoir plus sur les pratiques de Google, consultez sa{" "}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+          politique de confidentialité
+        </a>.
+      </p>
 
-        <p>
-        Le localStorage peut conserver des informations
-        après la fermeture du navigateur.
-        L'utilisatrice peut supprimer ces informations
-        en effaçant les données du site.
-        </p>
+      <h3>Retrait du consentement aux données de santé</h3>
+      <p>
+        Dans les paramètres, un bouton permet de retirer votre consentement
+        aux données de santé. Cette action supprime la trace locale de votre
+        accord. Elle ne supprime pas automatiquement les évaluations déjà
+        enregistrées. Pour demander l'effacement des données du compte ou
+        exercer vos droits, utilisez le contact indiqué dans la section 9.
+      </p>
+      <p>
+        Un fichier PDF téléchargé ou un résumé partagé constitue une copie
+        distincte : sa suppression n'est pas effectuée par la suppression
+        d'un épisode dans l'application.
+      </p>
+
       <h2>8. Droits des utilisateurs</h2>
       <p>
         Conformément au RGPD, les utilisateurs disposent,

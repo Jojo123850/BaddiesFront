@@ -1,5 +1,5 @@
 ﻿
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   Routes,
   Route,
@@ -125,7 +125,27 @@ function RequireAge() {
 
 // Protection des données de santé
 function RequireHealthConsent() {
-  if (!hasHealthConsent()) {
+  const [consentGranted, setConsentGranted] = useState(
+    () => hasHealthConsent()
+  );
+
+  useEffect(() => {
+    const updateConsent = () => {
+      setConsentGranted(hasHealthConsent());
+    };
+
+    window.addEventListener("consent-updated", updateConsent);
+    window.addEventListener("storage", updateConsent);
+
+    updateConsent();
+
+    return () => {
+      window.removeEventListener("consent-updated", updateConsent);
+      window.removeEventListener("storage", updateConsent);
+    };
+  }, []);
+
+  if (!consentGranted) {
     return <Navigate to="/DataPrivacy" replace />;
   }
 
