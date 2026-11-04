@@ -111,6 +111,7 @@ export function trackPageView(path: string): void {
 
   window.gtag("event", "page_view", {
     page_path: path,
+    page_location: `${window.location.origin}${path}`,
     page_title:
       path === "/Home" ? "Accueil" : "Premiers gestes",
   });
