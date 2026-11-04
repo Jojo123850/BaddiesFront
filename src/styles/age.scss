@@ -1,0 +1,131 @@
+.age-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: #fff7fa;
+  color: #38212c;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.age-card {
+  width: 100%;
+  max-width: 460px;
+  padding: clamp(24px, 6vw, 40px);
+  border: 1px solid #ecdde3;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 16px 48px rgb(80 34 55 / 8%);
+
+  h1 {
+    margin: 16px 0 12px;
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    line-height: 1.2;
+  }
+}
+
+.age-brand {
+  color: #86294e;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.age-description {
+  margin: 0 0 28px;
+  color: #6b5260;
+  line-height: 1.6;
+}
+
+.age-options {
+  display: grid;
+  gap: 12px;
+}
+
+.age-option {
+  width: 100%;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 2px solid #ded1d7;
+  border-radius: 16px;
+  background: #fff;
+  color: #38212c;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+
+  &:hover {
+    border-color: #86294e;
+    background: #fff7fa;
+  }
+
+  &.is-selected {
+    border-color: #86294e;
+    background: #fceaf1;
+
+    .age-indicator {
+      border-color: #86294e;
+      background: #86294e;
+      color: #fff;
+    }
+  }
+}
+
+.age-indicator {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid #9c8590;
+  border-radius: 50%;
+}
+
+.age-continue {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 28px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 14px;
+  background: #86294e;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #6b203e;
+  }
+
+  &:disabled {
+    background: #e9e0e4;
+    color: #705b65;
+    cursor: not-allowed;
+  }
+}
+
+.age-option,
+.age-continue {
+  &:focus-visible {
+    outline: 3px solid #38212c;
+    outline-offset: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .age-option {
+    transition: none;
+  }
+}
