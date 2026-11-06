@@ -403,5 +403,26 @@ export const apiService = {
         } finally {
             clearSession()
         }
+    },
+    async deleteAccount(password: string): Promise<void> {
+    const response = await fetchWithAuth(
+        `${BASE_URL}/api/v1/user/account`,
+        {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                password,
+                confirmation: "SUPPRIMER"
+            })
+        }
+    );
+
+    if (!response.ok) {
+        await readJson(response);
     }
 }
+}
+
+

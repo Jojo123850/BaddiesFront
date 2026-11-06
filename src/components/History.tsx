@@ -9,12 +9,19 @@ import db from "../data/db.json";
 import "../styles/tracking.scss";
 
 
+
+
+
+
+
+
 export function History() {
     const navigate = useNavigate();
 
     const [history, setHistory] = useState<HistoryEvaluation[]>([]);
     const [filtre, setFiltre] = useState("recent");
     const [loading, setLoading] = useState(true);
+    const isConnected = Boolean(localStorage.getItem("token"));
 
     const historyFiltree = [...history]
         .filter((item) => {
@@ -189,7 +196,7 @@ export function History() {
     return (
         <>
             <h2>Mon historique</h2>
-            {hasLocalHistory && (
+            {isConnected &&  hasLocalHistory && (
                 <section className="synchro">
                     <h2>Synchroniser votre données</h2>
                     <p>Transferez vos évaluations locales sur votre compte</p>

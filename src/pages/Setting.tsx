@@ -8,6 +8,7 @@ import defaultProfile from "../assets/images/IM(.webp";
 import {hasAnalyticsConsent,saveAnalyticsConsent} from "../services/analytics";
 
 import {  hasHealthConsent, withdrawHealthConsent} from "../services/healthConsent";
+import { apiService } from "../services/apiService";
 
 
 import "../styles/setting.scss";
@@ -134,6 +135,43 @@ export default function Settings({ embedded = false, onClose }: SettingsProps) {
   const [hasConsent, setHasConsent] = useState(
   hasHealthConsent
 );
+const [showDeleteAccount, setShowDeleteAccount] = useState(false);
+const [deletePassword, setDeletePassword] = useState("");
+const [deletingAccount, setDeletingAccount] = useState(false);
+const [deleteAccountError, setDeleteAccountError] = useState("");
+
+const handleDeleteAccount = async (
+    event: FormEvent<HTMLFormElement>
+) => {
+    event.preventDefault();
+    if (deletingAccount) return;
+
+    setDeletingAccount(true);
+    setDeleteAccountError("");
+
+    try {
+        await apiService.deleteAccount(deletePassword);
+    } catch (error) {
+        setDeleteAccountError(
+            error instanceof Error
+                ? error.message
+                : "Impossible de supprimer le compte."
+        );
+        setDeletingAccount(false);
+        return;
+    }
+
+    // Le serveur a confirmé la suppression.
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("login");
+
+    setDeletePassword("");
+    setUser(null);
+    onClose?.();
+    navigate("/Home", { replace: true });
+};
 
 const handleDeleteConsent = () => {
   withdrawHealthConsent();
@@ -442,12 +480,96 @@ const handleDeleteConsent = () => {
             Se déconnecter
           </button>
         )}
+      {canConnect && user && (
+      <button
+        type="button"
+        className="settings-delete-btn"
+        onClick={() => {
+          setShowDelete(false);
+          setDeletePassword("");
+          setDeleteAccountError("");
+          setShowDeleteAccount(true);
+        }}
+      >
+        Supprimer définitivement mon compte
+      </button>
+    )}
+ 
       </Container>
+      {canConnect && user && showDeleteAccount && (
+  <div id="delete-overlay">
+    <div
+      className="delete-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-account-title"
+      aria-describedby="delete-account-description"
+      aria-busy={deletingAccount}
+    >
+      <h2 id="delete-account-title">
+        Supprimer votre compte ?
+      </h2>
 
-      {showDelete && (
-      <Delete
-      onRefuse={() => setShowDelete(false)}
-      onAccept={() => {
+      <p id="delete-account-description">
+        Votre compte et ses évaluations enregistrées en ligne
+        seront supprimés définitivement. Les évaluations locales
+        et les fichiers téléchargés resteront sur votre appareil.
+      </p>
+
+      <form
+        onSubmit={handleDeleteAccount}
+        className="settings-contact-form"
+      >
+        <label htmlFor="delete-account-password">
+          Confirmez avec votre mot de passe
+        </label>
+
+        <input
+          id="delete-account-password"
+          type="password"
+          autoComplete="current-password"
+          value={deletePassword}
+          onChange={(event) =>
+            setDeletePassword(event.target.value)
+          }
+          disabled={deletingAccount}
+          required
+        />
+
+        {deleteAccountError && (
+          <p role="alert">{deleteAccountError}</p>
+        )}
+
+        <div className="delete-actions">
+          <button
+            type="button"
+            disabled={deletingAccount}
+            onClick={() => {
+              setShowDeleteAccount(false);
+              setDeletePassword("");
+              setDeleteAccountError("");
+            }}
+          >
+            Annuler
+          </button>
+
+          <button
+            type="submit"
+            disabled={deletingAccount || !deletePassword}
+          >
+            {deletingAccount ? "Suppression…" : "Supprimer"}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+
+{showDelete && !showDeleteAccount && (
+  <Delete
+    onRefuse={() => setShowDelete(false)}
+    onAccept={() => {
       handleDeleteContact();
       setShowDelete(false);
     }}
