@@ -93,6 +93,17 @@ export function History() {
         
 
     }, []);
+    const [hasLocalHistory, setHasLocalHistory] = useState(() => {
+  try {
+    const data = JSON.parse(
+      localStorage.getItem("historique") ?? "[]"
+    );
+
+    return Array.isArray(data) && data.length > 0;
+  } catch {
+    return false;
+  }
+});
 
     const [syncing, setSyncing] = useState(false)
     const [message, setMessage] = useState("")
@@ -141,6 +152,9 @@ export function History() {
                     rest.filter((item) => item.id !== episode.id)
                 )
                 );
+                setHasLocalHistory(
+                    rest.filter((item) => item.id !== episode.id).length > 0
+                    );
             } // La boucle se termine ici.
 
             try {
@@ -175,6 +189,17 @@ export function History() {
     return (
         <>
             <h2>Mon historique</h2>
+            {hasLocalHistory && (
+                <section className="synchro">
+                    <h2>Synchroniser votre données</h2>
+                    <p>Transferez vos évaluations locales sur votre compte</p>
+                    <button type="button" className="btn" onClick={shareHistory} disabled={syncing}>
+                        {syncing ? "Transfert en cours... ": "Ajouter à mon compte"}
+                    </button>
+                    {message && <p role="status">{message}</p>}
+                </section>
+            )}
+        
 
             <section className="filtreArt" aria-labelledby="history-filter-title">
                     <label htmlFor="history-filter">Trier ou filtrer les évaluations</label>
@@ -189,10 +214,7 @@ export function History() {
                     </select>
                 </div>
             </section>
-            <button type="button" className="btn" onClick={shareHistory} disabled={syncing}>
-                {syncing ? "Transfert en cours... ": "Ajouter à mon compte"}
-            </button>
-            {message && <p role="status">{message}</p>}
+           
 
 
             {loading ? (

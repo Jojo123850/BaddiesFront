@@ -70,7 +70,21 @@
   
   }
 
-  
+.synchro{
+    margin-top: 4px;
+    padding: 25px;
+    background-color: #f5e7e9;
+    border: 1px solid #eadde0;
+    border-radius: 15px;
+    margin-bottom: 20px;
+     p{ 
+      font-size: 12px;
+      color: var(--color-text-muted);
+     list-style-type: disc;
+     margin-bottom: 20px;
+    }
+   
+}
 .historyArticle {
   display: grid;
   grid-template-columns: 1fr auto;

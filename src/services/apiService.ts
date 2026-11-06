@@ -1,7 +1,9 @@
 
 import {  SESSION_EXPIRED_MESSAGE,  notifySessionExpired  } from "./sessionService"
 
-export const BASE_URL = 'https://baddies-api.onrender.com'
+export const BASE_URL = import.meta.env.DEV
+    ? "http://localhost:3001"
+    : "https://baddies-api.onrender.com"
 
 export type ProfileUser = {
     id: number
