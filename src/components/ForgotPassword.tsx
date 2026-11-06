@@ -32,6 +32,7 @@ export function ForgotPassword() {
                 }
             }}>
                 <h2 className="forgotPass">Mot de passe oublié </h2>
+              
 
                 <label htmlFor="mail" className="emailForgot">
                     Entrez votre Email :

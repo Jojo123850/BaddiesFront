@@ -171,6 +171,16 @@ h2{
   animation: dash_682 1.4s linear infinite;
 }
 
+.regexDiv{
+
+  color: var(--color-back);
+   margin-top: 25px;
+  padding: 25px;
+
+  border: 1px solid #eadde0;
+  border-radius: 15px;
+}
+
 @keyframes dash_682 {
   72.5% {
     opacity: 0;

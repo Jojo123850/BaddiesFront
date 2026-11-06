@@ -4,6 +4,7 @@ import { apiService } from "../services/apiService";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 import "../styles/register.scss";
+import { Link } from "react-router-dom";
 
 export function ResetPassword() {
     const [password, setPassword] = useState("");
@@ -65,10 +66,26 @@ export function ResetPassword() {
     return (
         <div className="formDiv">
             <form onSubmit={handleSubmit}>
+                  
+                     
+                    
 
                 <h2 className="forgotPass">
                     Réinitialiser le mot de passe
                 </h2>
+
+                <p>Tous les champs sont obligatoires</p>
+                  <div className="regexDiv">
+
+                    <p>Pour des raison de sécurité, botre nouveau mot de passe doit respecter les règles suivantes:
+                    </p>
+                    <ul>
+                        <li>une longueur d'au moins 10 caractères</li>
+                        <li>au moins 1 chiffre</li>
+                        <li>au moins 1 lettre minuscule et 1 majuscule</li>
+                        <li>au moins 1 caractère spécial(parmi cette liste:! @ # $ % ^ & * ( ) - _ + = [ ] { } ; : , . ? / \ | ~ < >)</></li>
+                    </ul>
+                  </div>
 
             
                 <div className="wave-group">
@@ -110,6 +127,7 @@ export function ResetPassword() {
                 <button type="submit" className="btn" disabled={loading || !token}>
                     {loading ? "Réinitialisation..." : "Réinitialiser"}
                 </button>
+               <Link to="/Home" className="btn">Abandonner</Link>
 
             </form>
         </div>
