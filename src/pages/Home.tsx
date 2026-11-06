@@ -68,31 +68,31 @@ export default function Home() {
 
   const hasHistory = evaluations.length > 0;
 
-const commencerEvaluation = () => {
-  const consent = localStorage.getItem("consentment-RGPD");
+// const commencerEvaluation = () => {
+//   const consent = localStorage.getItem("consentment-RGPD");
 
-   console.log("Bouton cliqué !");
-  console.log("Consentement enregistré :", consent);
+//    console.log("Bouton cliqué !");
+//   console.log("Consentement enregistré :", consent);
 
-  if (consent) {
-    try {
-      const parsed = JSON.parse(consent);
+//   if (consent) {
+//     try {
+//       const parsed = JSON.parse(consent);
 
-      if (
-        parsed.accepted === true &&
-        parsed.version === "1.0"
-      ) {
-        resetEvaluation();
-        navigate("/Analyse");
-        return;
-      }
-    } catch {
-      // Consentement invalide : on le redemande.
-    }
-  }
+//       if (
+//         parsed.accepted === true &&
+//         parsed.version === "1.0"
+//       ) {
+//         resetEvaluation();
+//         navigate("/Analyse");
+//         return;
+//       }
+//     } catch {
+//       // Consentement invalide : on le redemande.
+//     }
+//   }
 
- setShowPrivacy(true);
-};
+//  setShowPrivacy(true);
+// };
 
   return (
     <>
@@ -126,13 +126,12 @@ const commencerEvaluation = () => {
   </p>
 
   {canEvaluate && (
-    <button
-      type="button"
-      onClick={commencerEvaluation}
+    <Link to="/Analyse"
+     
       className="home-btn"
     >
       Commencer mon évaluation
-    </button>
+    </Link>
   )}
 
   <div className="home-immediate-help">
@@ -243,14 +242,14 @@ const commencerEvaluation = () => {
                 Aucune évaluation enregistrée pour le moment.
               </p>
            
-              <button type= "button" className="historyLink"  onClick={commencerEvaluation}>
+              <Link to="/Analyse" className="historyLink">
                 Faire ma première évaluation
                 <ArrowRight
                   size={20}
                   strokeWidth={1.8}
                   aria-hidden="true"
                 />
-              </button>
+              </Link>
 
             </div>
 
