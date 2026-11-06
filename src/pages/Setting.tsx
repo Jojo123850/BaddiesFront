@@ -483,7 +483,7 @@ const handleDeleteConsent = () => {
       {canConnect && user && (
       <button
         type="button"
-        className="settings-delete-btn"
+        className="settings-logout"
         onClick={() => {
           setShowDelete(false);
           setDeletePassword("");
