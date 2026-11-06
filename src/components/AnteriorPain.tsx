@@ -5,6 +5,7 @@ import { useEvaluation } from "../evaluation/useEvaluation";
 import silhouette from "../assets/images/silohouette-Photoroom.webp";
 import "../styles/localisation.scss";
 
+
 type Localisation = {
     id: string;
     label: string;
@@ -13,6 +14,7 @@ type Localisation = {
 const AnteriorPain = () => {
     const { evaluation, setEvaluation } = useEvaluation();
     const navigate = useNavigate();
+  
 
     const localisations: Localisation[] =
         db.evaluation_douleur.localisations.filter(

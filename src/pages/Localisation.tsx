@@ -38,7 +38,7 @@ export default function Localisation() {
         <>
             <Navbar />
 
-            <main>
+            <main className="context-page">
                 <Link to="/Zone" className="retour" aria-label="Retour à l'étape précédente">
                     <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
                 </Link>

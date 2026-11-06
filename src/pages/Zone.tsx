@@ -17,13 +17,13 @@ export default function ZoneP() {
         <>
             <Navbar />
 
-            <main>
+            <main className="bodyZone">
                 <Link to="/analyse" className="retour" aria-label="Retour à l'étape précédente">
                     <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
                 </Link>
 
                 <h1 className="analyse">Zone de douleur</h1>
-                <p className="analyse">Où avez-vous mal ?</p>
+                <p className="analysePara">Où avez-vous mal ?</p>
 
                 {!isPosterior ? (
                     <>

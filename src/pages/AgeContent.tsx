@@ -4,9 +4,15 @@ import { Check } from "lucide-react";
 import "../styles/age.scss";
 
 const ages = [
-  { id: "-12ans", label: "Moins de 12 ans" },
-  { id: "12-14ans", label: "De 12 à 14 ans" },
-  { id: "+15ans", label: "15 ans et plus" },
+  { id: "-12ans", 
+    label: "Moins de 12 ans" 
+  },
+  { id: "12-14ans", 
+    label: "De 12 à 14 ans" 
+  },
+  { id: "+15ans",
+    label: "15 ans et plus" 
+   },
 ];
 
 export default function Age() {
@@ -36,7 +42,6 @@ export default function Age() {
   return (
     <main className="age-page">
       <section className="age-card" aria-labelledby="age-title">
-        <span className="age-brand">BADDIES</span>
 
         <h1 id="age-title">Quel âge avez-vous ?</h1>
 

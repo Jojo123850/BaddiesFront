@@ -37,7 +37,7 @@ const PosteriorPain = () => {
     };
 
     return (
-        <div className="body-container">
+        <div className="silhouette-container">
             <p className="answer" aria-live="polite">
                 {evaluation.localisations.length === 0
                     ? "Vous devez sélectionner au moins une zone."

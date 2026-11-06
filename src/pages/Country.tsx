@@ -44,7 +44,7 @@ export default function Country() {
         if (!selectedCountry) return;
 
         localStorage.setItem("country", selectedCountry);
-        navigate("/Home", { replace: true });
+        navigate("/AgeContent", { replace: true });
     };
 
     if (savedCountry === "Mada" || savedCountry === "France") {
@@ -53,13 +53,6 @@ export default function Country() {
 
     return (
         <>
-            <header  className="country-header">
-                <div>
-                    <span>Écouter</span>
-                    <span>Comprendre</span>
-                    <span>Soulager</span>
-                </div>
-            </header>
 
             <main className="country-page">
                 <h1>Choisissez votre pays</h1>

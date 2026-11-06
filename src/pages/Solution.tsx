@@ -495,10 +495,6 @@ const handleDownloadPDF = () => {
             setMessage("Enregistré sur ton compte.");
         } else {
             saveEvaluation(evaluation, solutionsFiltre);
-            console.log(
-                "Historique après sauvegarde :",
-                localStorage.getItem("historique")
-            );
             setMessage("Enregistré sur cet appareil.");
         }
 
@@ -566,6 +562,9 @@ return (
                 <h1 id="solution-title" className="titleSolution">
                     Gestes conseillés
                 </h1>
+                <p className="pMedical">
+                    Informations générales, ne remplacent pas un avis médical.
+                </p>
 
                 <div id="solution">
                     {solutionsFiltre.length > 0 ? (
@@ -592,7 +591,7 @@ return (
                             </article>
                         ))
                     ) : (
-                        <p>
+                        <p className="NoSolution">
                             Aucun geste correspondant à votre évaluation.
                         </p>
                     )}
@@ -600,11 +599,11 @@ return (
             </section>
 
             <section aria-label="Actions sur votre évaluation">
-                <p className="collapse-note">
-                    <CheckCircle2 size={18} />
-                    Évaluation terminée
-                </p>
+           
+                {message && <p role="status" className="collapse-note"> 
+                     <CheckCircle2 size={18} />{message}</p>}
                 <div className="btnSolution">
+                    
                     <button type="button"  className="btn"  onClick={handleSave}   disabled={saved} >
                         {saved
                             ? "Épisode enregistré"
@@ -621,13 +620,10 @@ return (
                     </button>
                 </div>
 
-                {message && <p role="status">{message}</p>}
 
                 
 
-                <p>
-                    Informations générales, ne remplacent pas un avis médical.
-                </p>
+                
             </section>
         </main>
     </>

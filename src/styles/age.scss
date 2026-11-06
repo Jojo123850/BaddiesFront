@@ -1,11 +1,61 @@
-.age-page {
+.age-page {.age-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 40px 24px;
+  color: var(--color-text, var(--color-btn));
+
+  &,
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+.age-card {
+  width: 100%;
+  max-width: 412px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 12px;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
+.age-brand {
+  display: block;
+  margin-bottom: 16px;
+  color: #86294e;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.age-description {
+  margin: 0 0 28px;
+  color: #6b5260;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+}
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
   place-items: center;
   padding: 24px 16px;
-  background: #fff7fa;
-  color: #38212c;
+  color:var(--color-text);
 
   &,
   * {
@@ -16,11 +66,11 @@
 .age-card {
   width: 100%;
   max-width: 460px;
-  padding: clamp(24px, 6vw, 40px);
-  border: 1px solid #ecdde3;
-  border-radius: 28px;
-  background: #fff;
-  box-shadow: 0 16px 48px rgb(80 34 55 / 8%);
+ padding: clamp(24px, 6vw, 40px);
+//   border: 1px solid #ecdde3;
+//   border-radius: 28px;
+//   background: var( --color-bg);
+//   box-shadow: 0 16px 48px rgb(80 34 55 / 8%);
 
   h1 {
     margin: 16px 0 12px;
@@ -45,6 +95,7 @@
 .age-options {
   display: grid;
   gap: 12px;
+  min-height: 72px;
 }
 
 .age-option {
@@ -57,8 +108,8 @@
   padding: 16px 18px;
   border: 2px solid #ded1d7;
   border-radius: 16px;
-  background: #fff;
-  color: #38212c;
+  background: var( --color-bg);
+  color: var(--color-btn);
   font: inherit;
   font-weight: 600;
   text-align: left;
@@ -77,7 +128,7 @@
     .age-indicator {
       border-color: #86294e;
       background: #86294e;
-      color: #fff;
+      color: var( --color-bg);
     }
   }
 }
@@ -100,7 +151,7 @@
   border: 0;
   border-radius: 14px;
   background: #86294e;
-  color: #fff;
+  color: var( --color-bg);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
@@ -110,7 +161,7 @@
   }
 
   &:disabled {
-    background: #e9e0e4;
+    background: var( --color-fond-page);
     color: #705b65;
     cursor: not-allowed;
   }
@@ -119,7 +170,7 @@
 .age-option,
 .age-continue {
   &:focus-visible {
-    outline: 3px solid #38212c;
+    outline: 3px solid var(--color-btn);
     outline-offset: 4px;
   }
 }

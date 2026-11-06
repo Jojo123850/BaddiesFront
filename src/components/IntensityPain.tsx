@@ -1,5 +1,5 @@
 import db from "../data/db.json";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { Pointer } from "lucide-react";
@@ -59,6 +59,14 @@ const startIncrementing = () => {
         });
     }, 400);
 };
+useEffect(() => {
+  return () => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+}, []);
 
     const stopIncrementing = () => {
         if (intervalRef.current) {
@@ -82,6 +90,8 @@ const startIncrementing = () => {
 
     return (
         <>
+        <div className="analyse-page">
+
             <h2 className="analyse">
                 Intensité de la douleur
             </h2>
@@ -105,15 +115,49 @@ const startIncrementing = () => {
             </p>
                     
 
-            <div  className="hand-circle"  onPointerDown={startIncrementing}            onPointerUp={stopIncrementing} onPointerLeave={stopIncrementing}  >
-               <Pointer  className="hand-icon"  size={35}  strokeWidth={1.8}  aria-hidden="true"  />
-               {evaluation.intensiteValeur === null ? "Appuie" : `${evaluation.intensiteValeur}/10`}
-            </div> 
+            <button
+  type="button"
+  className="hand-circle"
+  aria-label="Intensité de la douleur : maintenez pour augmenter"
+  onPointerDown={startIncrementing}
+  onPointerUp={stopIncrementing}
+  onPointerLeave={stopIncrementing}
+  onPointerCancel={stopIncrementing}
+  onKeyDown={(event) => {
+    if (
+      (event.key === " " || event.key === "Enter") &&
+      !event.repeat
+    ) {
+      event.preventDefault();
+      startIncrementing();
+    }
+  }}
+  onKeyUp={(event) => {
+    if (event.key === " " || event.key === "Enter") {
+      event.preventDefault();
+      stopIncrementing();
+    }
+  }}
+  onBlur={stopIncrementing}
+>
+  <Pointer
+    className="hand-icon"
+    strokeWidth={1.8}
+    aria-hidden="true"
+  />
+
+  <span>
+    {evaluation.intensiteValeur === null
+      ? "Maintenir"
+      : `${evaluation.intensiteValeur}/10`}
+  </span>
+</button>
             <div className="btn-container">
                 <button disabled={evaluation.intensiteValeur === 0 || evaluation.intensiteValeur === null}  onClick=         {handleContinue}  className="btn" >
                     Continuer à analyser
                 </button>
             </div>
+        </div>
 
             
         </>

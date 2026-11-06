@@ -1,347 +1,310 @@
-@import './_variables.scss';
-@import './_mixins.scss';
-@import './navbar.scss';
+@import "./_variables.scss";
+@import "./_mixins.scss";
 
-.body-container {
-    position: relative;
-}
+.bodyZone {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 20px auto 0;
+  padding: 0 24px;
+  box-sizing: border-box;
 
-.silhouette {
-    display: block;
-    width: 70%;
-    margin: auto;
-}
-
-.btn1 {
-    position: absolute;
-    background: var(--color-btn);
-    color: var(--color-white);
-    padding: 8px 14px;
-    border-radius: 14px;
-}
-
-.btn1.selected {
-    background-color: var(--color-black);
-}
-
-.btn1.cuisses {
-    top: 76%;
-    left: 44%;
-}
-
-.btn1.pelvis {
-    top: 56%;
-    left: 22%;
-}
-
-.btn1.dos {
-    top: 44%;
-    left: 40%;
-}
-
-.btn-retour-face {
-    display: flex;
-    position: absolute;
-    right: 10px;
-    top: 75%;
-    align-items: center;
-    gap: 8px;
-
-    padding: 10px 16px;
-
-    border: none;
-    border-radius: 14px;
-
-    background: var(--color-btn);
-    color: var(--color-black);
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.btn-retour-face:hover {
-    background: var(--color-black);
-    color: var(--color-white);
-}
-
-.btn-retour-face svg {
-    font-size: 14px;
-}
-
-
- .btn2 {
-    display: inline-flex;
-     align-items: center;
-    justify-content: center;
-
-     width: auto;
-    min-width: 70px;
-    min-height: 38px;
-
-   padding: 8px 12px;
-
-    background: var(--color-pink);
-     color: var(--color-text);
-
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-
-    font-family: var(--font-body);
-    font-size: 12px;
-     font-weight: 600;
+  h1,
+  .analyse {
     text-align: center;
+  }
 
-    cursor: pointer;
-
-    transition: background 0.2s ease, color 0.2s ease;
-
-     &.selected {
-        background: var(--color-btn);
-        color: var(--color-white);
-        border-color: var(--color-btn);
-   }
-
-   &:focus-visible {
-        outline: 2px solid var(--color-btn);
-         outline-offset: 3px;
-     }
- }
-
- 
-@import './_variables.scss';
-@import './_mixins.scss';
-@import './navbar.scss';
-
-// PAGE LOCALISATION
-h1, .analyse{
+  .analysePara {
+    margin-top: 20px;
+    color: var(--color-text-muted);
+    font-size: 16px;
+    line-height: 1.6;
     text-align: center;
-}
+  }
 
-.loc {
+  .loc {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
     width: 100%;
     padding: 20px 12px;
-
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-
     box-sizing: border-box;
-}
+  }
 
-// CONTENEUR PRINCIPAL
-
-.body-container {
-    width: 100%;
-    min-width: 0;
-    text-align: center;
-}
-
-.body-container .answer {
-    margin: 10px auto 20px;
-    color: var(--color-btn);
-    font-size: 14px;
-    text-align: center;
-}
-
-// CONTENEUR DE LA SILHOUETTE
-
-.silhouette-container {
+  // Conteneurs des vues de face et de dos
+ .body-container, .silhouette-container {
     position: relative;
-
     width: 100%;
     max-width: 350px;
-
-    margin: 20px auto;
-}
-
-// IMAGE SILHOUETTE
-
-.silhouette-container .silhouette {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    object-fit: contain;
-}
-
-// BOUTONS DES ZONES
-
-.silhouette-container .btn2 {
-    position: absolute;
-    z-index: 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: max-content;
-    max-width: 145px;
     min-width: 0;
-    min-height: 36px;
-
-    margin: 0;
-    padding: 8px 12px;
-
-    background: var(--color-pink);
-    color: var(--color-text);
-
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.3;
+    margin: 20px auto;
     text-align: center;
 
-    white-space: normal;
-    overflow-wrap: break-word;
+    .answer {
+      margin: 10px auto 20px;
+      color: var(--color-btn);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
 
-    cursor: pointer;
+    .silhouette {
+      display: block;
+      width: 70%;
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
+    }
 
-    transform: translate(-50%, -50%);
+    // Conteneur intérieur présent dans AnteriorPain
+    > .silhouette-container {
+      margin: 20px auto;
+    }
 
-    transition:
-        background 0.2s ease,
+    // Styles communs des boutons de localisation
+    .btn1,
+    .btn2 {
+      position: absolute;
+      z-index: 2;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: auto;
+      max-width: 145px;
+      min-height: 44px;
+      margin: 0;
+      padding: 8px 12px;
+
+      background: var(--color-fond-page);
+      color: var(--color-text);
+
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      text-align: center;
+      white-space: normal;
+      overflow-wrap: break-word;
+
+      cursor: pointer;
+
+      transition:
+        background-color 0.2s ease,
         color 0.2s ease,
         border-color 0.2s ease;
 
-    &:hover {
+      &:hover {
         border-color: var(--color-btn);
-    }
+      }
 
-    &.selected {
+      &.selected {
         background: var(--color-btn);
         color: var(--color-white);
         border-color: var(--color-btn);
-    }
+      }
 
-    &:focus-visible {
+      &:focus-visible {
         outline: 2px solid var(--color-btn);
         outline-offset: 3px;
+      }
     }
-}
 
-// POSITION DES ZONES
-// Ajuster selon les dimensions réelles de l'image.
-// Les noms doivent correspondre aux ID du db.json.
+    // Boutons de face
+    .btn2 {
+      transform: translate(-50%, -50%);
 
-.silhouette-container {
-
-    .btn2.ventre {
+      &.ventre {
         top: 35%;
         left: 50%;
-    }
+      }
 
-   .silhouette-container .btn2.bas-ventre {
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 115px;
-}
+      &.bas-ventre {
+        top: 35%;
+        left: 50%;
+        max-width: 115px;
+      }
 
-        .btn2.pelvis {
+      &.pelvis {
         top: 59%;
         left: 41%;
         max-width: 125px;
-        transform: translate(-50%, -50%);
-        white-space: normal;
-        text-align: center;
-    }
+      }
 
-    .btn2.cuisses {
+      &.cuisses {
         top: 78%;
         left: 60%;
+      }
     }
-}
 
-// BOUTON CONTINUER
+    // Boutons de dos
+    .btn1 {
+      &.dos {
+        top: 44%;
+        left: 40%;
+      }
 
-.body-container .btn-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      &.pelvis {
+        top: 56%;
+        left: 22%;
+      }
 
-    width: 100%;
-    margin: 30px auto;
-    padding: 0 12px;
-}
-
-.body-container .btn-container .btn {
-    width: 100%;
-    max-width: 320px;
-    min-height: 52px;
-
-    padding: 14px 20px;
-
-    border: none;
-    border-radius: 16px;
-
-    background: var(--color-btn);
-    color: var(--color-white);
-
-    font-size: 15px;
-    font-weight: 700;
-    text-align: center;
-
-    &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+      &.cuisses {
+        top: 76%;
+        left: 44%;
+      }
     }
+
+    // Bouton Continuer des deux composants
+    .btn-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      margin: 30px auto;
+      padding: 0 12px;
+      box-sizing: border-box;
+
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 52px;
+        margin: 0;
+        padding: 14px 20px;
+
+        background: var(--color-btn);
+        color: var(--color-white);
+
+        border: none;
+        border-radius: 14px;
+
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+          background: var(--color-black);
+        }
+
+        &:disabled {
+          background: var(--color-fond-page);
+          color: var(--color-text-muted);
+          cursor: not-allowed;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--color-btn);
+          outline-offset: 3px;
+        }
+      }
+    }
+  }
+  .body-container{
+    .answer{
+        text-align: center;
+    }
+  }
+
+  // Bouton de rotation placé dans ZoneP
+  > .btn-retour-face {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+
+  background: var(--color-btn);
+  color: var(--color-white);
+
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    background: var(--color-black);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-btn);
+    outline-offset: 4px;
+  }
 }
-
-// TABLETTES ET ORDINATEURS
-
-@media (min-width: 768px) {
+  // Tablettes et ordinateurs
+  @media (min-width: 768px) {
     .loc {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
     }
 
     .silhouette-container {
-        max-width: 400px;
-    }
+      max-width: 400px;
 
-    .silhouette-container .btn2 {
+      .btn1,
+      .btn2 {
         max-width: 165px;
-        min-height: 40px;
         padding: 10px 14px;
         font-size: 13px;
+      }
     }
-}
+  }
 
-// PETITS ECRANS
+  // Petits écrans
+  @media (max-width: 480px) {
+    padding: 0 12px;
 
-@media (max-width: 480px) {
     .loc {
-        padding: 12px 8px;
+      padding: 12px 8px;
     }
 
     .silhouette-container {
-        max-width: 300px;
-        margin: 15px auto;
-    }
+      max-width: 300px;
+      margin: 15px auto;
 
-    .silhouette-container .btn2 {
+      .btn1,
+      .btn2 {
         max-width: 125px;
-        min-height: 32px;
-
         padding: 7px 9px;
-        font-size: 11px;
-    }
+        font-size: 12px;
+      }
 
-    .body-container .btn-container {
+      .btn-container {
         margin: 25px auto;
+      }
     }
-}
+  }
 
-// ACCESSIBILITE
-
-@media (prefers-reduced-motion: reduce) {
-    .silhouette-container .btn2 {
+  @media (prefers-reduced-motion: reduce) {
+    .silhouette-container {
+      .btn1,
+      .btn2 {
         transition: none;
+      }
     }
+  }
 }
