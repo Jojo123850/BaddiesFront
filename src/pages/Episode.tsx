@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import Navbar from "../components/Navbar";
@@ -11,6 +11,38 @@ import {
 import "../styles/episode.scss";
 import db from "../data/db.json";
 
+type DeleteProps = {
+  onAccept: () => void;
+  onRefuse: () => void;
+};
+
+function Delete({ onAccept, onRefuse }: DeleteProps) {
+    
+
+
+  return (
+    <div id="delete-overlay">
+      <div className="delete-card"   role="dialog" aria-modal="true"  aria-labelledby="delete-title">
+        <h2 id="delete-title">Supprimer le contact ?</h2>
+
+        <p>
+          Voulez-vous vraiment supprimer votre contact  ?
+        </p>
+
+        <div className="delete-actions">
+          <button type="button" onClick={onRefuse}>
+            Annuler
+          </button>
+
+          <button type="button" onClick={onAccept}>
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Episode() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -21,6 +53,7 @@ export default function Episode() {
     const [deleting, setDeleting] = useState(false);
 
     const isConnected = Boolean(localStorage.getItem("token"));
+    const [showDelete, setShowDelete] = useState(false)
 
     useEffect(() => {
         let active = true;
@@ -215,22 +248,31 @@ export default function Episode() {
                             <p role="alert">{error}</p>
                         )}
 
+                
                         <button
                             type="button"
-                            onClick={handleDelete}
+                            onClick={() => setShowDelete(true)}
                             className="btn"
                             disabled={deleting}
-                        >
-                            {deleting
-                                ? "Suppression..."
-                                : "Supprimer cet épisode"}
+                        >      
+                                 Supprimer cet épisode
                         </button>
                     </>
                 )}
 
-                <Link to="/Suivi?tab=historique">
+                {/* <Link to="/Suivi?tab=historique">
                     Retour à mon historique
-                </Link>
+                </Link> */}
+                    {showDelete && (
+                <Delete
+                onRefuse={() => setShowDelete(false)}
+                onAccept={() => {
+                handleDelete();
+                setShowDelete(false);
+                }}
+            />
+            )}
+            
             </main>
         </>
     );

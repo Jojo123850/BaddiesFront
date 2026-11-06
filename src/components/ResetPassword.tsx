@@ -74,10 +74,10 @@ export function ResetPassword() {
                     Réinitialiser le mot de passe
                 </h2>
 
-                <p>Tous les champs sont obligatoires</p>
+                <p className="paraPass">Tous les champs sont obligatoires</p>
                   <div className="regexDiv">
 
-                    <p>Pour des raison de sécurité, botre nouveau mot de passe doit respecter les règles suivantes:
+                    <p>Pour des raison de sécurité, votre nouveau mot de passe doit respecter les règles suivantes:
                     </p>
                     <ul>
                         <li>une longueur d'au moins 10 caractères</li>
@@ -123,11 +123,14 @@ export function ResetPassword() {
                     </p>
                 )}
 
-               
+            <div className="btnSubmit">
+               <Link to="/Home" className="btnStop">Abandonner</Link>
                 <button type="submit" className="btn" disabled={loading || !token}>
                     {loading ? "Réinitialisation..." : "Réinitialiser"}
                 </button>
-               <Link to="/Home" className="btn">Abandonner</Link>
+
+            </div>
+               
 
             </form>
         </div>

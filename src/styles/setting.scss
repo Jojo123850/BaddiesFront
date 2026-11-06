@@ -721,7 +721,141 @@ button.profile-link {
 
   cursor: pointer;
 }
+#delete-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--color-pink);
+  backdrop-filter: blur(5px);
+
+  .delete-card {
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    padding: 24px;
+    overflow-y: auto;
+
+    background: var(--color-card);
+    color: var(--color-text);
+    border-radius: 20px;
+
+    animation: delete-appear 200ms ease-out;
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+
+    }
+
+    .delete-actions {
+      display: flex;
+      gap: 12px;
+
+      button {
+        flex: 1;
+        min-height: 48px;
+        padding: 12px;
+
+        border: 1px solid var(--color-btn);
+        border-radius: 12px;
+
+        font-family: var(--font-body);
+        font-weight: 700;
+        cursor: pointer;
+
+        &:first-child {
+          background: var(--color-card);
+          color: var(--color-btn);
+        }
+
+        &:last-child {
+          background: var(--color-btn);
+          color: var(--color-white);
+        }
+      }
+    }
+  }
+}
+// Pendant l’affichage de la confirmation
+.settings-panel:has(#delete-overlay) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  animation: none;
+  transform: none;
+
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+// Bloque également le défilement de la page
+html:has(#delete-overlay),
+body:has(#delete-overlay) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+// Confirmation centrée dans la zone visible
+#delete-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .delete-card {
+    box-sizing: border-box;
+    max-height: 85vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+// Bloque le défilement pendant la confirmation.
+html:has(#delete-overlay),
+body:has(#delete-overlay),
+.settings-panel:has(#delete-overlay) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+@keyframes delete-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #delete-overlay .delete-card {
+    animation: none;
+  }
+}
 // ANIMATION
 
 @keyframes panel-enter {

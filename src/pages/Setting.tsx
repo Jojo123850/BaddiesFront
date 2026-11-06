@@ -94,9 +94,10 @@ function Delete({ onAccept, onRefuse }: DeleteProps) {
         <h2 id="delete-title">Supprimer le contact ?</h2>
 
         <p>
-          Voulez-vous vraiment supprimer votre contact d'urgence ?
+          Voulez-vous vraiment supprimer votre contact  ?
         </p>
 
+        
         <div className="delete-actions">
           <button type="button" onClick={onRefuse}>
             Annuler
@@ -433,31 +434,6 @@ const handleDeleteConsent = () => {
             </Link>
           </div>
         </section>
-
-        {canConnect && (
-      <section className="settings-section" >
-        <h2>Confidentialité et données de santé</h2>
-        <div className="settings-field">
-            <p className="paraHealth">
-              Vous pouvez retirer votre consentement
-              au traitement de vos données de santé.
-            </p>
-
-            <p className="paraStatus">
-              Statut : {hasConsent ? "Consentement actif" : "Aucun consentement actif"}
-            </p>
-
-            {hasConsent && (
-              <button type="button" className="settings-secondary-btn" onClick={handleDeleteConsent} >
-                Retirer mon consentement
-              </button>
-            )}
-        </div>
-
-      </section>
-)}
-       
-        
 
 
         {canConnect && user && (
