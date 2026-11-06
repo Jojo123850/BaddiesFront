@@ -2,11 +2,12 @@
 import { useState, useEffect } from "react";
 import type { HistoryEvaluation } from "../services/localStorageService";
 import { useNavigate } from "react-router-dom";
-import { getHistory } from "../services/historyService";
+import { getHistory, importHistory } from "../services/historyService";
 import { MapPin } from "lucide-react";
 import db from "../data/db.json";
 
 import "../styles/tracking.scss";
+
 
 export function History() {
     const navigate = useNavigate();
@@ -83,12 +84,93 @@ export function History() {
             }
         };
 
+
         loadHistory();
 
         return () => {
             active = false;
         };
+        
+
     }, []);
+
+    const [syncing, setSyncing] = useState(false)
+    const [message, setMessage] = useState("")
+        const  shareHistory = async() => {
+            if (syncing) return;
+
+            const token = localStorage.getItem("token")
+
+            if(!token){
+                setMessage("Il faut etre connecter pour récuperer l'historique")
+                return
+            }
+
+            if(!navigator.onLine){
+                setMessage("Il faut avoir une connexion internet pour le transfert")
+                return
+            }
+
+            const confirmedHistory = window.confirm("Ajouter les évaluations de cet appareil au compte connecté " + "Confirmez qu'elles vous appartiennent")
+
+            if(!confirmedHistory)return
+
+            setSyncing(true);
+            setMessage("")
+
+            try {
+                const localHistory: HistoryEvaluation[] = JSON.parse(
+                localStorage.getItem("historique") ?? "[]"
+            );
+
+            if (localHistory.length === 0) {
+                setMessage("Aucune évaluation locale à transférer.");
+                return;
+            }
+
+            for (const episode of localHistory) {
+                await importHistory(episode);
+
+                const rest: HistoryEvaluation[] = JSON.parse(
+                localStorage.getItem("historique") ?? "[]"
+                );
+
+                localStorage.setItem(
+                "historique",
+                JSON.stringify(
+                    rest.filter((item) => item.id !== episode.id)
+                )
+                );
+            } // La boucle se termine ici.
+
+            try {
+                const updatedHistory = await getHistory();
+                setHistory(updatedHistory);
+                setMessage("Vos évaluations ont été transférées.");
+            } catch {
+                 
+                setMessage(
+                "Transfert terminé. Rechargez la page pour actualiser l’historique."
+                );
+            }
+                
+            } catch(error)  {
+                const detail =
+                error instanceof Error
+                ? error.message
+                : "Erreur inconnue."
+                setMessage(
+            `Transfert interrompu: ${detail}`
+            );
+
+            }finally{
+                setSyncing(false);    
+
+            }
+            
+
+            
+}
 
     return (
         <>
@@ -107,6 +189,11 @@ export function History() {
                     </select>
                 </div>
             </section>
+            <button type="button" className="btn" onClick={shareHistory} disabled={syncing}>
+                {syncing ? "Transfert en cours... ": "Ajouter à mon compte"}
+            </button>
+            {message && <p role="status">{message}</p>}
+
 
             {loading ? (
                 <p role="status">Chargement de l'historique...</p>

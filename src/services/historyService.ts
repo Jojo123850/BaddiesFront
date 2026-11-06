@@ -2,6 +2,7 @@
 import type { HistoryEvaluation } from "./localStorageService"
 import { BASE_URL, fetchWithAuth } from "./apiService"
 
+
 const API_URL = `${BASE_URL}/api/v1/history`
 
 // Structure des erreurs renvoyées par Express
@@ -135,3 +136,36 @@ export async function deleteHistory(
         await readResponse(response)
     }
 }
+
+export async function importHistory(episode: HistoryEvaluation):Promise <HistoryEvaluation> {
+       const response = await fetchWithAuth(`${API_URL}/import`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+         body: JSON.stringify({
+            localId: String(episode.id),
+            date: episode.date,
+            evaluation: episode.evaluation,
+            solutions: episode.solutions
+        })
+    })
+    const data = await readResponse<{
+        history: HistoryFromApi
+    }>(response)
+
+    if (!data?.history) {
+        throw new Error(
+            "Réponse invalide lors du transfert de l'évaluation."
+    )
+    }
+
+    return formatHistory(data.history)
+
+}
+    
+
+
+
+
+
