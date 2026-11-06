@@ -167,7 +167,7 @@ export function History() {
             try {
                 const updatedHistory = await getHistory();
                 setHistory(updatedHistory);
-                setMessage("Vos évaluations ont été transférées.");
+                setMessage("Vos évaluations ont bien été transférées sur votre compte.");
             } catch {
                  
                 setMessage(
@@ -188,6 +188,8 @@ export function History() {
                 setSyncing(false);    
 
             }
+
+            setMessage("Vos évaluations ont bien été transférées sur votre compte.");
             
 
             
@@ -196,20 +198,29 @@ export function History() {
     return (
         <>
             <h2>Mon historique</h2>
-            {isConnected &&  hasLocalHistory && (
-                <section className="synchro">
-                    <h2>Synchroniser votre données</h2>
-                    <p>Transferez vos évaluations locales sur votre compte</p>
-                    <button type="button" className="btn" onClick={shareHistory} disabled={syncing}>
-                        {syncing ? "Transfert en cours... ": "Ajouter à mon compte"}
-                    </button>
-                    {message && <p role="status">{message}</p>}
-                </section>
+            {isConnected && hasLocalHistory && (
+            <section className="synchro">
+                <h2>Synchroniser vos données</h2>
+                <p>Transférez vos évaluations locales sur votre compte.</p>
+
+                <button
+                type="button"
+                className="btn"
+                onClick={shareHistory}
+                disabled={syncing}
+                >
+                {syncing ? "Transfert en cours…" : "Ajouter à mon compte"}
+                </button>
+            </section>
             )}
+
+<p role="status" aria-live="polite">
+  {message}
+</p>
         
 
             <section className="filtreArt" aria-labelledby="history-filter-title">
-                    <label htmlFor="history-filter">Trier ou filtrer les évaluations</label>
+                    <label htmlFor="history-filter">Trier les évaluations</label>
                 <div className="historyFilters">
 
                     <select id="history-filter" value={filtre} onChange={(e) => setFiltre(e.target.value)}>

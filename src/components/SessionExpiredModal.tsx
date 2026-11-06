@@ -1,7 +1,7 @@
 import { useEffect, useState  } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { SESSION_EXPIRED_EVENT} from "../services/sessionService"
-    
+import "../styles/sessionExpired.scss";
 
 
 export default function SessionExpiredModal() {
