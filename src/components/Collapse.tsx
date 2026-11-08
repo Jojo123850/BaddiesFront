@@ -1,12 +1,6 @@
 
 import { useState } from "react";
-import {
-  ChevronDown,
-  Smartphone,
-  Monitor,
-  Download,
-  CheckCircle2
-} from "lucide-react";
+import {ChevronDown,Smartphone,Monitor,Download,CheckCircle2} from "lucide-react";
 
 type Platform = "ios" | "android" | "ordinateur";
 

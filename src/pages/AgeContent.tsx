@@ -75,12 +75,7 @@ export default function Age() {
           })}
         </div>
 
-        <button
-          type="button"
-          className="age-continue"
-          onClick={handleContinue}
-          disabled={!selectedAge}
-        >
+        <button type="button" className="age-continue" onClick={handleContinue} disabled={!selectedAge} >
           Continuer
         </button>
       </section>
