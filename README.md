@@ -15,6 +15,7 @@ L’application fournit des informations et une aide à l’orientation ; elle n
 - Évaluation des douleurs, localisation, récapitulatif et propositions de solutions.
 - Historique local ou enregistré sur un compte, consultation des épisodes et graphiques de suivi.
 - Export PDF du récapitulatif.
+- Synchronisation des données
 - Inscription, connexion, gestion du profil et récupération du mot de passe via l’API.
 - Consentements distincts pour les données de santé et les statistiques Google Analytics.
 - Application installable (PWA), avec mise en cache des ressources de l’interface.
