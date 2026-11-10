@@ -10,6 +10,7 @@ type Consent = "accepted" | "refused";
 
 type Gtag = (...args: unknown[]) => void;
 
+// à simplifier
 declare global {
   interface Window {
     dataLayer?: IArguments[];

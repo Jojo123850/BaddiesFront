@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Check } from "lucide-react";
-import "../styles/age.scss";
+import "../styles/pages/age.scss";
 
 const ages = [
   { id: "-12ans", 
@@ -31,13 +31,15 @@ export default function Age() {
   }, [hasSavedAge, navigate]);
 
   const handleContinue = () => {
-    if (!selectedAge) return;
+    if (!selectedAge) 
+        return;
 
     localStorage.setItem("baddies-age", selectedAge);
     navigate("/Home", { replace: true });
   };
 
-  if (hasSavedAge) return null;
+  if (hasSavedAge) 
+    return null;
 
   return (
     <main className="age-page">
@@ -49,22 +51,13 @@ export default function Age() {
           Choisissez votre tranche d’âge pour adapter votre parcours.
         </p>
 
-        <div
-          role="group"
-          aria-labelledby="age-title"
-          className="age-options"
-        >
+        <div role="group" aria-labelledby="age-title" className="age-options" >
           {ages.map((item) => {
             const isSelected = selectedAge === item.id;
 
             return (
-              <button
-                key={item.id}
-                type="button"
-                className={`age-option${isSelected ? " is-selected" : ""}`}
-                aria-pressed={isSelected}
-                onClick={() => setSelectedAge(item.id)}
-              >
+              <button key={item.id} type="button" className={`age-option${isSelected ? " is-selected" : ""}`} aria-pressed={isSelected} onClick={() => setSelectedAge(item.id)} >
+             
                 <span>{item.label}</span>
 
                 <span className="age-indicator" aria-hidden="true">

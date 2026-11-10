@@ -1,10 +1,9 @@
-
+// Toutes les couleurs sont définies ici. Les autres fichiers utilisent var().
 :root {
-  // COULEURS PRINCIPALES
+
+  // Palette existante
   --color-white: #FFFFFF;
   --color-black: #171317;
-
-  // FONDS
   --color-bg: #FFFFFF;
   --color-card: #FFFFFF;
   --color-card-soft: #FAF5F7;
@@ -12,29 +11,80 @@
   --color-fond-clair: #FAF8F9;
   --color-fond-page: #e9e0e4;
   --color-back: #f5e7e9;
-
-  // TEXTES
   --color-text: #171317;
   --color-text-muted: #706970;
   --color-ok: #2f8b35;
 
-  // BORDURES
   --color-border: #EEE5E9;
-
-
-  // COULEURS BADDIES
   --color-btn: #741D2D;
   --color-accent: #741D2D;
   --color-pink: rgba(116, 29, 45, 0.16);
   --color-rec: rgba(217, 217, 217, 0.21);
---color-error: #a32038;
+  --color-error: #a32038;
 
-  // TYPOGRAPHIE
+  // Polices
   --font-display: "Manrope", sans-serif;
   --font-heading: "Manrope", sans-serif;
   --font-body: "Inter", sans-serif;
+
+  // Nuances conservées du projet
+  --color-transparent: transparent;
+  --color-age-accent: #86294e;
+  --color-onboarding-text: #6b5260;
+  --color-onboarding-border: #ded1d7;
+  --color-onboarding-hover: #fff7fa;
+  --color-onboarding-selected: #fceaf1;
+  --color-onboarding-indicator: #9c8590;
+  --color-age-hover: #6b203e;
+  --color-onboarding-disabled: #705b65;
+  --color-shadow-accent-soft: rgba(116, 29, 45, 0.05);
+  --color-alert-text: #66565d;
+  --color-alert-border: #b45353;
+  --color-alert-heading: #963f3f;
+  --color-alert-detail: #654c4c;
+  --color-alert-hover: #5e1725;
+  --color-alert-focus: #b96a80;
+  --color-consent-overlay: rgba(0, 0, 0, 0.65);
+  --color-text-strong: #252025;
+  --color-shadow-strong: rgba(0, 0, 0, 0.3);
+  --color-consent-border: #e8dce0;
+  --color-consent-option: #faf7f8;
+  --color-text-secondary: #555;
+  --color-country-text: #38212c;
+  --color-modal-overlay: rgba(0, 0, 0, 0.35);
+  --color-shadow-card: rgba(116, 29, 45, 0.18);
+  --color-contact-card: #faf0f4;
+  --color-border-pink: #e8d6dc;
+  --color-btn-hover: #5D1724;
+  --color-border-soft: #eadde0;
+  --color-warning-bg: #fff2e8;
+  --color-warning-border: #e8c6a9;
+  --color-warning-text: #a54819;
+  --color-help-muted: #666;
+  --color-shadow-soft: rgba(0, 0, 0, 0.05);
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-navbar-muted: #625B60;
+  --color-navbar-hover: #DFC7CF;
+  --color-chart-grid: #E8D6DD;
+  --color-input-line: #5264AE;
+  --color-loading-back: rgba(224, 70, 75, 0.2);
+  --color-loading-front: #d2494b;
+  --color-settings-border: #eadfe2;
+  --color-settings-title: #241e21;
+  --color-settings-divider: #f0e8eb;
+  --color-settings-accent: #8b2747;
+  --color-settings-arrow: #a39a9e;
+  --color-settings-selected: #fff1f5;
+  --color-settings-detail: #34272c;
+  --color-settings-muted: #82767c;
+  --color-tracking-border: #e9dde2;
+  --color-tracking-muted: #9c8991;
+  --color-success-bg: #f1f8f3;
+--color-success-text: #1f6b3a;
+--color-success-border: #c9e2d1;
 }
 
+// Tailles conservées pour les prochains ajustements.
 $font-size-logo: 410px;
 $breakpoint: 767px;
 $breakpoint-tablette: 1024px;

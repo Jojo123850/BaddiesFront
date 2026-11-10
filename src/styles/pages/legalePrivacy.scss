@@ -1,10 +1,11 @@
+// Styles propres à la page legalePrivacy.
 
 .legal-page {
   width: 90%;
   max-width: 800px;
   margin: 30px auto;
   padding: 25px;
-  background:transparent;
+  background: var(--color-transparent);
   color: var(--color-text);
 
   h1 {
@@ -44,20 +45,24 @@
     line-height: 1.7;
     margin-bottom: 8px;
   }
-  a{
-      color: var(--color-btn);
-      font-weight: bold;
-      text-decoration: underline;
-  }
-  .date{
+
+  a {
     color: var(--color-btn);
-     font-weight: bold;
+    font-weight: bold;
+    text-decoration: underline;
   }
+
+  .date {
+    color: var(--color-btn);
+    font-weight: bold;
+  }
+
   .btn {
     display: block;
     margin-top: 20px;
     color: var(--color-bg);
     text-decoration: none;
+
     &:hover {
       color: var(--color-bg);
       background-color: var(--color-text);

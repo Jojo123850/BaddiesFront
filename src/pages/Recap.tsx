@@ -13,8 +13,8 @@ import moderee from "../assets/images/moderee.webp";
 import intense from "../assets/images/intense.webp";
 import { contextImages } from "../data/contextDataImages";
 
-import "../styles/navbar.scss";
-import "../styles/recap.scss";
+import "../styles/components/navbar.scss";
+import "../styles/pages/recap.scss";
 
 const intensityImages: Record<string, string> = {
   legere,
@@ -73,23 +73,12 @@ const intensityLabel =
 
       <main className="recap-page">
         <div className="switch">
-          <Link
-            to="/Localisation"
-            className="retour"
-            aria-label="Retour à l’étape précédente"
-          >
-            <ChevronLeft
-              size={22}
-              strokeWidth={1.8}
-              aria-hidden="true" 
-            />
+          <Link to="/Localisation" className="retour" aria-label="Retour à l’étape précédente" >
+            <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
           </Link>
         </div>
 
-        <section
-          className="recap-summary"
-          aria-labelledby="recap-title"
-        >
+        <section className="recap-summary" aria-labelledby="recap-title" >
           <h1 id="recap-title">
             Récapitulatif de votre évaluation
           </h1>
@@ -143,10 +132,7 @@ const intensityLabel =
           </div>
         </section>
 
-        <section
-          className="recap-details"
-          aria-label="Symptômes et caractéristiques de la douleur"
-        >
+        <section className="recap-details" aria-label="Symptômes et caractéristiques de la douleur" >
           <div className="recap-panel">
             <Symptom />
           </div>
@@ -157,15 +143,7 @@ const intensityLabel =
         </section>
 
         <div className="btn-container">
-          <button
-            type="button"
-            disabled={isInComplete}
-            onClick={handleContinue}
-            className="btn"
-            aria-describedby={
-              isInComplete ? "recap-help" : undefined
-            }
-          >
+          <button type="button" disabled={isInComplete} onClick={handleContinue} className="btn" aria-describedby={ isInComplete ? "recap-help" : undefined } >
             Voir les solutions
           </button>
 

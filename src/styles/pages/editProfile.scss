@@ -1,16 +1,14 @@
-@import "./_variables.scss";
+// Styles propres à la page editProfile.
 
 .edit-profile {
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
   padding: 32px 20px 100px;
-
   color: var(--color-text);
   font-family: var(--font-body);
 
-  &,
-  * {
+  &, * {
     box-sizing: border-box;
   }
 
@@ -32,7 +30,6 @@
       height: 130px;
       margin: 0;
       padding: 0;
-
       border: 3px solid var(--color-border);
       border-radius: 50%;
       background: var(--color-card-soft);
@@ -59,7 +56,6 @@
   .collapse {
     min-width: 0;
     padding: 20px;
-
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: 20px;
@@ -73,16 +69,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-
       width: 100%;
       min-height: 48px;
       margin: 0;
       padding: 0;
-
       background: none;
       color: var(--color-text);
       border: none;
-
       font-family: var(--font-heading);
       font-size: 16px;
       font-weight: 700;
@@ -111,7 +104,6 @@
       min-width: 0;
       margin: 0;
       padding: 3px;
-
       background: var(--color-card);
       border: 2px solid var(--color-border);
       border-radius: 50%;
@@ -157,12 +149,10 @@
       min-height: 48px;
       margin-bottom: 20px;
       padding: 12px 14px;
-
       background: var(--color-fond-clair);
       color: var(--color-text);
       border: 1px solid var(--color-border);
       border-radius: 12px;
-
       font-family: var(--font-body);
       font-size: 16px;
 
@@ -190,12 +180,10 @@
       min-height: 52px;
       margin: 0;
       padding: 14px 20px;
-
       background: var(--color-btn);
       color: var(--color-white);
       border: none;
       border-radius: 14px;
-
       font-family: var(--font-body);
       font-size: 15px;
       font-weight: 700;
@@ -212,35 +200,39 @@
     }
   }
 
-  button:focus-visible,
-  input:focus-visible {
+  button:focus-visible, input:focus-visible {
     outline: 2px solid var(--color-btn);
     outline-offset: 4px;
   }
 
-  p[role="alert"],
-  p[role="status"] {
-    margin: 20px 0 0;
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: center;
-  }
+  p {
+    &[role=alert], &[role=status] {
+      margin: 20px 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
 
-  p[role="alert"] {
-    color: var(--color-error);
-  }
+    &[role=alert] {
+      color: var(--color-error);
+    }
 
-  p[role="status"] {
-    color: var(--color-ok);
+    &[role=status] {
+      color: var(--color-ok);
+    }
   }
+}
 
-  @media (max-width: 767px) {
+@media (max-width: 767px) {
+  .edit-profile {
     .collapseDiv {
       grid-template-columns: 1fr;
     }
   }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
+  .edit-profile {
     padding: 24px 16px 100px;
 
     h1 {

@@ -1,7 +1,7 @@
 
 import Navbar from "../components/Navbar";
-import "../styles/navbar.scss";
-import "../styles/zone.scss";
+import "../styles/components/navbar.scss";
+import "../styles/pages/zone.scss";
 
 import AnteriorPain from "../components/AnteriorPain";
 import PosteriorPain from "../components/PosteriorPain";

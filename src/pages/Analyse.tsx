@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "../styles/navbar.scss";
-import "../styles/analyse.scss";
+import "../styles/components/navbar.scss";
+import "../styles/pages/analyse.scss";
 import { ChevronLeft } from "lucide-react";
 
 import IntensityPain from "../components/IntensityPain";
@@ -18,11 +18,7 @@ export default function Analyse(){
                 <>
                 <div className="switch">
                     <Link to="/Home" className="retour">
-                          <ChevronLeft
-                                size={22}
-                                strokeWidth={1.8}
-                                aria-hidden="true"
-                            />
+                          <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
                     </Link>
                     <button onClick={() => setIsAsking(true)} className="btn-switch">Mode questionnaire</button>
                 </div>
@@ -32,11 +28,7 @@ export default function Analyse(){
                 <>
                 <div className="switch">
                     <Link to="/Zone" className="retour">
-                          <ChevronLeft
-                                size={22}
-                                strokeWidth={1.8}
-                                aria-hidden="true"
-                        />
+                          <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
                     </Link>
                     <button onClick={() => setIsAsking(false)} className="btn-switch">Mode anneau</button>
                 </div>

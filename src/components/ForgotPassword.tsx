@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import { useState } from "react"
 import { apiService } from "../services/apiService"
-import type { CSSProperties } from "react";
-import "../styles/register.scss";
+import "../styles/components/register.scss";
 
 
 
@@ -12,43 +13,29 @@ export function ForgotPassword() {
 
     return (
         <div className="formDiv">
-            <form onSubmit={async (e) => {
-                e.preventDefault()
-
-                const controller = new AbortController()
-
-                try {
-                    const datas = await apiService.forgotPassword(
-                        email,
-                        controller.signal
-                    )
-                    setMessage(datas.detail)
-                    setMessageType("success")
-                } catch (err) {
-                    if (err instanceof Error && err.name !== "AbortError") {
-                        setMessage(err.message)
-                        setMessageType("error")
-                    }
-                }
-            }}>
+            <Link to="/Home" className="auth-back">
+                <ChevronLeft size={20} aria-hidden="true" />
+                Retour à l’accueil
+            </Link>
+            <form onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) { event.preventDefault(); const input = event.target; const field = input.name === "email" ? "L’adresse email" : input.name === "pseudo" ? "Le pseudo" : input.name === "confirmPassword" ? "La confirmation du mot de passe" : "Le mot de passe";  if (input.validity.valueMissing) { setMessage(field + " est obligatoire."); } else if (input.validity.tooShort) { setMessage(field + " doit contenir au moins " + input.minLength + " caractères."); } else if (input.validity.typeMismatch) { setMessage("L’adresse email n’est pas valide."); } else { setMessage(field + " n’est pas valide."); } setMessageType("error"); } }} onSubmit={async (e) => {e.preventDefault();  setMessage(""); setMessageType(""); const controller = new AbortController(); try { const datas = await apiService.forgotPassword(email,controller.signal); setMessage(datas.detail); setMessageType("success");  } catch (err) { if (err instanceof Error && err.name !== "AbortError") { setMessage(err.message); setMessageType("error"); } } }}>
                 <h2 className="forgotPass">Mot de passe oublié </h2>
-              
-
-                <label htmlFor="mail" className="emailForgot">
+                
+                <label htmlFor="email" className="emailForgot">
                     Entrez votre Email :
                 </label>
                 <div className="wave-group">
-                    <input name="email"  id="email"   type="email" className="input" required  value={email} onChange={(e) => setEmail(e.target.value)}  />
-                    <label className="label"htmlFor="email">                                           {"Email".split("").map (
-                            (lettre, index) => (
-                                 <span  key={index}  className="label-char"   style={{ "--index":    index } as CSSProperties} >
-                                        {lettre}
-                                 </span>
-                              ))}
+                    <input name="email"  id="email"   type="email" className="input" aria-describedby={message ? "auth-message" : undefined} required  value={email} onChange={(e) => setEmail(e.target.value)} />
+                    {/* Chaque lettre se déplace avec un petit décalage. */}
+                    <label className="label" htmlFor="email">
+                        <span className="label-char" style={{ transitionDelay: "0s" }}>E</span>
+                        <span className="label-char" style={{ transitionDelay: "0.05s" }}>m</span>
+                        <span className="label-char" style={{ transitionDelay: "0.10s" }}>a</span>
+                        <span className="label-char" style={{ transitionDelay: "0.15s" }}>i</span>
+                        <span className="label-char" style={{ transitionDelay: "0.20s" }}>l</span>
                     </label>                              
                 </div>
                 {message && (
-                    <p className={messageType}>{message}</p>
+                    <p id="auth-message" className={messageType} role={messageType === "error" ? "alert" : "status"}>{message}</p>
                 )}
 
                 <button type="submit" className="btn">

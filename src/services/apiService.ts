@@ -24,6 +24,7 @@ export type ProfileUpdate = {
 }
 
 type ApiError = {
+    invalidParams?: { path: string; message: string }[]
     title?: string
     detail?: string
     message?: string
@@ -52,6 +53,7 @@ const getErrorMessage = (
     status: number
 ): string => {
     return (
+        data?.invalidParams?.[0]?.message ||
         data?.detail ||
         data?.title ||
         data?.message ||
@@ -285,9 +287,7 @@ export const apiService = {
 
         const data = await readJson<RegisterResponse>(response)
 
-        // Le backend retourne un JWT mais pas de refresh token
-        // Il est préférable de rediriger vers la connexion
-        // après inscription.
+        // Register ouvre ensuite une session avec la méthode login.
         return data
     },
 

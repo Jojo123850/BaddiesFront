@@ -32,10 +32,10 @@ import AvatarJeuneBlonde from "../assets/images/imageBlonde2.webp";
 import AvatarJeuneBoucles from "../assets/images/imageBlonde3.webp";
 import AvatarJeuneCheveuxNoirs from "../assets/images/imageBlonde4.webp";
 
-import "../styles/editProfile.scss";
+import "../styles/pages/editProfile.scss";
 
-import "../styles/setting.scss";
-import "../styles/home.scss";
+import "../styles/pages/setting.scss";
+import "../styles/pages/home.scss";
 
 const avatars = [AvatarCrepusRose, AvatarCrepusNoir, AvatarBouclesRousses, AvatarBouclesBrunes, AvatarLissesNoirs, AvatarLissesRoses, AvatarTressesNoires, AvatarTressesCuivrees, AvatarCoupeArgentee, AvatarCoupeCourte, AvatarHijabBordeaux, AvatarHijabRose, AvatarLunettesRondes, AvatarLunettesEcaille, AvatarJeuneChatain, AvatarJeuneBlonde, AvatarJeuneBoucles, AvatarJeuneCheveuxNoirs];
 
@@ -44,19 +44,21 @@ function getStoredUser(): ProfileUser | null {
         const token = localStorage.getItem("token");
         const storedUser = localStorage.getItem("user");
 
-        if (!token || !storedUser) return null;
+        if (!token || !storedUser) 
+            return null;
 
         const parsed = JSON.parse(storedUser);
 
-        if (!parsed || typeof parsed !== "object") return null;
-
+        if (!parsed || typeof parsed !== "object") 
+            return null;
+// à simplifier
         const id =
             typeof parsed.id === "number"
                 ? parsed.id
                 : typeof parsed.id === "string" && parsed.id.trim()
                     ? Number(parsed.id)
                     : NaN;
-
+// à simplifier
         if (
             !Number.isSafeInteger(id) ||
             id <= 0 ||
@@ -102,9 +104,7 @@ export default function EditProfile() {
     const [pseudo, setPseudo] = useState(user?.pseudo ?? "");
     const [email, setEmail] = useState(user?.email ?? "");
     const [selectedAvatar, setSelectedAvatar] = useState(() => getInitialAvatar(user));
-  const [openSection, setOpenSection] = useState<
-        "avatars" | "informations" | null
-        >(null);
+    const [openSection, setOpenSection] = useState<"avatars" | "informations" | null >(null);
 
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
@@ -190,52 +190,20 @@ export default function EditProfile() {
                         </div>
 
                         
-                    <form
-  className="profile-form"
-  onSubmit={handleSubmit}
-  aria-busy={isSaving}
->
+                    <form className="profile-form" onSubmit={handleSubmit} aria-busy={isSaving} >
   <div className="collapseDiv">
     <div className="collapse">
-      <button
-        type="button"
-        id="avatars-trigger"
-        className="collapse-trigger"
-        aria-expanded={openSection === "avatars"}
-        aria-controls="avatars-panel"
-        onClick={() =>
-          setOpenSection((current) =>
-            current === "avatars" ? null : "avatars"
-          )
-        }
-      >
+      <button type="button" id="avatars-trigger" className="collapse-trigger" aria-expanded={openSection === "avatars"} aria-controls="avatars-panel" onClick={() => setOpenSection((current) => current === "avatars" ? null : "avatars" ) } >
         <span>Choisir ma photo de profil</span>
         <span aria-hidden="true">
           {openSection === "avatars" ? "−" : "+"}
         </span>
       </button>
 
-      <div
-        id="avatars-panel"
-        hidden={openSection !== "avatars"}
-      >
-        <div
-          className="avatar-list"
-          role="group"
-          aria-labelledby="avatars-trigger"
-        >
+      <div id="avatars-panel" hidden={openSection !== "avatars"} >
+        <div className="avatar-list" role="group" aria-labelledby="avatars-trigger" >
           {avatars.map((avatar, index) => (
-            <button
-              type="button"
-              key={avatar}
-              onClick={() => handleAvatarChange(avatar)}
-              className={`settings-avatar ${
-                selectedAvatar === avatar ? "selected" : ""
-              }`}
-              aria-label={`Choisir l’avatar ${index + 1}`}
-              aria-pressed={selectedAvatar === avatar}
-              disabled={isSaving}
-            >
+            <button type="button" key={avatar} onClick={() => handleAvatarChange(avatar)} className={`settings-avatar ${ selectedAvatar === avatar ? "selected" : "" }`} aria-label={`Choisir l’avatar ${index + 1}`} aria-pressed={selectedAvatar === avatar} disabled={isSaving} >
               <img src={avatar} alt="" />
             </button>
           ))}
@@ -244,52 +212,20 @@ export default function EditProfile() {
     </div>
 
     <div className="collapse">
-      <button
-        type="button"
-        id="informations-trigger"
-        className="collapse-trigger"
-        aria-expanded={openSection === "informations"}
-        aria-controls="informations-panel"
-        onClick={() =>
-          setOpenSection((current) =>
-            current === "informations" ? null : "informations"
-          )
-        }
-      >
+      <button type="button" id="informations-trigger" className="collapse-trigger" aria-expanded={openSection === "informations"} aria-controls="informations-panel" onClick={() => setOpenSection((current) => current === "informations" ? null : "informations" ) } >
         <span>Modifier mes informations</span>
         <span aria-hidden="true">
           {openSection === "informations" ? "−" : "+"}
         </span>
       </button>
 
-      <div
-        id="informations-panel"
-        hidden={openSection !== "informations"}
-      >
+      <div id="informations-panel" hidden={openSection !== "informations"} >
         <div className="profile-fields">
           <label htmlFor="pseudo">Pseudo</label>
-          <input
-            id="pseudo"
-            name="pseudo"
-            type="text"
-            autoComplete="nickname"
-            value={pseudo}
-            onChange={(event) => setPseudo(event.target.value)}
-            disabled={isSaving}
-            required
-          />
+          <input id="pseudo" name="pseudo" type="text" autoComplete="nickname" value={pseudo} onChange={(event) => setPseudo(event.target.value)} disabled={isSaving} required />
 
           <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            disabled={isSaving}
-            required
-          />
+          <input id="email" name="email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} disabled={isSaving} required />
         </div>
       </div>
     </div>

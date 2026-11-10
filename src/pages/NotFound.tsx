@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import mascotte from "../assets/images/logo-nav.webp";
-import "../styles/notFound.scss";
+import "../styles/pages/notFound.scss";
 
 // Page affichée lorsqu'aucune route ne correspond à l'URL
 export default function NotFound() {

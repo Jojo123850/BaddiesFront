@@ -1,17 +1,15 @@
+// Bandeau de choix des données.
 
 .analytics-consent {
   position: fixed;
   inset: 0;
   z-index: 9999;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 20px;
-  background: rgba(0, 0, 0, 0.65);
+  background: var(--color-consent-overlay);
   backdrop-filter: blur(6px);
-
   overflow-y: auto;
 }
 
@@ -20,17 +18,15 @@
   max-width: 480px;
   max-height: calc(100dvh - 40px);
   overflow-y: auto;
-
   padding: 30px;
-  background: #fff;
-  color: #252025;
+  background: var(--color-white);
+  color: var(--color-text-strong);
   border-radius: 22px;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px var(--color-shadow-strong);
 
   h2 {
     margin-bottom: 14px;
-    color: #741d2d;
+    color: var(--color-btn);
     font-size: 24px;
   }
 
@@ -41,7 +37,7 @@
   }
 
   a {
-    color: #741d2d;
+    color: var(--color-btn);
     text-decoration: underline;
   }
 }
@@ -50,22 +46,21 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-
   padding: 15px;
   margin-bottom: 12px;
-
-  border: 1px solid #e8dce0;
+  border: 1px solid var(--color-consent-border);
   border-radius: 14px;
-  background: #faf7f8;
-
+  background: var(--color-consent-option);
   cursor: pointer;
 
-  input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    accent-color: #741d2d;
-    cursor: pointer;
+  input {
+    &[type=checkbox] {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      accent-color: var(--color-btn);
+      cursor: pointer;
+    }
   }
 
   span {
@@ -81,7 +76,7 @@
   small {
     font-size: 13px;
     line-height: 1.5;
-    color: #555;
+    color: var(--color-text-secondary);
   }
 }
 
@@ -100,15 +95,15 @@
   }
 
   .analytics-refuse {
-    background: #fff;
-    color: #741d2d;
-    border: 1px solid #741d2d;
+    background: var(--color-white);
+    color: var(--color-btn);
+    border: 1px solid var(--color-btn);
   }
 
   .analytics-accept {
-    background: #741d2d;
-    color: #fff;
-    border: 1px solid #741d2d;
+    background: var(--color-btn);
+    color: var(--color-white);
+    border: 1px solid var(--color-btn);
   }
 }
 

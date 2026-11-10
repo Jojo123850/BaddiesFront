@@ -11,8 +11,8 @@ import {  hasHealthConsent, withdrawHealthConsent} from "../services/healthConse
 import { apiService } from "../services/apiService";
 
 
-import "../styles/setting.scss";
-import "../styles/delete.scss";
+import "../styles/pages/setting.scss";
+import "../styles/components/delete.scss";
 
 
 type User = {
@@ -236,11 +236,7 @@ const handleDeleteConsent = () => {
         {!embedded && <h1>Paramètres</h1>}
 
         <section className="settings-profile" aria-label="Profil utilisateur">
-          <img src={user?.avatar_url || defaultProfile} alt="Photo de profil" className="settings-avatar" onError={(event) => {
-            if (event.currentTarget.getAttribute("src") !== defaultProfile) {
-              event.currentTarget.src = defaultProfile;
-            }
-          }} />
+          <img src={user?.avatar_url || defaultProfile} alt="Photo de profil" className="settings-avatar" onError={(event) => { if (event.currentTarget.getAttribute("src") !== defaultProfile) { event.currentTarget.src = defaultProfile; } }} />
 
           <div className="settings-profile-info">
             { user ? (
@@ -347,11 +343,7 @@ const handleDeleteConsent = () => {
             )}
 
             { !editingContact ? (
-              <button type="button" className="settings-secondary-btn" onClick={() => {
-                setEditingContact(true);
-                setContactMessage("");
-                setContactError(false);
-              }}>
+              <button type="button" className="settings-secondary-btn" onClick={() => { setEditingContact(true); setContactMessage(""); setContactError(false); }}>
                 {hasContact ? (
                   <Pencil size={17} aria-hidden="true" />
                 ) : (
@@ -371,12 +363,7 @@ const handleDeleteConsent = () => {
                 <input id="emergency-phone" name="emergency-phone" type="tel" autoComplete="tel" value={contact.phone} onChange={(event) => setContact((prev) => ({ ...prev, phone: event.target.value }))} placeholder="+33 6 ..." required />
 
                 <div className="settings-form-actions">
-                  <button type="button" className="settings-cancel-btn" onClick={() => {
-                    setContact(getStoredContact());
-                    setEditingContact(false);
-                    setContactMessage("");
-                    setContactError(false);
-                  }}>
+                  <button type="button" className="settings-cancel-btn" onClick={() => { setContact(getStoredContact()); setEditingContact(false); setContactMessage(""); setContactError(false); }}>
                     Annuler
                   </button>
 
@@ -405,19 +392,7 @@ const handleDeleteConsent = () => {
 
   <div className="settings-field">
     <label className="consent-option">
-      <input
-        type="checkbox"
-        checked={analyticsEnabled}
-        onChange={(e) => {
-          const enabled = e.target.checked;
-
-          saveAnalyticsConsent(
-            enabled ? "accepted" : "refused"
-          );
-
-          setAnalyticsEnabled(enabled);
-        }}
-      />
+      <input type="checkbox" checked={analyticsEnabled} onChange={(e) => { const enabled = e.target.checked;  saveAnalyticsConsent( enabled ? "accepted" : "refused" );  setAnalyticsEnabled(enabled); }} />
       <span>
         <strong>Statistiques Google Analytics</strong>
         <small>
@@ -435,11 +410,7 @@ const handleDeleteConsent = () => {
       </p>
 
       {hasConsent && (
-        <button
-          type="button"
-          className="settings-secondary-btn"
-          onClick={handleDeleteConsent}
-        >
+        <button type="button" className="settings-secondary-btn" onClick={handleDeleteConsent} >
           Retirer mon consentement de santé
         </button>
       )}
@@ -481,16 +452,7 @@ const handleDeleteConsent = () => {
           </button>
         )}
       {canConnect && user && (
-      <button
-        type="button"
-        className="settings-logout"
-        onClick={() => {
-          setShowDelete(false);
-          setDeletePassword("");
-          setDeleteAccountError("");
-          setShowDeleteAccount(true);
-        }}
-      >
+      <button type="button" className="settings-logout" onClick={() => { setShowDelete(false); setDeletePassword(""); setDeleteAccountError(""); setShowDeleteAccount(true); }} >
         Supprimer définitivement mon compte
       </button>
     )}
@@ -498,14 +460,7 @@ const handleDeleteConsent = () => {
       </Container>
       {canConnect && user && showDeleteAccount && (
   <div id="delete-overlay">
-    <div
-      className="delete-card"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="delete-account-title"
-      aria-describedby="delete-account-description"
-      aria-busy={deletingAccount}
-    >
+    <div className="delete-card" role="dialog" aria-modal="true" aria-labelledby="delete-account-title" aria-describedby="delete-account-description" aria-busy={deletingAccount} >
       <h2 id="delete-account-title">
         Supprimer votre compte ?
       </h2>
@@ -516,47 +471,23 @@ const handleDeleteConsent = () => {
         et les fichiers téléchargés resteront sur votre appareil.
       </p>
 
-      <form
-        onSubmit={handleDeleteAccount}
-        className="settings-contact-form"
-      >
+      <form onSubmit={handleDeleteAccount} className="settings-contact-form" >
         <label htmlFor="delete-account-password">
           Confirmez avec votre mot de passe
         </label>
 
-        <input
-          id="delete-account-password"
-          type="password"
-          autoComplete="current-password"
-          value={deletePassword}
-          onChange={(event) =>
-            setDeletePassword(event.target.value)
-          }
-          disabled={deletingAccount}
-          required
-        />
+        <input id="delete-account-password" type="password" autoComplete="current-password" value={deletePassword} onChange={(event) => setDeletePassword(event.target.value) } disabled={deletingAccount} required />
 
         {deleteAccountError && (
           <p role="alert">{deleteAccountError}</p>
         )}
 
         <div className="delete-actions">
-          <button
-            type="button"
-            disabled={deletingAccount}
-            onClick={() => {
-              setShowDeleteAccount(false);
-              setDeletePassword("");
-              setDeleteAccountError("");
-            }}
-          >
+          <button type="button" disabled={deletingAccount} onClick={() => { setShowDeleteAccount(false); setDeletePassword(""); setDeleteAccountError(""); }} >
             Annuler
           </button>
 
-          <button
-            type="submit"
-            disabled={deletingAccount || !deletePassword}
-          >
+          <button type="submit" disabled={deletingAccount || !deletePassword} >
             {deletingAccount ? "Suppression…" : "Supprimer"}
           </button>
         </div>
@@ -567,13 +498,7 @@ const handleDeleteConsent = () => {
 
 
 {showDelete && !showDeleteAccount && (
-  <Delete
-    onRefuse={() => setShowDelete(false)}
-    onAccept={() => {
-      handleDeleteContact();
-      setShowDelete(false);
-    }}
-  />
+  <Delete onRefuse={() => setShowDelete(false)} onAccept={() => { handleDeleteContact(); setShowDelete(false); }} />
 )}
     </>
   );

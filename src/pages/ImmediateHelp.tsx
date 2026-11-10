@@ -11,7 +11,7 @@ import chaleur from "../assets/images/chaleur.webp";
 import repos from "../assets/images/repos.webp";
 import hydratation from "../assets/images/hydratation.webp";
 
-import "../styles/immediateHelp.scss";
+import "../styles/pages/immediateHelp.scss";
 
 export default function ImmediateHelp() {
     const country = localStorage.getItem("country")
@@ -36,10 +36,7 @@ export default function ImmediateHelp() {
           </p>
         </header>
 
-        <section
-          className="immediate-help-tips"
-          aria-labelledby="immediate-help-tips-title"
-        >
+        <section className="immediate-help-tips" aria-labelledby="immediate-help-tips-title" >
           <h2 id="immediate-help-tips-title">
             Ce que tu peux faire maintenant
           </h2>
@@ -89,10 +86,7 @@ export default function ImmediateHelp() {
           </article>
         </section>
 
-        <section
-          className="immediate-help-warning"
-          aria-labelledby="immediate-help-warning-title"
-        >
+        <section className="immediate-help-warning" aria-labelledby="immediate-help-warning-title" >
           <TriangleAlert size={28} aria-hidden="true" />
 
           <h2 id="immediate-help-warning-title">

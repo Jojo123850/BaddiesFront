@@ -1,4 +1,4 @@
-@import "./_variables.scss";
+// Styles propres à la page notFound.
 
 .not-found {
   display: flex;
@@ -13,8 +13,7 @@
   font-family: var(--font-body);
   text-align: center;
 
-  &,
-  * {
+  &, * {
     box-sizing: border-box;
   }
 
@@ -111,8 +110,10 @@
       outline-offset: 4px;
     }
   }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
+  .not-found {
     padding: 32px 16px;
 
     .not-found-brand {

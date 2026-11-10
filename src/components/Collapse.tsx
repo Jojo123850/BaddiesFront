@@ -34,13 +34,8 @@ export default function Collapse() {
 
   return (
     <div className="collapse">
-      <button
-        type="button"
-        className="collapse-trigger"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-        aria-controls="collapse-installation"
-      >
+      <button type="button" className="collapse-trigger"onClick={ () => setIsOpen(!isOpen)} aria-expanded={isOpen} aria-controls="collapse-installation" >
+    
         <span className="collapse-heading">
           <span className="collapse-icon">
             <Download size={20} />
@@ -52,10 +47,7 @@ export default function Collapse() {
           </span>
         </span>
 
-        <ChevronDown
-          size={20}
-          className={`collapse-chevron ${isOpen ? "open" : ""}`}
-        />
+        <ChevronDown size={20} className={`collapse-chevron ${isOpen ? "open" : ""}`} /> 
       </button>
 
       {isOpen && (
@@ -67,13 +59,7 @@ export default function Collapse() {
 
           <div className="btnCollapse">
             {plateformes.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                type="button"
-                className={`btnChoice ${content === id ? "selected" : ""}`}
-                onClick={() => setContent(id)}
-                aria-pressed={content === id}
-              >
+              <button key={id} type="button" className={`btnChoice ${content === id ? "selected" : ""}`} onClick={() => setContent(id)} aria-pressed={content === id}>
                 <Icon size={17} />
                 <span>{label}</span>
               </button>

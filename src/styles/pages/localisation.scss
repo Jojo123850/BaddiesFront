@@ -1,4 +1,4 @@
-@import "./_variables.scss";
+// Styles propres à la page localisation.
 
 .context-page {
   width: 100%;
@@ -8,8 +8,7 @@
   color: var(--color-text);
   font-family: var(--font-body);
 
-  &,
-  * {
+  &, * {
     box-sizing: border-box;
   }
 
@@ -21,20 +20,20 @@
     text-align: center;
   }
 
-  p.analyse {
-    margin: 0 0 24px;
-    color: var(--color-text-muted);
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center;
+  p {
+    &.analyse {
+      margin: 0 0 24px;
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: center;
+    }
   }
 
-  // Cartes de contexte
   .loc {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-
     width: 100%;
     max-width: 650px;
     margin: 30px auto;
@@ -43,74 +42,63 @@
     > .btn2 {
       position: static;
       transform: none;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-
       width: 100%;
       max-width: none;
       min-width: 0;
       min-height: 185px;
       margin: 0;
       padding: 6px 12px;
-
       background: var(--color-card-soft);
       color: var(--color-text);
-
       border: 2px solid var(--color-border);
       border-radius: 20px;
-
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 700;
       text-align: center;
-
       cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
 
-      transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease;
+    > .btn2 img {
+      display: block;
+      width: 100%;
+      max-width: 170px;
+      height: 125px;
+      margin: auto;
+      object-fit: contain;
+    }
 
-      img {
-        display: block;
-        width: 100%;
-        max-width: 170px;
-        height: 125px;
-        margin: auto;
-        object-fit: contain;
-      }
+    > .btn2 span {
+      display: block;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      overflow-wrap: break-word;
+    }
 
-      span {
-        display: block;
-        width: 100%;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 1.4;
-        overflow-wrap: break-word;
-      }
+    > .btn2.selected {
+      background: var(--color-text);
+      color: var(--color-white);
+      border-color: var(--color-btn);
+    }
 
-      &.selected {
-        background: var(--color-text);
-        color: var(--color-white);
-        border-color: var(--color-btn);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--color-btn);
-        outline-offset: 4px;
-      }
+    > .btn2:focus-visible {
+      outline: 2px solid var(--color-btn);
+      outline-offset: 4px;
     }
   }
 
-  // Bouton Continuer
   .btn-container {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     margin: 28px auto 16px;
     padding: 0;
@@ -121,25 +109,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
       width: 100%;
       max-width: 340px;
       min-height: 52px;
       margin: 0;
       padding: 14px 20px;
-
       background: var(--color-btn);
       color: var(--color-white);
-
       border: none;
       border-radius: 14px;
-
       font-family: var(--font-body);
       font-size: 15px;
       font-weight: 700;
       line-height: 1.4;
       text-align: center;
-
       cursor: pointer;
 
       &:disabled {
@@ -155,7 +138,6 @@
     }
   }
 
-  // Explication sous le bouton
   .answer {
     max-width: 500px;
     margin: 0 auto;
@@ -164,21 +146,29 @@
     line-height: 1.6;
     text-align: center;
   }
+}
 
-  // Survol avec une souris
-  @media (hover: hover) {
-    .loc > .btn2:not(.selected):hover {
-      border-color: var(--color-btn);
-      background: var(--color-pink);
+@media (hover: hover) {
+  .context-page {
+    .loc {
+      > .btn2:not(.selected):hover {
+        border-color: var(--color-btn);
+        background: var(--color-pink);
+      }
     }
 
-    .btn-container .btn:not(:disabled):hover {
-      background: var(--color-black);
+    .btn-container {
+      .btn {
+        &:not(:disabled):hover {
+          background: var(--color-black);
+        }
+      }
     }
   }
+}
 
-  // Petits écrans
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
+  .context-page {
     padding: 0 16px 24px;
 
     h1 {
@@ -193,42 +183,47 @@
         min-height: 155px;
         padding: 12px 8px;
         border-radius: 16px;
+      }
 
-        img {
-          max-width: 140px;
-          height: 95px;
-        }
+      > .btn2 img {
+        max-width: 140px;
+        height: 95px;
+      }
 
-        span {
-          font-size: 13px;
-        }
+      > .btn2 span {
+        font-size: 13px;
       }
     }
   }
+}
 
-  // Tablettes et ordinateurs
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
+  .context-page {
     .loc {
       gap: 20px;
 
       > .btn2 {
         min-height: 220px;
         padding: 20px;
+      }
 
-        img {
-          height: 150px;
-        }
+      > .btn2 img {
+        height: 150px;
+      }
 
-        span {
-          font-size: 16px;
-        }
+      > .btn2 span {
+        font-size: 16px;
       }
     }
   }
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    .loc > .btn2 {
-      transition: none;
+@media (prefers-reduced-motion: reduce) {
+  .context-page {
+    .loc {
+      > .btn2 {
+        transition: none;
+      }
     }
   }
 }

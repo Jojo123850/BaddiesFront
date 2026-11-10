@@ -1,6 +1,4 @@
-
-@import './_variables.scss';
-@import './_mixins.scss';
+// Graphique de suivi de la douleur.
 
 .Pain-chart {
   width: 100%;
@@ -16,11 +14,11 @@
   }
 
   .chart-grid {
-    stroke: #E8D6DD;
+    stroke: var(--color-chart-grid);
   }
 
   .recharts-cartesian-axis-tick-value {
-    fill: #741D2D;
+    fill: var(--color-btn);
     font-size: 11px;
   }
 }

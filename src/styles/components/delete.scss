@@ -1,0 +1,65 @@
+// Fenêtres de confirmation de suppression.
+
+#delete-overlay {
+  background: var(--color-modal-overlay);
+
+  .delete-card {
+    padding: 24px 20px;
+    background-color: var(--color-border);
+    border-radius: 17px;
+
+    h2 {
+      padding-bottom: 20px;
+    }
+
+    p {
+      line-height: 1.65;
+      margin: 0 0 14px;
+      text-align: start;
+    }
+
+    .delete-actions {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      button {
+        min-height: 46px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 600;
+
+        &:first-child {
+          background: var(--color-transparent);
+          border: 1px solid var(--color-btn);
+        }
+
+        &:first-child:hover {
+          background-color: var(--color-text);
+          color: var(--color-bg);
+        }
+
+        &:last-child {
+          border: 1px solid var(--color-btn);
+          color: var(--color-bg);
+        }
+
+        &:last-child:hover {
+          background-color: var(--color-text);
+          color: var(--color-bg);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .delete-card {
+    padding: 24px 18px;
+
+    .delete-actions {
+      grid-template-columns: 1fr;
+    }
+  }
+}

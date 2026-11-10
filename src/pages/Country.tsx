@@ -6,8 +6,9 @@ import { Check } from "lucide-react";
 import Madagascar from "../assets/images/Madagascar.webp";
 import France from "../assets/images/France.webp";
 
-import "../styles/navbar.scss";
-import "../styles/country.scss";
+import logo from "../assets/images/logo-nav.webp";
+
+import "../styles/pages/country.scss";
 
 type Country = {
     id: string;
@@ -53,14 +54,18 @@ export default function Country() {
 
     return (
         <>
-
             <main className="country-page">
-                <h1>Choisissez votre pays</h1>
+                <header className="country-welcome">
+                    <img src={logo} className="country-logo" alt="" width={104} height={104} fetchPriority="high" />
+                    <h1>Bienvenue sur <span>BADDIES</span></h1>
+                    <p>Des premiers gestes pour mieux vivre vos douleurs menstruelles.</p>
+                </header>
 
-                <p>
-                    Sélectionnez votre pays afin que BADDIES puisse vous
-                    proposer les informations d'urgence adaptées.
-                </p>
+                <section className="country-choice" aria-labelledby="country-title">
+                    <h2 id="country-title">Choisissez votre pays</h2>
+                    <p className="country-description">
+                        Ce choix permet d’adapter les informations et les numéros d’urgence.
+                    </p>
 
                 <div role="group" aria-label="Choix du pays">
                     {countries.map((item) => (
@@ -80,6 +85,7 @@ export default function Country() {
                 <div className="btn-container">
                     <button type="button" className="btn" onClick={handleContinue} disabled={!selectedCountry}>Continuer</button>
                 </div>
+                </section>
             </main>
         </>
     );

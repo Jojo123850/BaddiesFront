@@ -1,6 +1,4 @@
-
-@import "./_variables.scss";
-@import "./_mixins.scss";
+// Styles propres à la page emergencyContact.
 
 .urgence-page {
   width: 100%;
@@ -36,9 +34,9 @@
   gap: 10px;
   padding: 16px;
   margin-bottom: 22px;
-  border: 1px solid #eee5e9;
+  border: 1px solid var(--color-border);
   border-radius: 15px;
-  background: #faf8f9;
+  background: var(--color-fond-clair);
 
   svg {
     color: var(--color-btn);
@@ -63,15 +61,15 @@
 }
 
 .urgence-medical {
-  background: #faf0f4;
-  border: 1px solid #e8d6dc;
+  background: var(--color-contact-card);
+  border: 1px solid var(--color-border-pink);
 }
 
 .urgence-contact {
-  background: white;
-  border: 1px solid #eee5e9;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
 
-  > .samu{
+  > .samu {
     text-align: start;
     color: var(--color-text-muted);
     font-size: 13px;
@@ -100,9 +98,11 @@
   color: var(--color-btn);
 }
 
-.urgence-medical > p {
-  font-size: 13px;
-  color: #706970;
+.urgence-medical {
+  > p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
 }
 
 .urgence-call {
@@ -116,7 +116,7 @@
   padding: 14px;
   border-radius: 14px;
   background: var(--color-btn);
-  color: white;
+  color: var(--color-white);
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
@@ -130,7 +130,7 @@
   gap: 9px;
   padding: 13px;
   margin-top: 12px;
-  border: 1px solid #e8d6dc;
+  border: 1px solid var(--color-border-pink);
   border-radius: 12px;
   color: var(--color-btn);
   font-size: 13px;
@@ -165,8 +165,8 @@
   gap: 10px;
   padding: 16px;
   border-radius: 14px;
-  background: #faf8f9;
-  color: #706970;
+  background: var(--color-fond-clair);
+  color: var(--color-text-muted);
 
   svg {
     color: var(--color-btn);

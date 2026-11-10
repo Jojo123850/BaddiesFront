@@ -7,8 +7,8 @@ import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { contextImages } from "../data/contextDataImages";
 
-import "../styles/navbar.scss";
-import "../styles/localisation.scss";
+import "../styles/components/navbar.scss";
+import "../styles/pages/localisation.scss";
 
 type Contexte = {
     id: string;
@@ -29,8 +29,10 @@ export default function Localisation() {
 
     const handleLocation = (id: string) => {
         setEvaluation(prev => ({
-            ...prev,
-            contextes: id
+            // Garder les réponses précédentes
+            ...prev, 
+            // Mettre à jour le contexte choisi
+            contextes: id 
         }));
     };
 

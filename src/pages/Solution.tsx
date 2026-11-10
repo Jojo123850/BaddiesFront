@@ -1,13 +1,13 @@
 import Navbar from "../components/Navbar";
-import "../styles/navbar.scss";
-import "../styles/solution.scss";
+import "../styles/components/navbar.scss";
+import "../styles/pages/solution.scss";
 import db from "../data/db.json";
 import { useEvaluation } from "../evaluation/useEvaluation";
 import { Link } from "react-router-dom";
 import { saveEvaluation } from "../services/localStorageService";
 import { useState } from "react";
 import { createHistory } from "../services/historyService";
-import {jsPDF} from 'jspdf';
+import { downloadEvaluationPDF } from "../services/pdfService";
 import { ChevronLeft } from "lucide-react";
 import { Share2 } from "lucide-react";
 
@@ -80,383 +80,15 @@ export default function Solution() {
             symptomeOk
         );
     });
-const handleDownloadPDF = () => {
-    try {
-        const pdf = new jsPDF();
-
-        const colors = {
-            black: [22, 22, 26] as const,
-            pink: [231, 88, 146] as const,
-            lightPink: [255, 241, 246] as const,
-            white: [255, 255, 255] as const,
-            gray: [108, 108, 118] as const,
-            border: [235, 235, 239] as const,
-        };
-
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-
-        const margin = 18;
-        const contentWidth = pageWidth - margin * 2;
-        const bottomLimit = pageHeight - 22;
-
-        let y = 0;
-
-        // Ajouter un en-tête sur chaque page
-        const addHeader = () => {
-            pdf.setFillColor(...colors.black);
-            pdf.rect(0, 0, pageWidth, 47, "F");
-
-            // Accent rose
-            pdf.setFillColor(...colors.pink);
-            pdf.roundedRect(
-                margin,
-                12,
-                5,
-                23,
-                2,
-                2,
-                "F"
-            );
-
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(25);
-            pdf.setTextColor(...colors.white);
-            pdf.text("BADDIES", margin + 12, 25);
-
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(10);
-            pdf.setTextColor(225, 225, 230);
-            pdf.text(
-                "Mon bilan de douleur",
-                margin + 12,
-                33
-            );
-
-            y = 59;
-        };
-
-        // Ajouter un pied de page
-        const addFooter = () => {
-            const totalPages = pdf.getNumberOfPages();
-
-            for (let i = 1; i <= totalPages; i++) {
-                pdf.setPage(i);
-
-                pdf.setDrawColor(...colors.border);
-                pdf.line(
-                    margin,
-                    pageHeight - 18,
-                    pageWidth - margin,
-                    pageHeight - 18
-                );
-
-                pdf.setFontSize(8);
-                pdf.setFont("helvetica", "normal");
-                pdf.setTextColor(...colors.gray);
-
-                pdf.text(
-                    "BADDIES - Informations générales, ne remplace pas un avis médical.",
-                    margin,
-                    pageHeight - 12
-                );
-
-                pdf.text(
-                    `${i} / ${totalPages}`,
-                    pageWidth - margin,
-                    pageHeight - 12,
-                    { align: "right" }
-                );
-            }
-        };
-
-        const newPage = () => {
-            pdf.addPage();
-            addHeader();
-        };
-
-        addHeader();
-
-        // Date
-        pdf.setFontSize(10);
-        pdf.setTextColor(...colors.gray);
-        pdf.text(
-            `Évaluation du ${new Date().toLocaleDateString("fr-FR")}`,
-            margin,
-            y
-        );
-
-        y += 12;
-
-        // Titre de section
-        pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(15);
-        pdf.setTextColor(...colors.black);
-        pdf.text("Résumé de mon évaluation", margin, y);
-
-        y += 9;
-
-        // Carte intensité
-        pdf.setFillColor(...colors.lightPink);
-        pdf.roundedRect(
-            margin,
-            y,
-            contentWidth,
-            36,
-            4,
-            4,
-            "F"
-        );
-
-        pdf.setFontSize(10);
-        pdf.setFont("helvetica", "normal");
-        pdf.setTextColor(...colors.gray);
-        pdf.text("INTENSITÉ DE LA DOULEUR", margin + 9, y + 11);
-
-        pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(22);
-        pdf.setTextColor(...colors.pink);
-
-        const intensity = evaluation.intensiteValeur;
-        const intensityLabel =
-            db.evaluation_douleur.echelle_intensite.niveaux.find(
-                (niveau) => niveau.id === evaluation.intensiteNiveau
-            )?.label ?? "Non renseignée";
-
-        pdf.text(
-            intensity == null ? intensityLabel : `${intensity}/10`,
-            margin + 9,
-            y + 27
-        );
-
-        y += 47;
-
-        // Réponses affichées avec les libellés de db.json.
-        const localisationLabel = evaluation.localisations
-            .map((id) =>
-                db.evaluation_douleur.localisations.find(
-                    (localisation) => localisation.id === id
-                )?.label ?? "Zone indisponible"
-            )
-            .join(", ") || "Non renseignée";
-
-        const contexteLabel = db.contextes.find(
-            (contexte) =>
-                contexte.id.replace(/\//g, "_") ===
-                evaluation.contextes?.replace(/\//g, "_")
-        )?.label ?? "Contexte non renseigné";
-
-        const caractereLabel =
-            db.evaluation_douleur.caractere_habituel.options.find(
-                (option) => option.id === evaluation.option
-            )?.label ?? "Non renseigné";
-
-        const symptomesLabel = evaluation.symptomes
-            .map((id) =>
-                db.evaluation_douleur.symptomes.find(
-                    (symptome) => symptome.id === id
-                )?.label ?? "Symptôme indisponible"
-            )
-            .join(", ") || "Aucun symptôme renseigné";
-
-        // Passe à une nouvelle page si nécessaire pour éviter les débordements.
-        const addResponse = (title: string, value: string) => {
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(10);
-            const lines: string[] = pdf.splitTextToSize(value, contentWidth);
-
-            if (y + 12 > bottomLimit) newPage();
-
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(10);
-            pdf.setTextColor(...colors.black);
-            pdf.text(title, margin, y);
-            y += 7;
-
-            lines.forEach((line) => {
-                if (y + 5 > bottomLimit) newPage();
-                pdf.setFont("helvetica", "normal");
-                pdf.setFontSize(10);
-                pdf.setTextColor(...colors.gray);
-                pdf.text(line, margin, y);
-                y += 5;
-            });
-
-            y += 10;
-        };
-
-        addResponse("LOCALISATION DE LA DOULEUR", localisationLabel);
-        addResponse("CONTEXTE", contexteLabel);
-        addResponse("CARACTÈRE DE LA DOULEUR", caractereLabel);
-        addResponse("SYMPTÔMES RENSEIGNÉS", symptomesLabel);
-
-        // Section solutions
-        if (y > bottomLimit - 35) {
-            newPage();
+    // Je crée le bilan PDF et je lance son téléchargement.
+    const handleDownloadPDF = () => {
+        try {
+            downloadEvaluationPDF(evaluation, solutionsFiltre);
+        } catch (error) {
+            console.error("Erreur génération PDF :", error);
+            setMessage("Impossible de générer le PDF.");
         }
-
-        pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(15);
-        pdf.setTextColor(...colors.black);
-        pdf.text("Solutions proposées", margin, y);
-
-        y += 7;
-
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(9);
-        pdf.setTextColor(...colors.gray);
-        pdf.text(
-            `${solutionsFiltre.length} geste(s) adapté(s) à ton évaluation`,
-            margin,
-            y
-        );
-
-        y += 12;
-
-        // Cartes des solutions
-        solutionsFiltre.forEach((solution, index) => {
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(11);
-
-           const titleLines: string[] = pdf.splitTextToSize(
-            `${index + 1}. ${solution.label ?? ""}`,
-             contentWidth - 24
-);
-
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(10);
-
-            const descriptionLines: string[] = pdf.splitTextToSize(
-                String(solution.description ?? ""),
-                contentWidth - 24
-            );
-
-            const lineHeight = 5;
-            const cardPadding = 9;
-            // const titleHeight = titleLines.length * 6;
-            // const availableHeight = bottomLimit - 59;
-
-            // Les cartes longues peuvent être découpées en plusieurs pages
-            const  remaining = [...descriptionLines];
-            let firstPart = true;
-
-            do {
-                const currentTitle = firstPart
-                    ? titleLines
-                    : [`${solution.label} (suite)`];
-
-                const currentTitleHeight = currentTitle.length * 6;
-
-                const minimumHeight =
-                    cardPadding * 2 + currentTitleHeight + 7;
-
-                if (y + minimumHeight + lineHeight > bottomLimit) {
-                    newPage();
-                }
-
-                const spaceForDescription =
-                    bottomLimit -
-                    y -
-                    minimumHeight -
-                    5;
-
-                const maxLines = Math.max(
-                    0,
-                    Math.floor(spaceForDescription / lineHeight)
-                );
-
-                if (maxLines === 0 && remaining.length > 0) {
-                    newPage();
-                    continue;
-                }
-
-                const currentDescription = remaining.splice(0, maxLines);
-
-                const cardHeight =
-                    cardPadding * 2 +
-                    currentTitleHeight +
-                    7 +
-                    currentDescription.length * lineHeight;
-
-                // Fond de la carte
-                pdf.setFillColor(249, 249, 251);
-                pdf.setDrawColor(...colors.border);
-                pdf.roundedRect(
-                    margin,
-                    y,
-                    contentWidth,
-                    cardHeight,
-                    4,
-                    4,
-                    "FD"
-                );
-
-                // Trait rose à gauche
-                pdf.setFillColor(...colors.pink);
-                pdf.roundedRect(
-                    margin,
-                    y + 7,
-                    3,
-                    Math.min(18, cardHeight - 14),
-                    1,
-                    1,
-                    "F"
-                );
-
-                // Numéro et titre
-                pdf.setFont("helvetica", "bold");
-                pdf.setFontSize(11);
-                pdf.setTextColor(...colors.black);
-
-                const displayTitle = currentTitle;
-
-                pdf.text(
-                    displayTitle,
-                    margin + 10,
-                    y + 12
-                );
-
-                // Description
-                pdf.setFont("helvetica", "normal");
-                pdf.setFontSize(10);
-                pdf.setTextColor(...colors.gray);
-
-                if (currentDescription.length > 0) {
-                    pdf.text(
-                        currentDescription,
-                        margin + 10,
-                        y + 12 + currentTitleHeight + 3
-                    );
-                }
-
-                y += cardHeight + 8;
-                firstPart = false;
-
-                if (remaining.length > 0) {
-                    newPage();
-                }
-            } while (remaining.length > 0);
-        });
-
-        if (solutionsFiltre.length === 0) {
-            pdf.setFontSize(10);
-            pdf.setTextColor(...colors.gray);
-            pdf.text(
-                "Aucune solution correspondante pour cette évaluation.",
-                margin,
-                y
-            );
-        }
-
-        addFooter();
-
-        pdf.save("BADDIES-bilan.pdf");
-
-    } catch (error) {
-        console.error("Erreur génération PDF :", error);
-        setMessage("Impossible de générer le PDF.");
-    }
-};
+    };
     // Partager le résumé de l'évaluation
     async function shareSummary() {
         const text =
@@ -537,23 +169,11 @@ return (
 
         <main className="solutionPage">
             <div className="switch">
-                <Link
-                    to="/Localisation"
-                    className="retour"
-                    aria-label="Retour à l'étape précédente"
-                >
-                    <ChevronLeft
-                        size={22}
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                    />
+                <Link to="/Localisation" className="retour" aria-label="Retour à l'étape précédente" >
+                    <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
                 </Link>
 
-                <button
-                    type="button"
-                    className="btn-switch"
-                    onClick={handleDownloadPDF}
-                >
+                <button type="button" className="btn-switch" onClick={handleDownloadPDF} >
                     Télécharger le fichier
                 </button>
             </div>
@@ -569,16 +189,9 @@ return (
                 <div id="solution">
                     {solutionsFiltre.length > 0 ? (
                         solutionsFiltre.map((item) => (
-                            <article
-                                className="contentSolution"
-                                key={item.id}
-                            >
+                            <article className="contentSolution" key={item.id} >
                                 <div className="solutionImage">
-                                    <img
-                                        src={imagesSolutions[item.id]}
-                                        alt=""
-                                        loading="lazy"
-                                    />
+                                    <img src={imagesSolutions[item.id]} alt="" loading="lazy" />
                                 </div>
 
                                 <div className="solutionTexte">
@@ -611,11 +224,7 @@ return (
                     </button>
 
                     <button type="button"className="btn" onClick={shareSummary} >  
-                      <Share2
-                            size={20}
-                            strokeWidth={1.8}
-                            aria-hidden="true"
-                        />
+                      <Share2 size={20} strokeWidth={1.8} aria-hidden="true" />
                         Partager
                     </button>
                 </div>

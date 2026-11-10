@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import "../styles/legalePrivacy.scss";
+import "../styles/pages/legalePrivacy.scss";
 import { Link } from "react-router-dom";
 export default function Privacy() {
   return (
@@ -183,6 +183,7 @@ export default function Privacy() {
         ne correspond pas nécessairement à la suppression immédiate
         de leurs enregistrements dans la base de données.
       </p>
+
       {/* À FINALISER AVANT PUBLICATION : vérifier et documenter le nettoyage
           des jetons expirés, utilisés ou révoqués. */}
 
@@ -195,6 +196,7 @@ export default function Privacy() {
         conservation de la plupart des rapports standards fondés sur
         des données agrégées, ni la durée de vie des cookies.
       </p>
+
       {/* À VÉRIFIER AVANT PUBLICATION : état de l'option de réinitialisation
           de la conservation à chaque nouvelle activité, et durées des cookies. */}
 
@@ -285,6 +287,7 @@ export default function Privacy() {
         de mesure d'audience peuvent également impliquer des traitements
         ou des accès en dehors de l'Espace économique européen.
       </p>
+      
       {/* À FINALISER AVANT PUBLICATION : identifier les autres destinations
           effectives et vérifier les garanties applicables aux transferts
           (décision d'adéquation applicable à l'entité concernée, ou clauses
@@ -432,11 +435,7 @@ export default function Privacy() {
       <p>
         Site internet :
         {" "}
-        <a
-          href="https://www.cnil.fr"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" >
           www.cnil.fr
         </a>
       </p>

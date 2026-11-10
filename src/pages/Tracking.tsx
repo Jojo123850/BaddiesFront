@@ -9,7 +9,7 @@ import type { HistoryEvaluation } from "../services/localStorageService";
 import { getHistory } from "../services/historyService";
 import db from "../data/db.json";
 
-import "../styles/tracking.scss";
+import "../styles/pages/tracking.scss";
 
 export default function Tracking() {
     const [history, setHistory] = useState<HistoryEvaluation[]>([]);

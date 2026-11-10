@@ -1,0 +1,314 @@
+// Formulaires de connexion, inscription et réinitialisation.
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+p {
+  margin-bottom: 40px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--color-btn);
+}
+
+.login {
+  color: var(--color-btn);
+}
+
+.paraRegister {
+  color: var(--color-text-muted);
+  margin-top: 40px;
+}
+
+.formDiv {
+  width: 90%;
+  max-width: 420px;
+  margin: 20px auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 17px;
+  box-shadow: 0 12px 35px var(--color-shadow-card);
+}
+
+#register {
+  margin: 20px auto;
+}
+
+.wave-group {
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
+
+  .input {
+    font-size: 14px;
+    padding: 10px 10px 5px;
+    display: block;
+    padding: 10px;
+    border-radius: 14px;
+    background: var(--color-transparent);
+    border-top: 1px solid var(--color-btn);
+    border-top: none;
+    border-right: none;
+    border-left: 2px solid var(--color-text-muted);
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      margin-right: 10px;
+    }
+  }
+
+  .label {
+    color: var(--color-text-muted);
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    display: flex;
+  }
+
+  .label-char {
+    transition: 0.2s ease all;
+    transition-delay: calc(var(--index) * 0.05s);
+  }
+
+  .input {
+    &:focus ~ label .label-char, &:valid ~ label .label-char {
+      transform: translate(10px, -20px);
+      font-size: 16px;
+      color: var(--color-btn);
+    }
+  }
+
+  .bar {
+    position: relative;
+    display: block;
+    width: 200px;
+
+    &:before, &:after {
+      content: "";
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: var(--color-input-line);
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
+
+    &:before {
+      left: 50%;
+    }
+
+    &:after {
+      right: 50%;
+    }
+  }
+
+  .input {
+    &:focus ~ .bar:before, &:focus ~ .bar:after {
+      width: 50%;
+    }
+  }
+}
+
+.btn {
+  place-self: center;
+  display: block;
+}
+
+.btnStop {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-fond);
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  min-height: 52px;
+  font-weight: bold;
+}
+
+.forgotPassword {
+  width: 100%;
+  text-align: right;
+  margin-top: -15px;
+  margin-bottom: 25px;
+
+  a {
+    color: var(--color-btn);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+}
+
+.forgotPass {
+  margin-bottom: 40px;
+
+  .emailForgot {
+    color: var(--color-text-muted);
+  }
+}
+
+.loading1 {
+  width: 100%;
+  margin: 20px auto;
+
+  svg {
+    polyline {
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+
+      &#back {
+        fill: none;
+        stroke: var(--color-loading-back);
+      }
+
+      &#front {
+        fill: none;
+        stroke: var(--color-loading-front);
+        stroke-dasharray: 48, 144;
+        stroke-dashoffset: 192;
+        animation: dash_682 1.4s linear infinite;
+      }
+    }
+  }
+}
+
+.paraPass {
+  margin-bottom: 10px;
+}
+
+.regexDiv {
+  margin-top: 4px;
+  padding: 25px;
+  background-color: var(--color-back);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 15px;
+  margin-bottom: 20px;
+
+  p, li {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    list-style-type: disc;
+    margin-bottom: 0;
+  }
+}
+
+.btnSubmit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@keyframes dash_682 {
+  72.5% {
+    opacity: 0;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .formDiv {
+    padding: 32px;
+  }
+}
+
+// Messages communs aux formulaires de compte.
+.formDiv {
+  .error, .success {
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .error { color: var(--color-error); }
+  .success { color: var(--color-ok); }
+
+  .input:user-invalid {
+    border-color: var(--color-error);
+  }
+}
+
+// Retour commun aux pages de connexion, inscription et mot de passe oublié.
+.formDiv .auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  color: var(--color-accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+
+  svg { flex-shrink: 0; }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  @media (hover: hover) {
+    &:hover { text-decoration: underline; text-underline-offset: 4px; }
+  }
+}
+
+// Accord demandé avant de créer le compte.
+.formDiv .register-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px 0;
+  text-align: left;
+
+  input {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 3px 0 0;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+
+    &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+    &:user-invalid { outline: 2px solid var(--color-error); outline-offset: 3px; }
+  }
+
+  label {
+    position: static;
+    min-height: 44px;
+    color: var(--color-text);
+    font-size: 13px;
+    line-height: 1.7;
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  }
+}

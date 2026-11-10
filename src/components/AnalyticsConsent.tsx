@@ -3,15 +3,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { saveAnalyticsConsent } from "../services/analytics";
 import { hasHealthConsent, saveHealthConsent } from "../services/healthConsent";
-// import {hasHealthConsent,saveHealthConsent} from "../services/healthConsent";
-import "../styles/analyticsConsent.scss";
+import "../styles/components/analyticsConsent.scss";
 
 const ANALYTICS_KEY = "baddies-analytics-consent";
 
 export default function AnalyticsConsent() {
   const age = localStorage.getItem("baddies-age");
   const canEvaluate = age === "+15ans";
-
   const [visible, setVisible] = useState(() => 
     localStorage.getItem(ANALYTICS_KEY) === null
   );
@@ -21,11 +19,9 @@ export default function AnalyticsConsent() {
 
   const saveChoices = () => {
     saveAnalyticsConsent(analytics ? "accepted" : "refused");
-
     if (canEvaluate && health && !hasHealthConsent()) {
       saveHealthConsent();
     }
-
     setVisible(false);
   };
 

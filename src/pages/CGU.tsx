@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import "../styles/legalePrivacy.scss";
+import "../styles/pages/legalePrivacy.scss";
 import Navbar from "../components/Navbar";
 
 export default function CGU() {

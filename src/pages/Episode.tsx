@@ -8,7 +8,7 @@ import {
     deleteHistory
 } from "../services/historyService";
 
-import "../styles/episode.scss";
+import "../styles/pages/episode.scss";
 import db from "../data/db.json";
 
 type DeleteProps = {
@@ -92,12 +92,14 @@ export default function Episode() {
                 if (active) {
                     setEpisode(data);
                 }
+
             } catch (err) {
                 console.error("Erreur épisode :", err);
 
                 if (active) {
                     setError("Impossible de charger cet épisode.");
                 }
+
             } finally {
                 if (active) {
                     setLoading(false);
@@ -110,6 +112,7 @@ export default function Episode() {
         return () => {
             active = false;
         };
+
     }, [id, isConnected]);
 
     const handleDelete = async () => {
@@ -140,6 +143,7 @@ export default function Episode() {
             }
 
             navigate("/Suivi?tab=historique", { replace: true });
+
         } catch (err) {
             console.error("Erreur suppression :", err);
 
@@ -201,6 +205,8 @@ export default function Episode() {
                                 {episode.evaluation.localisations.join(", ") ||
                                     "Non renseignée"}
                             </p>
+                            
+                            {/* à simplifier */}
 
                             <p>
                                 Contexte :{" "}
@@ -249,12 +255,7 @@ export default function Episode() {
                         )}
 
                 
-                        <button
-                            type="button"
-                            onClick={() => setShowDelete(true)}
-                            className="btn"
-                            disabled={deleting}
-                        >      
+                        <button type="button" onClick={() => setShowDelete(true)} className="btn" disabled={deleting} >      
                                  Supprimer cet épisode
                         </button>
                     </>
@@ -264,13 +265,7 @@ export default function Episode() {
                     Retour à mon historique
                 </Link> */}
                     {showDelete && (
-                <Delete
-                onRefuse={() => setShowDelete(false)}
-                onAccept={() => {
-                handleDelete();
-                setShowDelete(false);
-                }}
-            />
+                <Delete onRefuse={() => setShowDelete(false)} onAccept={() => { handleDelete(); setShowDelete(false); }} />
             )}
             
             </main>

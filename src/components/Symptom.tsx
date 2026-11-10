@@ -75,23 +75,9 @@ export default function Symptom() {
                         .filter((item) => item.id !== "aucun")
                         .map((item) => (
                             <div key={item.id}>
-                                <input
-                                    type="checkbox"
-                                    id={`symptom-${item.id}`}
-                                    name="symptomes"
-                                    value={item.id}
-                                    checked={evaluation.symptomes.includes(item.id)}
-                                    onChange={() => handleChange(item.id)}
-                                />
-
-                                <label
-                                    htmlFor={`symptom-${item.id}`}
-                                    className={
-                                        evaluation.symptomes.includes(item.id)
-                                            ? "selected"
-                                            : ""
-                                    }
-                                >
+                                <input type="checkbox"id={`symptom-${item.id}`}   name="symptomes"value={item.id} checked={evaluation.symptomes.includes(item.id)} onChange={() => handleChange(item.id)} />
+                               
+                                <label htmlFor={`symptom-${item.id}`} className={evaluation.symptomes.includes(item.id) ? "selected" : ""}>
                                     {item.label}
                                 </label>
                             </div>

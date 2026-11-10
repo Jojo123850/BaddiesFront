@@ -1,5 +1,4 @@
-@import "./_variables.scss";
-@import "./_mixins.scss";
+// Styles propres à la page analyse.
 
 .analyse-page {
   box-sizing: border-box;
@@ -9,42 +8,42 @@
   min-height: 100svh;
   margin: 0 auto;
   padding: 40px 24px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   color: var(--color-text);
   text-align: center;
 
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     box-sizing: border-box;
   }
 
-  h2.analyse {
-    margin: 0 0 12px;
-    font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
-    font-weight: 800;
-    line-height: 1.2;
+  h2 {
+    &.analyse {
+      margin: 0 0 12px;
+      font-family: var(--font-heading);
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+    }
   }
 
-  p.analyse {
-    max-width: 480px;
-    margin: 0 0 20px;
-    color: var(--color-text-muted);
-    font-size: 1rem;
-    line-height: 1.6;
+  p {
+    &.analyse {
+      max-width: 480px;
+      margin: 0 0 20px;
+      color: var(--color-text-muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
   }
 
   .answerPain {
-    min-height: 1.5em;
+    min-height: 27px;
     margin: 0 0 12px;
     color: var(--color-btn);
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
   }
@@ -53,7 +52,7 @@
     max-width: 440px;
     margin: 0 0 16px;
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: 14.4px;
     line-height: 1.5;
 
     &:empty {
@@ -68,22 +67,18 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-
     width: clamp(150px, 42vw, 190px);
     aspect-ratio: 1;
     flex-shrink: 0;
     margin: 12px 0 32px;
     padding: 20px;
-
     border: 2px solid var(--color-btn);
     border-radius: 50%;
-    background: transparent;
+    background: var(--color-transparent);
     color: var(--color-btn);
-
     font: inherit;
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 700;
-
     cursor: pointer;
     user-select: none;
     touch-action: none;
@@ -115,7 +110,7 @@
     margin: 0;
     padding: 0;
     border: none;
-    background: transparent;
+    background: var(--color-transparent);
   }
 
   .btn {
@@ -126,12 +121,10 @@
     min-height: 52px;
     margin: 0;
     padding: 14px 20px;
-
     border: none;
     border-radius: 14px;
     background: var(--color-btn);
     color: var(--color-white);
-
     font: inherit;
     font-weight: 700;
     line-height: 1.4;
@@ -148,13 +141,6 @@
       outline-offset: 4px;
     }
   }
-}
-
-
-/* Mode questionnaire */
-.analyse-page {
-  
-  
 
   .intensityCard {
     display: grid;
@@ -172,8 +158,7 @@
       background: var(--color-pink);
       overflow-wrap: anywhere;
 
-      h2,
-      h3 {
+      h2, h3 {
         margin: 0 0 12px;
         text-align: center;
       }
@@ -200,14 +185,12 @@
     }
   }
 
-  .btn-switch,
-  .btnIntensity {
-    &:focus-visible {
-      outline: 3px solid var(--color-btn);
-      outline-offset: 4px;
-    }
+  .btn-switch:focus-visible, .btnIntensity:focus-visible {
+    outline: 3px solid var(--color-btn);
+    outline-offset: 4px;
   }
 }
+
 .switch {
   box-sizing: border-box;
   display: flex;
@@ -215,108 +198,108 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
   width: 100%;
   max-width: 960px;
   margin: 20px auto 0;
   padding: 0 24px;
-}
 
-.switch .btn-switch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  .btn-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    max-width: 100%;
+    margin: 0;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: var(--color-btn);
+    color: var(--color-white);
+    font: inherit;
+    font-size: 15.2px;
+    font-weight: 600;
+    cursor: pointer;
 
-  min-height: 44px;
-  max-width: 100%;
-  margin: 0;
-  padding: 12px 20px;
+    &:hover {
+      background: var(--color-black);
+    }
 
-  border: none;
-  border-radius: 12px;
-  background: var(--color-btn);
-  color: var(--color-white);
-
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-
-  &:hover {
-    background: var(--color-black);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--color-btn);
-    outline-offset: 4px;
+    &:focus-visible {
+      outline: 3px solid var(--color-btn);
+      outline-offset: 4px;
+    }
   }
 }
+
 .analyse-page {
   min-height: auto;
   padding: 40px 24px;
   justify-content: flex-start;
-}
 
-.analyse-page .intensity-btn {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
-  width: 100%;
-  max-width: 640px;
-  margin: 24px auto;
-}
+  .intensity-btn {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 640px;
+    margin: 24px auto;
 
-.analyse-page .intensity-btn .btnIntensity {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    .btnIntensity {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 60px;
+      margin: 0;
+      padding: 14px 20px;
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      background: var(--color-pink);
+      color: var(--color-text);
+      font: inherit;
+      font-weight: 600;
+      line-height: 1.4;
+      text-align: center;
+      cursor: pointer;
 
-  width: 100%;
-  min-height: 60px;
-  margin: 0;
-  padding: 14px 20px;
+      &.selected {
+        border-color: var(--color-accent);
+        background: var(--color-text);
+        color: var(--color-bg);
+      }
 
-  border: 2px solid var(--color-border);
-  border-radius: 16px;
-  background: var(--color-pink);
-  color: var(--color-text);
-
-  font: inherit;
-  font-weight: 600;
-  line-height: 1.4;
-  text-align: center;
-  cursor: pointer;
-
-  &.selected {
-    border-color: var(--color-accent);
-    background: var(--color-text);
-    color: var(--color-bg);
-  }
-
-  &:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 4px;
+      &:focus-visible {
+        outline: 3px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+    }
   }
 }
 
-@media (min-width: 768px) {
-  .analyse-page .intensity-btn {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (hover: hover) {
-  .analyse-page .btnIntensity:hover {
-    border-color: var(--color-accent);
-    background: var(--color-white)7fa;
-  }
-}
 @media (min-width: 768px) {
   .analyse-page {
     .intensity-btn {
       grid-template-columns: 1fr;
-     
+    }
+  }
+}
+
+@media (hover: hover) {
+  .analyse-page {
+    .btnIntensity {
+      &:hover {
+        border-color: var(--color-accent);
+        background: var(--color-white) 7fa;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .analyse-page {
+    .intensity-btn {
+      grid-template-columns: 1fr;
     }
 
     .intensityCard {
@@ -332,21 +315,28 @@
 
 @media (hover: hover) {
   .analyse-page {
-    .btn-switch:hover {
-      background: var(--color-black);
+    .btn-switch {
+      &:hover {
+        background: var(--color-black);
+      }
     }
 
-    .btnIntensity:not(.selected):hover {
-      border-color: var(--color-btn);
+    .btnIntensity {
+      &:not(.selected):hover {
+        border-color: var(--color-btn);
+      }
     }
   }
 }
+
 @media (min-width: 768px) {
   .analyse-page {
     padding: 48px 32px;
 
-    p.analyse {
-      font-size: 1.125rem;
+    p {
+      &.analyse {
+        font-size: 18px;
+      }
     }
 
     .hand-circle {
@@ -357,7 +347,11 @@
 }
 
 @media (hover: hover) {
-  .analyse-page .btn:not(:disabled):hover {
-    background: var(--color-black);
+  .analyse-page {
+    .btn {
+      &:not(:disabled):hover {
+        background: var(--color-black);
+      }
+    }
   }
 }

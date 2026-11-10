@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Phone, UserRound, Plus } from "lucide-react";
 
 import Navbar from "../components/Navbar";
-import "../styles/emergencyContact.scss";
+import "../styles/pages/emergencyContact.scss";
 
 type EmergencyContact = {
     name: string;
@@ -48,6 +48,7 @@ export default function Urgency() {
 
         // Cet onglet : signal envoyé par Settings après une modification.
         window.addEventListener("settings-updated", updateSettings);
+        
         // Autres onglets : changement du stockage partagé.
         window.addEventListener("storage", updateSettings);
         updateSettings();

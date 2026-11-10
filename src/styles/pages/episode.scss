@@ -1,0 +1,276 @@
+// Styles propres à la page episode.
+
+.episode-page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding: 24px 16px 112px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin: 0 0 28px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.2;
+  }
+
+  h2 {
+    margin: 0 0 20px;
+    font-family: var(--font-heading);
+    font-size: 17.6px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14.4px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  section {
+    min-width: 0;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+
+    &[aria-labelledby=episode-details-title] {
+      background: var(--color-card-soft);
+    }
+
+    &[aria-labelledby=episode-details-title] > p {
+      padding-block: 14px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    &[aria-labelledby=episode-details-title] > p:first-of-type {
+      color: var(--color-accent);
+      font-family: var(--font-heading);
+      font-size: 18.4px;
+      font-weight: 700;
+    }
+
+    &[aria-labelledby=episode-details-title] > p:nth-of-type(2) {
+      padding-top: 0;
+      color: var(--color-text-muted);
+      font-size: 12.8px;
+    }
+
+    &[aria-labelledby=episode-details-title] > p:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    &[aria-labelledby=solutions-title] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    &[aria-labelledby=solutions-title] > h2 {
+      margin-bottom: 4px;
+    }
+
+    &[aria-labelledby=solutions-title] article {
+      min-width: 0;
+      padding: 16px;
+      background: var(--color-pink);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+    }
+
+    &[aria-labelledby=solutions-title] article h3 {
+      margin: 0 0 8px;
+      color: var(--color-text);
+      font-family: var(--font-heading);
+      font-size: 15.2px;
+      font-weight: 700;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    &[aria-labelledby=solutions-title] article p {
+      color: var(--color-text-muted);
+      font-size: 13.6px;
+      text-align: left;
+    }
+  }
+
+  > p {
+    margin-block: 16px;
+    padding: 16px;
+    background: var(--color-card-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    color: var(--color-text-muted);
+  }
+
+  > p[role=alert] {
+    background: var(--color-pink);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .episode-page {
+    .episode-login {
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--color-card-soft);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      text-align: center;
+
+      p {
+        color: var(--color-text-muted);
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        margin-top: 12px;
+        padding: 12px 20px;
+        background: var(--color-btn);
+        color: var(--color-white);
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:focus-visible {
+          outline: 2px solid var(--color-accent);
+          outline-offset: 4px;
+        }
+      }
+    }
+  }
+
+  > .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 24px;
+    padding: 14px 20px;
+    background: var(--color-btn);
+    color: var(--color-white);
+    border: 1px solid var(--color-btn);
+    border-radius: 14px;
+    font: inherit;
+    font-size: 14.4px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  > .btn:active {
+    background: var(--color-card);
+    color: var(--color-btn);
+  }
+
+  > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 16px;
+    padding: 14px 20px;
+    background: var(--color-card);
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    font-size: 14.4px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 180ms ease;
+  }
+
+  > .btn:focus-visible, > a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
+
+@media (hover: hover) {
+  .episode-page {
+    > .btn:hover {
+      background: var(--color-card);
+      color: var(--color-btn);
+    }
+
+    > a:hover {
+      background: var(--color-card-soft);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .episode-page {
+    padding: 40px 32px 112px;
+
+    section {
+      padding: 28px;
+      border-radius: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    section {
+      &[aria-labelledby=solutions-title] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      &[aria-labelledby=solutions-title] > h2, &[aria-labelledby=solutions-title] > p {
+        grid-column: 1/-1;
+      }
+    }
+
+    > .btn, > a {
+      width: fit-content;
+      min-width: 240px;
+      margin-inline: auto;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .episode-page {
+    > .btn, > a {
+      transition: none;
+    }
+  }
+}
+
+.episode-page {
+  text-align: left;
+
+  > h1 {
+    text-align: center;
+  }
+
+  section {
+    display: block;
+    text-align: left;
+
+    h2, h3, p {
+      text-align: left;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { ChevronLeft, TriangleAlert, Phone } from "lucide-react";
 
-import "../styles/alert.scss";
+import "../styles/pages/alert.scss";
 
 export default function MedicalAlert() {
     return (
