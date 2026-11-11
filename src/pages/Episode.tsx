@@ -23,10 +23,10 @@ function Delete({ onAccept, onRefuse }: DeleteProps) {
   return (
     <div id="delete-overlay">
       <div className="delete-card" role="dialog" aria-modal="true" aria-labelledby="delete-title">
-        <h2 id="delete-title">Supprimer le contact ?</h2>
+        <h2 id="delete-title">Supprimer l'épisode ?</h2>
 
         <p>
-          Voulez-vous vraiment supprimer votre contact  ?
+          Voulez-vous vraiment supprimer cet épisode  ?
         </p>
 
         <div className="delete-actions">
@@ -206,7 +206,6 @@ export default function Episode() {
                   "Non renseignée"}
               </p>
 
-              {/* à simplifier */}
 
               <p>
                 Contexte :{" "}
@@ -266,9 +265,7 @@ export default function Episode() {
           </>
         )}
 
-        {/* <Link to="/Suivi?tab=historique">
-                    Retour à mon historique
-                </Link> */}
+      
         {showDelete && (
           <Delete
             onRefuse={() =>
