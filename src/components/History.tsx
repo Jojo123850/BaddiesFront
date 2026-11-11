@@ -103,7 +103,7 @@ export function History() {
         return () => {
             active = false;
         };
-        
+
 
     }, []);
 
@@ -113,15 +113,19 @@ export function History() {
     return (
         <>
             <h2>Mon historique</h2>
-         
-        
+
+
 
             <section className="filtreArt" aria-labelledby="history-filter-title">
-                
+
                 <label htmlFor="history-filter">Trier les évaluations</label>
 
                 <div className="historyFilters">
-                    <select id="history-filter" value={filtre} onChange={(e) => setFiltre(e.target.value)}>
+                    <select id="history-filter" value={filtre}
+                        onChange={(e) =>
+                            setFiltre(e.target.value)
+                        }
+                    >
                         <option value="recent">Plus récentes</option>
                         <option value="ancien">Plus anciennes</option>
                         <option value="intense">Douleur intense</option>
@@ -131,7 +135,7 @@ export function History() {
                 </div>
 
             </section>
-        
+
 
             {loading ? (
                 <p role="status">Chargement de l'historique...</p>
@@ -146,19 +150,19 @@ export function History() {
                 <div className="historyList">
                     {/* Je crée une carte pour chaque évaluation. */}
                     {historyFiltree.map((item) => (
-                    <article key={item.id} className="historyArticle">
-                        <div className="historyContent">
-                            <div className="blocHistory">
-                                <p className="date">{new Date(item.date).toLocaleDateString("fr-FR",{ day: "numeric", month: "long", year: "numeric" })}              
-                                </p>
-                               <p className="paraHistory">
-                                    {getIntensityLabel(item.evaluation.intensiteNiveau)}
-                                </p>
-                            </div>
-                            <div className="zone">
+                        <article key={item.id} className="historyArticle">
+                            <div className="historyContent">
+                                <div className="blocHistory">
+                                    <p className="date">{new Date(item.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                                    </p>
+                                    <p className="paraHistory">
+                                        {getIntensityLabel(item.evaluation.intensiteNiveau)}
+                                    </p>
+                                </div>
+                                <div className="zone">
                                     <MapPin className="map" aria-hidden="true" />
                                     <p>{item.evaluation.localisations.join(", ") || "Non renseignée"}</p>
-                            </div>
+                                </div>
                                 {item.evaluation.intensiteValeur != null && (
                                     <p className="intensity">
                                         {item.evaluation.intensiteValeur}/10
@@ -166,7 +170,11 @@ export function History() {
                                 )}
                             </div>
 
-                            <button type="button" className="btnEpisode" onClick={() => navigate(`/Historique/${item.id}`)}>
+                            <button type="button" className="btnEpisode"
+                                onClick={() =>
+                                    navigate(`/Historique/${item.id}`)
+                                }
+                            >
                                 Voir l'épisode
                             </button>
                         </article>

@@ -31,12 +31,16 @@ export default function ConfirmModal({
 
   return (
     <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message" onClick={(e) => e.stopPropagation()} >
+      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message"
+        onClick={(e) =>
+          e.stopPropagation()
+        }
+      >
         <h2 id="confirm-title">{title}</h2>
         <p id="confirm-message">{message}</p>
 
         <div className="modal-actions">
-          <button type="button" className="btn btn-secondary" ref={cancelRef} onClick={onCancel} >
+          <button type="button" className="btn btn-secondary" ref={cancelRef} onClick={onCancel}>
             {cancelLabel}
           </button>
           <button type="button" className="btn" onClick={onConfirm}>

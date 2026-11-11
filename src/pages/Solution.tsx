@@ -24,7 +24,7 @@ import alimentationLegere from "../assets/images/alimentation_pauvre_en_graisses
 import stress from "../assets/images/reduction_stress.webp";
 import hydratation from "../assets/images/hydratation.webp";
 import tabac from "../assets/images/eviter_tabac.webp";
-import { CheckCircle2} from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 
 
@@ -114,128 +114,128 @@ export default function Solution() {
     }
 
     // Enregistrer l'épisode
-   const handleSave = async () => {
-    if (saved) return;
+    const handleSave = async () => {
+        if (saved) return;
 
-    console.log("État en ligne :", navigator.onLine);
+        console.log("État en ligne :", navigator.onLine);
 
-    const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
 
-    try {
-        if (token && navigator.onLine) {
-            await createHistory(evaluation, solutionsFiltre);
-            setMessage("Enregistré sur ton compte.");
-        } else {
-            saveEvaluation(evaluation, solutionsFiltre);
-            setMessage("Enregistré sur cet appareil.");
+        try {
+            if (token && navigator.onLine) {
+                await createHistory(evaluation, solutionsFiltre);
+                setMessage("Enregistré sur ton compte.");
+            } else {
+                saveEvaluation(evaluation, solutionsFiltre);
+                setMessage("Enregistré sur cet appareil.");
+            }
+
+            setSaved(true);
+        } catch (error) {
+            console.error("Échec de sauvegarde API History :", error)
+
+            try {
+                saveEvaluation(evaluation, solutionsFiltre)
+                setSaved(true)
+
+                if (
+                    error instanceof Error &&
+                    error.message ===
+                    "Session expirée. Veuillez vous reconnecter."
+                ) {
+                    setMessage(
+                        "Session expirée. Veuillez vous reconnecter. " +
+                        "Votre évaluation a été conservée sur cet appareil."
+                    )
+                } else {
+                    setMessage(
+                        "Enregistrement sur le compte impossible. " +
+                        "Votre évaluation a été conservée sur cet appareil."
+                    )
+                }
+            } catch {
+                setMessage("Impossible d'enregistrer. Réessaie.")
+            }
         }
-
-        setSaved(true);
-    } catch (error) {
-    console.error("Échec de sauvegarde API History :", error)
-
-    try {
-        saveEvaluation(evaluation, solutionsFiltre)
-        setSaved(true)
-
-        if (
-            error instanceof Error &&
-            error.message ===
-                "Session expirée. Veuillez vous reconnecter."
-        ) {
-            setMessage(
-                "Session expirée. Veuillez vous reconnecter. " +
-                "Votre évaluation a été conservée sur cet appareil."
-            )
-        } else {
-            setMessage(
-                "Enregistrement sur le compte impossible. " +
-                "Votre évaluation a été conservée sur cet appareil."
-            )
-        }
-    } catch {
-        setMessage("Impossible d'enregistrer. Réessaie.")
-    }
-}
-};
+    };
 
 
 
 
-  
-return (
-    <>
-        <Navbar />
 
-        <main className="solutionPage">
-            <div className="switch">
-                <Link to="/Localisation" className="retour" aria-label="Retour à l'étape précédente" >
-                    <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
-                </Link>
+    return (
+        <>
+            <Navbar />
 
-                <button type="button" className="btn-switch" onClick={handleDownloadPDF} >
-                    Télécharger le fichier
-                </button>
-            </div>
+            <main className="solutionPage">
+                <div className="switch">
+                    <Link to="/Localisation" className="retour" aria-label="Retour à l'étape précédente">
+                        <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
+                    </Link>
 
-            <section aria-labelledby="solution-title">
-                <h1 id="solution-title" className="titleSolution">
-                    Gestes conseillés
-                </h1>
-                <p className="pMedical">
-                    Informations générales, ne remplacent pas un avis médical.
-                </p>
-
-                <div id="solution">
-                    {solutionsFiltre.length > 0 ? (
-                        solutionsFiltre.map((item) => (
-                            <article className="contentSolution" key={item.id} >
-                                <div className="solutionImage">
-                                    <img src={imagesSolutions[item.id]} alt="" loading="lazy" />
-                                </div>
-
-                                <div className="solutionTexte">
-                                    <h2>{item.label}</h2>
-
-                                    <p className="solutionPara">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </article>
-                        ))
-                    ) : (
-                        <p className="NoSolution">
-                            Aucun geste correspondant à votre évaluation.
-                        </p>
-                    )}
-                </div>
-            </section>
-
-            <section aria-label="Actions sur votre évaluation">
-           
-                {message && <p role="status" className="collapse-note"> 
-                     <CheckCircle2 size={18} />{message}</p>}
-                <div className="btnSolution">
-                    
-                    <button type="button"  className="btn"  onClick={handleSave}   disabled={saved} >
-                        {saved
-                            ? "Épisode enregistré"
-                            : "+ Enregistrer"}
-                    </button>
-
-                    <button type="button"className="btn" onClick={shareSummary} >  
-                      <Share2 size={20} strokeWidth={1.8} aria-hidden="true" />
-                        Partager
+                    <button type="button" className="btn-switch" onClick={handleDownloadPDF}>
+                        Télécharger le fichier
                     </button>
                 </div>
 
+                <section aria-labelledby="solution-title">
+                    <h1 id="solution-title" className="titleSolution">
+                        Gestes conseillés
+                    </h1>
+                    <p className="pMedical">
+                        Informations générales, ne remplacent pas un avis médical.
+                    </p>
 
-                
+                    <div id="solution">
+                        {solutionsFiltre.length > 0 ? (
+                            solutionsFiltre.map((item) => (
+                                <article className="contentSolution" key={item.id}>
+                                    <div className="solutionImage">
+                                        <img src={imagesSolutions[item.id]} alt="" loading="lazy" />
+                                    </div>
 
-                
-            </section>
-        </main>
-    </>
-);
+                                    <div className="solutionTexte">
+                                        <h2>{item.label}</h2>
+
+                                        <p className="solutionPara">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </article>
+                            ))
+                        ) : (
+                            <p className="NoSolution">
+                                Aucun geste correspondant à votre évaluation.
+                            </p>
+                        )}
+                    </div>
+                </section>
+
+                <section aria-label="Actions sur votre évaluation">
+
+                    {message && <p role="status" className="collapse-note">
+                        <CheckCircle2 size={18} />{message}</p>}
+                    <div className="btnSolution">
+
+                        <button type="button" className="btn" onClick={handleSave} disabled={saved}>
+                            {saved
+                                ? "Épisode enregistré"
+                                : "+ Enregistrer"}
+                        </button>
+
+                        <button type="button" className="btn" onClick={shareSummary}>
+                            <Share2 size={20} strokeWidth={1.8} aria-hidden="true" />
+                            Partager
+                        </button>
+                    </div>
+
+
+
+
+
+                </section>
+            </main>
+        </>
+    );
 }
 

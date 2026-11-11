@@ -19,11 +19,11 @@ export default function Login() {
 
     // Ce code récupère la page d'origine et vérifie que c'est un chemin interne valide.
     const from =
-    typeof location.state?.from === "string" &&
-    location.state.from.startsWith("/") &&
-    !location.state.from.startsWith("//")
-        ? location.state.from
-        : "/Home";
+        typeof location.state?.from === "string" &&
+            location.state.from.startsWith("/") &&
+            !location.state.from.startsWith("//")
+            ? location.state.from
+            : "/Home";
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,7 +59,7 @@ export default function Login() {
             navigate(hasCountry ? (hasLocalHistory ? "/Home" : from) : "/Country", {
                 replace: true
             });
-            
+
         } catch (err) {
             if (err instanceof Error && err.name !== "AbortError") {
                 setMessage(err.message);
@@ -72,25 +72,25 @@ export default function Login() {
         }
     };
 
-        if (loading) {
-    return (
-        <main className="loading1" role="status" aria-label="Connexion en cours">
-    <div className="container">
-        <div className="content">
-            <div className="heart-rate">
-                <svg viewBox="0 0 150 73" height="73" width="150" aria-hidden="true">
-                    <polyline points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486" fill="none" strokeMiterlimit={10} strokeWidth={3} />
-                </svg>
+    if (loading) {
+        return (
+            <main className="loading1" role="status" aria-label="Connexion en cours">
+                <div className="container">
+                    <div className="content">
+                        <div className="heart-rate">
+                            <svg viewBox="0 0 150 73" height="73" width="150" aria-hidden="true">
+                                <polyline points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486" fill="none" strokeMiterlimit={10} strokeWidth={3} />
+                            </svg>
 
-                <div className="fade-in"></div>
-                <div className="fade-out"></div>
-            </div>
-        </div>
-        <p className="loading-text" aria-hidden="true">Connexion en cours...</p>
-    </div>
-</main>
-    );
-}
+                            <div className="fade-in"></div>
+                            <div className="fade-out"></div>
+                        </div>
+                    </div>
+                    <p className="loading-text" aria-hidden="true">Connexion en cours...</p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="formDiv">
@@ -98,7 +98,31 @@ export default function Login() {
                 <ChevronLeft size={20} aria-hidden="true" />
                 Retour à l’accueil
             </Link>
-            <form onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) { event.preventDefault(); const input = event.target; const field = input.name === "email" ? "L’adresse email" : input.name === "pseudo" ? "Le pseudo" : input.name === "confirmPassword" ? "La confirmation du mot de passe" : "Le mot de passe";  if (input.validity.valueMissing) { setMessage(field + " est obligatoire."); } else if (input.validity.tooShort) { setMessage(field + " doit contenir au moins " + input.minLength + " caractères."); } else if (input.validity.typeMismatch) { setMessage("L’adresse email n’est pas valide."); } else { setMessage(field + " n’est pas valide."); } setMessageType("error"); } }} onSubmit={handleSubmit}>
+            <form
+                onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) {
+                    event.preventDefault();
+                    const input = event.target;
+                    const field = input.name === "email"
+                        ? "L’adresse email"
+                        : input.name === "pseudo"
+                            ? "Le pseudo"
+                            : input.name === "confirmPassword"
+                                ? "La confirmation du mot de passe"
+                                : "Le mot de passe";
+                    if (input.validity.valueMissing) {
+                        setMessage(field + " est obligatoire.");
+                    } else if (input.validity.tooShort) {
+                        setMessage(field + " doit contenir au moins " + input.minLength + " caractères.");
+                    } else if (input.validity.typeMismatch) {
+                        setMessage("L’adresse email n’est pas valide.");
+                    } else {
+                        setMessage(field + " n’est pas valide.");
+                    }
+                    setMessageType("error");
+                }
+                }}
+                onSubmit={handleSubmit}
+            >
                 <h1>Connexion</h1>
 
                 <p className="paraRegister">
@@ -108,7 +132,17 @@ export default function Login() {
 
                 <div id="register">
                     <div className="wave-group">
-                        <input id="email" name="email" type="email" className="input" aria-describedby={message ? "auth-message" : undefined} autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input id="email" name="email" type="email" className="input"
+                            aria-describedby={
+                                message
+                                    ? "auth-message"
+                                    : undefined
+                            }
+                            autoComplete="email" required value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)
+                            }
+                        />
 
                         <label className="label" htmlFor="email">
                             <span className="label-char" style={{ transitionDelay: "0.00s" }}>E</span>
@@ -120,7 +154,17 @@ export default function Login() {
                     </div>
 
                     <div className="wave-group">
-                        <input id="password" name="password" type="password" className="input" aria-describedby={message ? "auth-message" : undefined} autoComplete="current-password" minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input id="password" name="password" type="password" className="input"
+                            aria-describedby={
+                                message
+                                    ? "auth-message"
+                                    : undefined
+                            }
+                            autoComplete="current-password" minLength={6} required value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)
+                            }
+                        />
 
                         <label className="label" htmlFor="password">
                             <span className="label-char" style={{ transitionDelay: "0.00s" }}>M</span>
@@ -140,7 +184,13 @@ export default function Login() {
                 </div>
 
                 {message && (
-                    <p id="auth-message" className={messageType} role={messageType === "error" ? "alert" : "status"}>
+                    <p id="auth-message" className={messageType}
+                        role={
+                            messageType === "error"
+                                ? "alert"
+                                : "status"
+                        }
+                    >
                         {message}
                     </p>
                 )}
@@ -149,12 +199,12 @@ export default function Login() {
                     <Link to="/ForgotPassword">Mot de passe oublié ?</Link>
                 </div>
 
-               
+
 
                 <button type="submit" className="btn" disabled={loading}>Connexion</button>
             </form>
-             <p className="paraRegister">
-                    Pas encore de compte ? <Link to="/Register" className="login">S'inscrire</Link>
+            <p className="paraRegister">
+                Pas encore de compte ? <Link to="/Register" className="login">S'inscrire</Link>
             </p>
         </main>
     );

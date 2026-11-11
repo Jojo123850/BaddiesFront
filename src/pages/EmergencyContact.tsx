@@ -48,7 +48,7 @@ export default function Urgency() {
 
         // Cet onglet : signal envoyé par Settings après une modification.
         window.addEventListener("settings-updated", updateSettings);
-        
+
         // Autres onglets : changement du stockage partagé.
         window.addEventListener("storage", updateSettings);
         updateSettings();

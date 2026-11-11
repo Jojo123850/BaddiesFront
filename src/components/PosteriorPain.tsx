@@ -47,7 +47,16 @@ const PosteriorPain = () => {
             <img src={silhouette} className="silhouette" alt="Silhouette du corps vue de dos" />
 
             {dos && (
-                <button type="button" onClick={() => handleZoneClick(dos.id)} aria-pressed={evaluation.localisations.includes(dos.id)} className={`btn1 ${dos.id} ${evaluation.localisations.includes(dos.id) ? "selected" : ""}`}>
+                <button type="button"
+                    onClick={() =>
+                        handleZoneClick(dos.id)
+                    }
+                    aria-pressed={evaluation.localisations.includes(dos.id)}
+                    className={`btn1 ${dos.id} ${evaluation.localisations.includes(dos.id)
+                        ? "selected"
+                        : ""}`
+                    }
+                >
                     {dos.label}
                 </button>
             )}

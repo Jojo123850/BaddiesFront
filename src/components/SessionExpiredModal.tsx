@@ -1,6 +1,6 @@
-import { useEffect, useState  } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { SESSION_EXPIRED_EVENT} from "../services/sessionService"
+import { SESSION_EXPIRED_EVENT } from "../services/sessionService"
 import "../styles/components/sessionExpired.scss";
 
 
@@ -44,8 +44,8 @@ export default function SessionExpiredModal() {
 
     return (
         <div className="session-overlay">
-            <section className="session-modal" role="alertdialog" aria-modal="true" aria-labelledby="session-title" aria-describedby="session-description" >
-            
+            <section className="session-modal" role="alertdialog" aria-modal="true" aria-labelledby="session-title" aria-describedby="session-description">
+
                 <h2 id="session-title">
                     Session expirée
                 </h2>
@@ -57,11 +57,15 @@ export default function SessionExpiredModal() {
                 </p>
 
                 <div className="session-actions">
-                    <button  type="button" className="btn"onClick={handleReconnect}>
+                    <button type="button" className="btn" onClick={handleReconnect}>
                         Se reconnecter
                     </button>
 
-                    <button type="button" onClick={() => setIsOpen(false)}>
+                    <button type="button"
+                        onClick={() =>
+                            setIsOpen(false)
+                        }
+                    >
                         Continuer sans connexion
                     </button>
                 </div>

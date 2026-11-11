@@ -61,17 +61,41 @@ export function ResetPassword() {
         }
     };
 
- 
+
     return (
         <div className="formDiv">
-            <form onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) { event.preventDefault(); const input = event.target; const field = input.name === "email" ? "L’adresse email" : input.name === "pseudo" ? "Le pseudo" : input.name === "confirmPassword" ? "La confirmation du mot de passe" : "Le mot de passe";  if (input.validity.valueMissing) { setMessage(field + " est obligatoire."); } else if (input.validity.tooShort) { setMessage(field + " doit contenir au moins " + input.minLength + " caractères."); } else if (input.validity.typeMismatch) { setMessage("L’adresse email n’est pas valide."); } else { setMessage(field + " n’est pas valide."); } setMessageType("error"); } }} onSubmit={handleSubmit}>
-                  
+            <form
+                onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) {
+                    event.preventDefault();
+                    const input = event.target;
+                    const field = input.name === "email"
+                        ? "L’adresse email"
+                        : input.name === "pseudo"
+                            ? "Le pseudo"
+                            : input.name === "confirmPassword"
+                                ? "La confirmation du mot de passe"
+                                : "Le mot de passe";
+                    if (input.validity.valueMissing) {
+                        setMessage(field + " est obligatoire.");
+                    } else if (input.validity.tooShort) {
+                        setMessage(field + " doit contenir au moins " + input.minLength + " caractères.");
+                    } else if (input.validity.typeMismatch) {
+                        setMessage("L’adresse email n’est pas valide.");
+                    } else {
+                        setMessage(field + " n’est pas valide.");
+                    }
+                    setMessageType("error");
+                }
+                }}
+                onSubmit={handleSubmit}
+            >
+
                 <h2 className="forgotPass">
                     Réinitialiser le mot de passe
                 </h2>
 
                 <p className="paraPass">Tous les champs sont obligatoires</p>
-                  <div className="regexDiv">
+                <div className="regexDiv">
 
                     <p>Pour des raison de sécurité, votre nouveau mot de passe doit respecter les règles suivantes:
                     </p>
@@ -79,15 +103,25 @@ export function ResetPassword() {
                         <li>une longueur d'au moins 6 caractères</li>
                         <li>au moins 1 chiffre</li>
                         <li>au moins 1 lettre minuscule et 1 majuscule</li>
-                        <li>au moins 1 caractère spécial(parmi cette liste:! @ # $ % ^ & * ( ) - _ + = [ ] { } ; : , . ? / \ | ~ < >)</></li>
+                        <li>au moins 1 caractère spécial(parmi cette liste:! @ # $ % ^ & * ( ) - _ + = [ ] {} ; : , . ? / \ | ~ < >)</></li>
                     </ul>
-                  </div>
+                </div>
 
-            
+
                 <div className="wave-group">
-                    <input type="password" name="password"   id="password"  className="input" aria-describedby={message ? "auth-message" : undefined}  autoComplete="new-password" required  minLength={6}  value={password}  onChange={(e) => setPassword(e.target.value)}  />
-                   
-  {/* SOURCE UIVERSE.IO */}
+                    <input type="password" name="password" id="password" className="input"
+                        aria-describedby={
+                            message
+                                ? "auth-message"
+                                : undefined
+                        }
+                        autoComplete="new-password" required minLength={6} value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                    />
+
+                    {/* SOURCE UIVERSE.IO */}
                     <label className="label" htmlFor="password">
                         <span className="label-char" style={{ transitionDelay: "0.00s" }}>N</span>
                         <span className="label-char" style={{ transitionDelay: "0.05s" }}>o</span>
@@ -112,9 +146,19 @@ export function ResetPassword() {
                     </label>
                 </div>
 
-              
+
                 <div className="wave-group">
-                    <input type="password" name="confirmPassword"id="confirmPassword"  className="input" aria-describedby={message ? "auth-message" : undefined}  autoComplete="new-password" required  minLength={6}  value={confirmPassword}      onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <input type="password" name="confirmPassword" id="confirmPassword" className="input"
+                        aria-describedby={
+                            message
+                                ? "auth-message"
+                                : undefined
+                        }
+                        autoComplete="new-password" required minLength={6} value={confirmPassword}
+                        onChange={(e) =>
+                            setConfirmPassword(e.target.value)
+                        }
+                    />
                     <label className="label" htmlFor="confirmPassword">
                         <span className="label-char" style={{ transitionDelay: "0.00s" }}>C</span>
                         <span className="label-char" style={{ transitionDelay: "0.05s" }}>o</span>
@@ -145,19 +189,25 @@ export function ResetPassword() {
                 </div>
 
                 {message && (
-                    <p id="auth-message" className={messageType} role={messageType === "error" ? "alert" : "status"}>
+                    <p id="auth-message" className={messageType}
+                        role={
+                            messageType === "error"
+                                ? "alert"
+                                : "status"
+                        }
+                    >
                         {message}
                     </p>
                 )}
 
-            <div className="btnSubmit">
-               <Link to="/Home" className="btnStop">Abandonner</Link>
-                <button type="submit" className="btn" disabled={loading || !token}>
-                    {loading ? "Réinitialisation..." : "Réinitialiser"}
-                </button>
+                <div className="btnSubmit">
+                    <Link to="/Home" className="btnStop">Abandonner</Link>
+                    <button type="submit" className="btn" disabled={loading || !token}>
+                        {loading ? "Réinitialisation..." : "Réinitialiser"}
+                    </button>
 
-            </div>
-               
+                </div>
+
 
             </form>
         </div>

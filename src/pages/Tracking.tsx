@@ -96,12 +96,38 @@ export default function Tracking() {
 
                 <nav className="btnSuivi" aria-label="Navigation du suivi">
                     <div>
-                        <button type="button" onClick={() => setIsActive("suivi")} className={`btn-fond ${isActive === "suivi" ? "active" : ""}`} aria-current={isActive === "suivi" ? "page" : undefined}>
+                        <button type="button"
+                            onClick={() =>
+                                setIsActive("suivi")
+                            }
+                            className={`btn-fond ${isActive === "suivi"
+                                ? "active"
+                                : ""}`
+                            }
+                            aria-current={
+                                isActive === "suivi"
+                                    ? "page"
+                                    : undefined
+                            }
+                        >
                             Suivi
                         </button>
                     </div>
                     <div>
-                        <button type="button" onClick={() => setIsActive("historique")} className={`btn-fond ${isActive === "historique" ? "active" : ""}`} aria-current={isActive === "historique" ? "page" : undefined}>
+                        <button type="button"
+                            onClick={() =>
+                                setIsActive("historique")
+                            }
+                            className={`btn-fond ${isActive === "historique"
+                                ? "active"
+                                : ""}`
+                            }
+                            aria-current={
+                                isActive === "historique"
+                                    ? "page"
+                                    : undefined
+                            }
+                        >
                             Historique
                         </button>
                     </div>

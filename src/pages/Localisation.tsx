@@ -30,9 +30,9 @@ export default function Localisation() {
     const handleLocation = (id: string) => {
         setEvaluation(prev => ({
             // Garder les réponses précédentes
-            ...prev, 
+            ...prev,
             // Mettre à jour le contexte choisi
-            contextes: id 
+            contextes: id
         }));
     };
 
@@ -50,7 +50,16 @@ export default function Localisation() {
 
                 <div className="loc" role="group" aria-label="Choisissez votre contexte actuel">
                     {contextes.map((contexte) => (
-                        <button type="button" key={contexte.id} className={`btn2 ${evaluation.contextes === contexte.id ? "selected" : ""}`} onClick={() => handleLocation(contexte.id)} aria-pressed={evaluation.contextes === contexte.id}>
+                        <button type="button" key={contexte.id}
+                            className={`btn2 ${evaluation.contextes === contexte.id
+                                ? "selected"
+                                : ""}`
+                            }
+                            onClick={() =>
+                                handleLocation(contexte.id)
+                            }
+                            aria-pressed={evaluation.contextes === contexte.id}
+                        >
                             <img src={contextImages[contexte.id]} alt="" />
                             <span>{contexte.label}</span>
                         </button>

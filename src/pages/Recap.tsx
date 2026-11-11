@@ -34,9 +34,9 @@ export default function Recap() {
     ? intensityImages[evaluation.intensiteNiveau]
     : null;
 
-const intensityLabel =
+  const intensityLabel =
     db.evaluation_douleur.echelle_intensite.niveaux.find(
-        (niveau) => niveau.id === evaluation.intensiteNiveau
+      (niveau) => niveau.id === evaluation.intensiteNiveau
     )?.label ?? "Intensité non renseignée";
 
   const localisationLabel =
@@ -54,8 +54,8 @@ const intensityLabel =
   const contexteId = evaluation.contextes?.replace(/\//g, "_");
   const contexteLabel = contexteId
     ? db.contextes.find(
-        (contexte) => contexte.id.replace(/\//g, "_") === contexteId
-      )?.label ?? "Contexte indisponible"
+      (contexte) => contexte.id.replace(/\//g, "_") === contexteId
+    )?.label ?? "Contexte indisponible"
     : "Contexte non renseigné";
 
   const isInComplete =
@@ -73,12 +73,12 @@ const intensityLabel =
 
       <main className="recap-page">
         <div className="switch">
-          <Link to="/Localisation" className="retour" aria-label="Retour à l’étape précédente" >
+          <Link to="/Localisation" className="retour" aria-label="Retour à l’étape précédente">
             <ChevronLeft size={22} strokeWidth={1.8} aria-hidden="true" />
           </Link>
         </div>
 
-        <section className="recap-summary" aria-labelledby="recap-title" >
+        <section className="recap-summary" aria-labelledby="recap-title">
           <h1 id="recap-title">
             Récapitulatif de votre évaluation
           </h1>
@@ -91,7 +91,7 @@ const intensityLabel =
 
               <div className="intensityComponent">
                 {intensityImage && (
-                  <img className="intensityImg"src={intensityImage}alt="" /> 
+                  <img className="intensityImg" src={intensityImage} alt="" />
                 )}
 
                 {evaluation.intensiteValeur !== null && (
@@ -107,32 +107,32 @@ const intensityLabel =
             </article>
 
             <article className="recap-card recap-card--location">
-                <h2 className="recap-card__title">
+              <h2 className="recap-card__title">
                 <span className="recap-sr-only">Localisation :</span>
                 {localisationLabel}
-            </h2>
+              </h2>
 
-            <div className="recap-card__visual">
-                <img  src={silhouette} className="recap-card__silhouette"alt="" />
-            </div>
+              <div className="recap-card__visual">
+                <img src={silhouette} className="recap-card__silhouette" alt="" />
+              </div>
             </article>
 
-           <article className="recap-card recap-card--context">
-                <h2 className="recap-card__title">
-                    <span className="recap-sr-only">Contexte :</span>
-                    {contexteLabel}
-                </h2>
+            <article className="recap-card recap-card--context">
+              <h2 className="recap-card__title">
+                <span className="recap-sr-only">Contexte :</span>
+                {contexteLabel}
+              </h2>
 
-                <div className="recap-card__visual">
-                    {contextImage && (
-                        <img src={contextImage} alt="" className="recap-card__context-image" />
-                    )}
-                </div>
+              <div className="recap-card__visual">
+                {contextImage && (
+                  <img src={contextImage} alt="" className="recap-card__context-image" />
+                )}
+              </div>
             </article>
           </div>
         </section>
 
-        <section className="recap-details" aria-label="Symptômes et caractéristiques de la douleur" >
+        <section className="recap-details" aria-label="Symptômes et caractéristiques de la douleur">
           <div className="recap-panel">
             <Symptom />
           </div>
@@ -143,7 +143,13 @@ const intensityLabel =
         </section>
 
         <div className="btn-container">
-          <button type="button" disabled={isInComplete} onClick={handleContinue} className="btn" aria-describedby={ isInComplete ? "recap-help" : undefined } >
+          <button type="button" disabled={isInComplete} onClick={handleContinue} className="btn"
+            aria-describedby={
+              isInComplete
+                ? "recap-help"
+                : undefined
+            }
+          >
             Voir les solutions
           </button>
 

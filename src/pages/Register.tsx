@@ -81,7 +81,38 @@ export default function Register() {
                 <ChevronLeft size={20} aria-hidden="true" />
                 Retour à l’accueil
             </Link>
-            <form onInvalid={(event) => { /* Afficher un message court si un champ est invalide. */ if (event.target instanceof HTMLInputElement) { event.preventDefault(); const input = event.target; if (input.name === "terms") { setMessage("Veuillez accepter les conditions générales d’utilisation pour vous inscrire."); setMessageType("error"); return; } const field = input.name === "email" ? "L’adresse email" : input.name === "pseudo" ? "Le pseudo" : input.name === "confirmPassword" ? "La confirmation du mot de passe" : "Le mot de passe";  if (input.validity.valueMissing) { setMessage(field + " est obligatoire."); } else if (input.validity.tooShort) { setMessage(field + " doit contenir au moins " + input.minLength + " caractères."); } else if (input.validity.typeMismatch) { setMessage("L’adresse email n’est pas valide."); } else { setMessage(field + " n’est pas valide."); } setMessageType("error"); } }} onSubmit={handleSubmit}>
+            <form
+                onInvalid={(event) => {
+                    if (event.target instanceof HTMLInputElement) {
+                        event.preventDefault();
+                        const input = event.target;
+                        if (input.name === "terms") {
+                            setMessage("Veuillez accepter les conditions générales d’utilisation pour vous inscrire.");
+                            setMessageType("error");
+                            return;
+                        }
+                        const field = input.name === "email"
+                            ? "L’adresse email"
+                            : input.name === "pseudo"
+                                ? "Le pseudo"
+                                : input.name === "confirmPassword"
+                                    ? "La confirmation du mot de passe"
+                                    : "Le mot de passe";
+                        if (input.validity.valueMissing) {
+                            setMessage(field + " est obligatoire.");
+                        } else if (input.validity.tooShort) {
+                            setMessage(field + " doit contenir au moins " + input.minLength + " caractères.");
+                        } else if (input.validity.typeMismatch) {
+                            setMessage("L’adresse email n’est pas valide.");
+                        } else {
+                            setMessage(field + " n’est pas valide.");
+                        }
+                        setMessageType("error");
+                    }
+                }}
+                onSubmit={handleSubmit}
+            >
+
                 <h1>Inscription</h1>
 
                 <p className="paraRegister">
@@ -91,7 +122,17 @@ export default function Register() {
 
                 <div id="register">
                     <div className="wave-group">
-                        <input id="pseudo" name="pseudo" type="text" className="input" aria-describedby={message ? "auth-message" : undefined} autoComplete="nickname" minLength={3} maxLength={50} required value={pseudo} onChange={(e) => setPseudo(e.target.value)} />
+                        <input id="pseudo" name="pseudo" type="text" className="input"
+                            aria-describedby={
+                                message
+                                    ? "auth-message"
+                                    : undefined
+                            }
+                            autoComplete="nickname" minLength={3} maxLength={50} required value={pseudo}
+                            onChange={(e) =>
+                                setPseudo(e.target.value)
+                            }
+                        />
 
                         <label className="label" htmlFor="pseudo">
                             <span className="label-char" style={{ transitionDelay: "0.00s" }}>P</span>
@@ -104,7 +145,17 @@ export default function Register() {
                     </div>
 
                     <div className="wave-group">
-                        <input id="email" name="email" type="email" className="input" aria-describedby={message ? "auth-message" : undefined} autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input id="email" name="email" type="email" className="input"
+                            aria-describedby={
+                                message
+                                    ? "auth-message"
+                                    : undefined
+                            }
+                            autoComplete="email" required value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)
+                            }
+                        />
 
                         <label className="label" htmlFor="email">
                             <span className="label-char" style={{ transitionDelay: "0.00s" }}>E</span>
@@ -116,7 +167,17 @@ export default function Register() {
                     </div>
 
                     <div className="wave-group">
-                        <input id="password" name="password" type="password" minLength={6} className="input" aria-describedby={message ? "auth-message" : undefined} autoComplete="new-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input id="password" name="password" type="password" minLength={6} className="input"
+                            aria-describedby={
+                                message
+                                    ? "auth-message"
+                                    : undefined
+                            }
+                            autoComplete="new-password" required value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)
+                            }
+                        />
 
                         <label className="label" htmlFor="password">
                             <span className="label-char" style={{ transitionDelay: "0.00s" }}>M</span>
@@ -136,14 +197,29 @@ export default function Register() {
                 </div>
 
                 <div className="register-terms">
-                    <input id="register-terms" name="terms" type="checkbox" required checked={acceptedTerms} onChange={(event) => setAcceptedTerms(event.target.checked)} aria-describedby={messageType === "error" && message ? "auth-message" : undefined} />
+                    <input id="register-terms" name="terms" type="checkbox" required checked={acceptedTerms}
+                        onChange={(event) =>
+                            setAcceptedTerms(event.target.checked)
+                        }
+                        aria-describedby={
+                            messageType === "error" && message
+                                ? "auth-message"
+                                : undefined
+                        }
+                    />
                     <label htmlFor="register-terms">
                         J’accepte les <Link to="/CGU" target="_blank" rel="noopener noreferrer" aria-label="Conditions générales d’utilisation (nouvel onglet)">conditions générales d’utilisation</Link> et j’ai pris connaissance de la <Link to="/PrivacyPolicy" target="_blank" rel="noopener noreferrer" aria-label="Politique de confidentialité (nouvel onglet)">politique de confidentialité</Link>.
                     </label>
                 </div>
 
                 {message && (
-                    <p id="auth-message" className={messageType} role={messageType === "error" ? "alert" : "status"}>
+                    <p id="auth-message" className={messageType}
+                        role={
+                            messageType === "error"
+                                ? "alert"
+                                : "status"
+                        }
+                    >
                         {message}
                     </p>
                 )}

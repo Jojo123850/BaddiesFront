@@ -10,7 +10,7 @@ const ANALYTICS_KEY = "baddies-analytics-consent";
 export default function AnalyticsConsent() {
   const age = localStorage.getItem("baddies-age");
   const canEvaluate = age === "+15ans";
-  const [visible, setVisible] = useState(() => 
+  const [visible, setVisible] = useState(() =>
     localStorage.getItem(ANALYTICS_KEY) === null
   );
 
@@ -35,7 +35,7 @@ export default function AnalyticsConsent() {
   if (!visible) return null;
 
   return (
-    <section  className="analytics-consent" role="dialog" aria-modal="true"  aria-labelledby="consent-title">
+    <section className="analytics-consent" role="dialog" aria-modal="true" aria-labelledby="consent-title">
       <div className="analytics-consent-content">
         <h2 id="consent-title">Vos données, vos choix</h2>
 
@@ -46,7 +46,11 @@ export default function AnalyticsConsent() {
         </p>
 
         <label className="consent-option">
-          <input  type="checkbox" checked={analytics}  onChange={(e) => setAnalytics(e.target.checked)} />
+          <input type="checkbox" checked={analytics}
+            onChange={(e) =>
+              setAnalytics(e.target.checked)
+            }
+          />
           <span>
             <strong>Statistiques</strong>
             <small>
@@ -58,7 +62,11 @@ export default function AnalyticsConsent() {
 
         {canEvaluate && !hasHealthConsent() && (
           <label className="consent-option">
-            <input type="checkbox" checked={health}   onChange={(e) => setHealth(e.target.checked)} />
+            <input type="checkbox" checked={health}
+              onChange={(e) =>
+                setHealth(e.target.checked)
+              }
+            />
             <span>
               <strong>Données de santé</strong>
               <small>
@@ -82,11 +90,11 @@ export default function AnalyticsConsent() {
         </Link>
 
         <div className="analytics-consent-actions">
-          <button type="button" className="analytics-refuse"onClick={refuseAll}>
+          <button type="button" className="analytics-refuse" onClick={refuseAll}>
             Tout refuser
           </button>
 
-          <button type="button" className="analytics-accept"   onClick={saveChoices}>
+          <button type="button" className="analytics-accept" onClick={saveChoices}>
             Enregistrer mes choix
           </button>
         </div>

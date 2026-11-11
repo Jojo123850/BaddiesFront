@@ -76,20 +76,20 @@ export default function Home() {
   const hasHistory = evaluations.length > 0;
 
 
-  
-    // vérification si l'user a des historiques locales
-    const [hasLocalHistory, setHasLocalHistory] = useState(() => {
-   
-    try {
-        const data = JSON.parse(localStorage.getItem("historique") ?? "[]");
-        
-        return Array.isArray(data) && data.length > 0;
-    } catch {
-        return false;
-    }
-});
 
-// Ouvrir la proposition une seule fois après la connexion.
+  // vérification si l'user a des historiques locales
+  const [hasLocalHistory, setHasLocalHistory] = useState(() => {
+
+    try {
+      const data = JSON.parse(localStorage.getItem("historique") ?? "[]");
+
+      return Array.isArray(data) && data.length > 0;
+    } catch {
+      return false;
+    }
+  });
+
+  // Ouvrir la proposition une seule fois après la connexion.
   const syncDialog = useRef<HTMLDialogElement>(null);
   const [showSync, setShowSync] = useState(() =>
     isConnected && hasLocalHistory &&
@@ -104,88 +104,95 @@ export default function Home() {
   }, [showSync]);
 
   // synchronisation
-    const [syncing, setSyncing] = useState(false)
-    const [message, setMessage] = useState("")
+  const [syncing, setSyncing] = useState(false)
+  const [message, setMessage] = useState("")
 
-        const  shareHistory = async() => {
-          setSyncSuccess(false);
-            if (syncing) return;
+  const shareHistory = async () => {
+    setSyncSuccess(false);
+    if (syncing) return;
 
-            const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token")
 
-            if(!token){
-                setMessage("Il faut être connecté·e pour transférer l'historique")
-                return
-            }
+    if (!token) {
+      setMessage("Il faut être connecté·e pour transférer l'historique")
+      return
+    }
 
-            if(!navigator.onLine){
-                setMessage("Il faut avoir une connexion internet pour le transfert")
-                return
-            }
+    if (!navigator.onLine) {
+      setMessage("Il faut avoir une connexion internet pour le transfert")
+      return
+    }
 
 
-            setSyncing(true);
-            setMessage("")
+    setSyncing(true);
+    setMessage("")
 
-            try {
-                const localHistory: HistoryEvaluation[] = JSON.parse(
-                localStorage.getItem("historique") ?? "[]"
-            );
+    try {
+      const localHistory: HistoryEvaluation[] = JSON.parse(
+        localStorage.getItem("historique") ?? "[]"
+      );
 
-            if (localHistory.length === 0) {
-                setMessage("Aucune évaluation locale à transférer.");
-                return;
-            }
+      if (localHistory.length === 0) {
+        setMessage("Aucune évaluation locale à transférer.");
+        return;
+      }
 
-            for (const episode of localHistory) {
-                await importHistory(episode);
+      for (const episode of localHistory) {
+        await importHistory(episode);
 
-                const remaining: HistoryEvaluation[] = JSON.parse(
-                localStorage.getItem("historique") ?? "[]"
-                );
+        const remaining: HistoryEvaluation[] = JSON.parse(
+          localStorage.getItem("historique") ?? "[]"
+        );
 
-                localStorage.setItem("historique",JSON.stringify(
-                    remaining.filter((item) => item.id !== episode.id)
-                )
-                );
-                setHasLocalHistory(
-                    remaining.filter((item) => item.id !== episode.id).length > 0
-                    );
-            } 
+        localStorage.setItem("historique", JSON.stringify(
+          remaining.filter((item) => item.id !== episode.id)
+        )
+        );
+        setHasLocalHistory(
+          remaining.filter((item) => item.id !== episode.id).length > 0
+        );
+      }
 
-            try {
-                setShowSync(false);
-                const updatedHistory = await getHistory();
-                setEvaluations(updatedHistory);
-                setSyncSuccess(true);
-                setMessage("Vos évaluations ont bien été transférées sur votre compte.");
-            } catch {   
-                setMessage(
-                "Transfert terminé. Rechargez la page pour actualiser l’historique."
-                );
-            }
-                
-            } catch(error)  {
-                const detail =
-                error instanceof Error
-                ? error.message
-                : "Erreur inconnue."
-                setMessage(
-            `Transfert interrompu: ${detail}`
-            );
+      try {
+        setShowSync(false);
+        const updatedHistory = await getHistory();
+        setEvaluations(updatedHistory);
+        setSyncSuccess(true);
+        setMessage("Vos évaluations ont bien été transférées sur votre compte.");
+      } catch {
+        setMessage(
+          "Transfert terminé. Rechargez la page pour actualiser l’historique."
+        );
+      }
 
-            }finally{
-                setSyncing(false);    
+    } catch (error) {
+      const detail =
+        error instanceof Error
+          ? error.message
+          : "Erreur inconnue."
+      setMessage(
+        `Transfert interrompu: ${detail}`
+      );
 
-            }
+    } finally {
+      setSyncing(false);
 
-}
+    }
+
+  }
 
   return (
     <>
       <Navbar />
       {showSync && (
-        <dialog ref={syncDialog} className="sync-dialog" aria-labelledby="sync-dialog-title" aria-describedby="sync-dialog-description" aria-busy={syncing} onCancel={(event) => { if (syncing) event.preventDefault(); }} onClose={() => setShowSync(false)} >
+        <dialog ref={syncDialog} className="sync-dialog" aria-labelledby="sync-dialog-title" aria-describedby="sync-dialog-description" aria-busy={syncing}
+          onCancel={(event) => {
+            if (syncing) event.preventDefault();
+          }}
+          onClose={() =>
+            setShowSync(false)
+          }
+        >
           <RefreshCw size={30} aria-hidden="true" />
           <h2 id="sync-dialog-title">Retrouver vos évaluations sur votre compte ? </h2>
           <p id="sync-dialog-description">
@@ -195,7 +202,12 @@ export default function Home() {
           </p>
           {message && !syncSuccess && <p role="status">{message}</p>}
           <div className="sync-dialog-actions">
-            <button type="button" disabled={syncing} onClick={() => setShowSync(false)} autoFocus>
+            <button type="button" disabled={syncing}
+              onClick={() =>
+                setShowSync(false)
+              }
+              autoFocus
+            >
               Plus tard
             </button>
             <button type="button" disabled={syncing} onClick={shareHistory}>
@@ -205,72 +217,93 @@ export default function Home() {
         </dialog>
       )}
       {showPrivacy && (
-      <DataPrivacy onAccept={() => { setShowPrivacy(false); resetEvaluation(); navigate("/analyse"); }} onRefuse={() => setShowPrivacy(false)} />
-    )}
+        <DataPrivacy
+          onAccept={() => {
+            setShowPrivacy(false);
+            resetEvaluation();
+            navigate("/analyse");
+          }}
+          onRefuse={() =>
+            setShowPrivacy(false)
+          }
+        />
+      )}
 
       <main className="home-page">
         <Collapse />
 
-        <section className="home-intro" aria-labelledby="home-title" >
-       
-                {isConnected && hasLocalHistory && (
-  <section className="synchro" aria-labelledby="synchro-title">
-    <div className="synchro-text">
+        <section className="home-intro" aria-labelledby="home-title">
 
-          <RefreshCw  size={28} aria-hidden="true" className="synchroSVG"/>
-          <h2 id="synchro-title">Synchroniser vos données</h2>
-     
-      <p>Transférez vos évaluations locales sur votre compte.</p>
-    </div>
+          {isConnected && hasLocalHistory && (
+            <section className="synchro" aria-labelledby="synchro-title">
+              <div className="synchro-text">
 
-    <button type="button" className="btn" onClick={() => setShowSync(true)} disabled={syncing} >
-      {syncing ? "Transfert en cours…" : "Ajouter à mon compte"}
-    </button>
-  </section>
-)}
+                <RefreshCw size={28} aria-hidden="true" className="synchroSVG" />
+                <h2 id="synchro-title">Synchroniser vos données</h2>
 
-            <p className={syncSuccess ? "sync-message success" : "sync-message"} role="status" aria-live="polite" >
-              {syncSuccess && <CheckCircle size={20} aria-hidden="true" />}
-              {message}
-            </p>
-            <h1 id="home-title">
-              Votre assistant de premiers gestes pour les
-              douleurs menstruelles, utilisable même hors ligne.
-            </h1>
-
-            <p className="home-description">
-              {canEvaluate
-                ? "Évaluez vos douleurs en quelques minutes et découvrez des gestes adaptés pour vous soulager."
-                : "Découvrez des premiers gestes simples pour soulager vos douleurs menstruelles, sans compte ni évaluation."}
-            </p>
-
-              {canEvaluate && (
-                <Link to="/Analyse" onClick={resetEvaluation}  className="home-btn" >
-                  Commencer mon évaluation
-                </Link>
-              )}
-
-            <div className="home-immediate-help">
-              <div className="home-immediate-help-content">
-                <h2>Besoin d'aide tout de suite ?</h2>
-
-                <p>
-                  Découvre des premiers gestes pour soulager tes douleurs
-                  menstruelles, sans compte ni évaluation.
-                </p>
-
-                <Link to="/ImmediateHelp" className="home-immediate-help-link" >
-                  Voir les premiers gestes
-                  <ArrowRight size={18} aria-hidden="true" />
-                </Link>
+                <p>Transférez vos évaluations locales sur votre compte.</p>
               </div>
+
+              <button type="button" className="btn"
+                onClick={() =>
+                  setShowSync(true)
+                }
+                disabled={syncing}
+              >
+                {syncing ? "Transfert en cours…" : "Ajouter à mon compte"}
+              </button>
+            </section>
+          )}
+
+          <p
+            className={
+              syncSuccess
+                ? "sync-message success"
+                : "sync-message"
+            }
+            role="status" aria-live="polite"
+          >
+            {syncSuccess && <CheckCircle size={20} aria-hidden="true" />}
+            {message}
+          </p>
+          <h1 id="home-title">
+            Votre assistant de premiers gestes pour les
+            douleurs menstruelles, utilisable même hors ligne.
+          </h1>
+
+          <p className="home-description">
+            {canEvaluate
+              ? "Évaluez vos douleurs en quelques minutes et découvrez des gestes adaptés pour vous soulager."
+              : "Découvrez des premiers gestes simples pour soulager vos douleurs menstruelles, sans compte ni évaluation."}
+          </p>
+
+          {canEvaluate && (
+            <Link to="/Analyse" onClick={resetEvaluation} className="home-btn">
+              Commencer mon évaluation
+            </Link>
+          )}
+
+          <div className="home-immediate-help">
+            <div className="home-immediate-help-content">
+              <h2>Besoin d'aide tout de suite ?</h2>
+
+              <p>
+                Découvre des premiers gestes pour soulager tes douleurs
+                menstruelles, sans compte ni évaluation.
+              </p>
+
+              <Link to="/ImmediateHelp" className="home-immediate-help-link">
+                Voir les premiers gestes
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
             </div>
+          </div>
         </section>
 
-        {canEvaluate &&  !isConnected && (
-          <section className="home-account" aria-labelledby="home-account-title" >
-         
-          <div className="home-account-card">
+        {canEvaluate && !isConnected && (
+          <section className="home-account" aria-labelledby="home-account-title">
+
+            <div className="home-account-card">
               <h2 id="home-account-title">
                 Ton historique, avec toi
               </h2>
@@ -293,63 +326,63 @@ export default function Home() {
           </section>
         )}
 
-        {canEvaluate &&(
+        {canEvaluate && (
 
-        <section  className="historyHome"  aria-labelledby="history-title">
-          <div className="historyHome-header">
-            <h2 id="history-title">Mes évaluations</h2>
-            <p>Retrouve tes évaluations enregistrées.</p>
-          </div>
-
-          {loading ? (
-            <p role="status">
-              Chargement des évaluations...
-            </p>
-          ) : historyError ? (
-            <p role="alert">
-              Impossible de charger tes évaluations pour le moment.
-            </p>
-          ) : hasHistory ? (
-            <>
-              <div className="historyHome-summary">
-                <span className="historyHome-count">
-                  {evaluations.length}
-                </span>
-
-                <div>
-                  <strong>
-                    {evaluations.length > 1
-                      ? "Évaluations enregistrées"
-                      : "Évaluation enregistrée"}
-                  </strong>
-
-                  <p>
-                    Consulte tes précédentes évaluations
-                    et les gestes associés.
-                  </p>
-                </div>
-              </div>
-
-              <Link to="/Suivi?tab=historique" className="historyLink" >
-                Voir mon historique
-                <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
-              </Link>
-            </>
-          ) : (
-            <div className="historyHome-empty">
-              <p>
-                Aucune évaluation enregistrée pour le moment.
-              </p>
-           
-              <Link to="/Analyse" onClick={resetEvaluation} className="historyLink">
-                Faire ma première évaluation
-                <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
-              </Link>
-
+          <section className="historyHome" aria-labelledby="history-title">
+            <div className="historyHome-header">
+              <h2 id="history-title">Mes évaluations</h2>
+              <p>Retrouve tes évaluations enregistrées.</p>
             </div>
 
-          )}
-        </section>
+            {loading ? (
+              <p role="status">
+                Chargement des évaluations...
+              </p>
+            ) : historyError ? (
+              <p role="alert">
+                Impossible de charger tes évaluations pour le moment.
+              </p>
+            ) : hasHistory ? (
+              <>
+                <div className="historyHome-summary">
+                  <span className="historyHome-count">
+                    {evaluations.length}
+                  </span>
+
+                  <div>
+                    <strong>
+                      {evaluations.length > 1
+                        ? "Évaluations enregistrées"
+                        : "Évaluation enregistrée"}
+                    </strong>
+
+                    <p>
+                      Consulte tes précédentes évaluations
+                      et les gestes associés.
+                    </p>
+                  </div>
+                </div>
+
+                <Link to="/Suivi?tab=historique" className="historyLink">
+                  Voir mon historique
+                  <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
+                </Link>
+              </>
+            ) : (
+              <div className="historyHome-empty">
+                <p>
+                  Aucune évaluation enregistrée pour le moment.
+                </p>
+
+                <Link to="/Analyse" onClick={resetEvaluation} className="historyLink">
+                  Faire ma première évaluation
+                  <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
+                </Link>
+
+              </div>
+
+            )}
+          </section>
         )
 
         }

@@ -67,24 +67,33 @@ export default function Country() {
                         Ce choix permet d’adapter les informations et les numéros d’urgence.
                     </p>
 
-                <div role="group" aria-label="Choix du pays">
-                    {countries.map((item) => (
-                        <button key={item.id} type="button" className={`country ${selectedCountry === item.id ? "selected" : ""}`} aria-pressed={selectedCountry === item.id} onClick={() => setSelectedCountry(item.id)}>
-                            <img src={item.flag} alt="" />
-                            <span className="text">{item.country}</span>
+                    <div role="group" aria-label="Choix du pays">
+                        {countries.map((item) => (
+                            <button key={item.id} type="button"
+                                className={`country ${selectedCountry === item.id
+                                    ? "selected"
+                                    : ""}`
+                                }
+                                aria-pressed={selectedCountry === item.id}
+                                onClick={() =>
+                                    setSelectedCountry(item.id)
+                                }
+                            >
+                                <img src={item.flag} alt="" />
+                                <span className="text">{item.country}</span>
 
-                            {selectedCountry === item.id && (
-                                <span className="check">
-                                    <Check size={20} strokeWidth={2.5} aria-hidden="true" />
-                                </span>
-                            )}
-                        </button>
-                    ))}
-                </div>
+                                {selectedCountry === item.id && (
+                                    <span className="check">
+                                        <Check size={20} strokeWidth={2.5} aria-hidden="true" />
+                                    </span>
+                                )}
+                            </button>
+                        ))}
+                    </div>
 
-                <div className="btn-container">
-                    <button type="button" className="btn" onClick={handleContinue} disabled={!selectedCountry}>Continuer</button>
-                </div>
+                    <div className="btn-container">
+                        <button type="button" className="btn" onClick={handleContinue} disabled={!selectedCountry}>Continuer</button>
+                    </div>
                 </section>
             </main>
         </>

@@ -29,7 +29,12 @@ export default function ZoneP() {
                     <>
                         <AnteriorPain />
 
-                        <button type="button" onClick={() => setIsPosterior(true)} className="btn-retour-face" aria-label="Afficher le dos de la silhouette">
+                        <button type="button"
+                            onClick={() =>
+                                setIsPosterior(true)
+                            }
+                            className="btn-retour-face" aria-label="Afficher le dos de la silhouette"
+                        >
                             <RotateCcw size={22} strokeWidth={1.8} aria-hidden="true" />
                         </button>
                     </>
@@ -37,7 +42,12 @@ export default function ZoneP() {
                     <>
                         <PosteriorPain />
 
-                        <button type="button" onClick={() => setIsPosterior(false)} className="btn-retour-face" aria-label="Afficher l'avant de la silhouette">
+                        <button type="button"
+                            onClick={() =>
+                                setIsPosterior(false)
+                            }
+                            className="btn-retour-face" aria-label="Afficher l'avant de la silhouette"
+                        >
                             <RotateCcw size={22} strokeWidth={1.8} aria-hidden="true" />
                         </button>
                     </>

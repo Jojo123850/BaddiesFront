@@ -40,213 +40,246 @@ import "../styles/pages/home.scss";
 const avatars = [AvatarCrepusRose, AvatarCrepusNoir, AvatarBouclesRousses, AvatarBouclesBrunes, AvatarLissesNoirs, AvatarLissesRoses, AvatarTressesNoires, AvatarTressesCuivrees, AvatarCoupeArgentee, AvatarCoupeCourte, AvatarHijabBordeaux, AvatarHijabRose, AvatarLunettesRondes, AvatarLunettesEcaille, AvatarJeuneChatain, AvatarJeuneBlonde, AvatarJeuneBoucles, AvatarJeuneCheveuxNoirs];
 
 function getStoredUser(): ProfileUser | null {
-    try {
-        const token = localStorage.getItem("token");
-        const storedUser = localStorage.getItem("user");
+  try {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
 
-        if (!token || !storedUser) 
-            return null;
+    if (!token || !storedUser)
+      return null;
 
-        const parsed = JSON.parse(storedUser);
+    const parsed = JSON.parse(storedUser);
 
-        if (!parsed || typeof parsed !== "object") 
-            return null;
-// à simplifier
-        const id =
-            typeof parsed.id === "number"
-                ? parsed.id
-                : typeof parsed.id === "string" && parsed.id.trim()
-                    ? Number(parsed.id)
-                    : NaN;
-// à simplifier
-        if (
-            !Number.isSafeInteger(id) ||
-            id <= 0 ||
-            typeof parsed.pseudo !== "string" ||
-            typeof parsed.email !== "string"
-        ) {
-            return null;
-        }
-
-        return {
-            id,
-            pseudo: parsed.pseudo,
-            email: parsed.email,
-            avatar_url: typeof parsed.avatar_url === "string" ? parsed.avatar_url : null,
-        };
-    } catch {
-        return null;
+    if (!parsed || typeof parsed !== "object")
+      return null;
+    // à simplifier
+    const id =
+      typeof parsed.id === "number"
+        ? parsed.id
+        : typeof parsed.id === "string" && parsed.id.trim()
+          ? Number(parsed.id)
+          : NaN;
+    // à simplifier
+    if (
+      !Number.isSafeInteger(id) ||
+      id <= 0 ||
+      typeof parsed.pseudo !== "string" ||
+      typeof parsed.email !== "string"
+    ) {
+      return null;
     }
+
+    return {
+      id,
+      pseudo: parsed.pseudo,
+      email: parsed.email,
+      avatar_url: typeof parsed.avatar_url === "string" ? parsed.avatar_url : null,
+    };
+  } catch {
+    return null;
+  }
 }
 
 function getInitialAvatar(user: ProfileUser | null): string {
-    if (user?.avatar_url) return user.avatar_url;
+  if (user?.avatar_url) return user.avatar_url;
 
-    try {
-        const savedAvatar = localStorage.getItem("companionAvatar");
+  try {
+    const savedAvatar = localStorage.getItem("companionAvatar");
 
-        if (savedAvatar !== null && savedAvatar !== "") {
-            const index = Number(savedAvatar);
+    if (savedAvatar !== null && savedAvatar !== "") {
+      const index = Number(savedAvatar);
 
-            if (Number.isInteger(index) && index >= 0 && index < avatars.length) {
-                return avatars[index];
-            }
-        }
-    } catch {
-        // Utiliser le premier compagnon si le stockage est indisponible.
+      if (Number.isInteger(index) && index >= 0 && index < avatars.length) {
+        return avatars[index];
+      }
     }
+  } catch {
+    // Utiliser le premier compagnon si le stockage est indisponible.
+  }
 
-    return avatars[0];
+  return avatars[0];
 }
 
 export default function EditProfile() {
-    const [user, setUser] = useState<ProfileUser | null>(getStoredUser);
-    const [pseudo, setPseudo] = useState(user?.pseudo ?? "");
-    const [email, setEmail] = useState(user?.email ?? "");
-    const [selectedAvatar, setSelectedAvatar] = useState(() => getInitialAvatar(user));
-    const [openSection, setOpenSection] = useState<"avatars" | "informations" | null >(null);
+  const [user, setUser] = useState<ProfileUser | null>(getStoredUser);
+  const [pseudo, setPseudo] = useState(user?.pseudo ?? "");
+  const [email, setEmail] = useState(user?.email ?? "");
+  const [selectedAvatar, setSelectedAvatar] = useState(() => getInitialAvatar(user));
+  const [openSection, setOpenSection] = useState<"avatars" | "informations" | null>(null);
 
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
-    const [isSaving, setIsSaving] = useState(false);
-    const submitting = useRef(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const submitting = useRef(false);
 
-    const handleAvatarChange = (avatar: string) => {
-        setSelectedAvatar(avatar);
-        setMessage("");
-        setError("");
-    };
+  const handleAvatarChange = (avatar: string) => {
+    setSelectedAvatar(avatar);
+    setMessage("");
+    setError("");
+  };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        if (!user || submitting.current) return;
+    if (!user || submitting.current) return;
 
-        setMessage("");
-        setError("");
+    setMessage("");
+    setError("");
 
-        const cleanPseudo = pseudo.trim();
-        const cleanEmail = email.trim();
+    const cleanPseudo = pseudo.trim();
+    const cleanEmail = email.trim();
 
-        if (!cleanPseudo || !cleanEmail) {
-            setError("Le pseudo et l’email sont obligatoires.");
-            return;
+    if (!cleanPseudo || !cleanEmail) {
+      setError("Le pseudo et l’email sont obligatoires.");
+      return;
+    }
+
+    submitting.current = true;
+    setIsSaving(true);
+
+    try {
+      const updatedUser = await apiService.updateProfile({
+        pseudo: cleanPseudo,
+        email: cleanEmail,
+        avatar_url: selectedAvatar,
+      });
+
+      setUser(updatedUser);
+      setPseudo(updatedUser.pseudo);
+      setEmail(updatedUser.email);
+      setSelectedAvatar(updatedUser.avatar_url || defaultProfile);
+
+      try {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        const avatarIndex = avatars.indexOf(updatedUser.avatar_url ?? "");
+
+        if (avatarIndex >= 0) {
+          localStorage.setItem("companionAvatar", String(avatarIndex));
+        } else {
+          localStorage.removeItem("companionAvatar");
         }
+      } catch {
+        setMessage("Profil enregistré sur le serveur, mais le stockage local n’a pas pu être actualisé.");
+        return;
+      }
 
-        submitting.current = true;
-        setIsSaving(true);
+      setMessage("Modifications enregistrées.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Impossible d’enregistrer les modifications."
+      );
+    } finally {
+      submitting.current = false;
+      setIsSaving(false);
+    }
+  };
 
-        try {
-            const updatedUser = await apiService.updateProfile({
-                pseudo: cleanPseudo,
-                email: cleanEmail,
-                avatar_url: selectedAvatar,
-            });
+  return (
+    <>
+      <Navbar />
 
-            setUser(updatedUser);
-            setPseudo(updatedUser.pseudo);
-            setEmail(updatedUser.email);
-            setSelectedAvatar(updatedUser.avatar_url || defaultProfile);
+      <main className="edit-profile">
+        <h1>Modifier mon profil</h1>
 
-            try {
-                localStorage.setItem("user", JSON.stringify(updatedUser));
+        {user ? (
+          <>
+            <div className="profile-avatar">
+              <img src={selectedAvatar || defaultProfile} alt="Mon compagnon BADDIES" className="settings-avatar" />
+            </div>
 
-                const avatarIndex = avatars.indexOf(updatedUser.avatar_url ?? "");
 
-                if (avatarIndex >= 0) {
-                    localStorage.setItem("companionAvatar", String(avatarIndex));
-                } else {
-                    localStorage.removeItem("companionAvatar");
-                }
-            } catch {
-                setMessage("Profil enregistré sur le serveur, mais le stockage local n’a pas pu être actualisé.");
-                return;
-            }
+            <form className="profile-form" onSubmit={handleSubmit} aria-busy={isSaving}>
+              <div className="collapseDiv">
+                <div className="collapse">
+                  <button type="button" id="avatars-trigger" className="collapse-trigger" aria-expanded={openSection === "avatars"} aria-controls="avatars-panel"
+                    onClick={() =>
+                      setOpenSection((current) =>
+                        current === "avatars"
+                          ? null
+                          : "avatars")
+                    }
+                  >
+                    <span>Choisir ma photo de profil</span>
+                    <span aria-hidden="true">
+                      {openSection === "avatars" ? "−" : "+"}
+                    </span>
+                  </button>
 
-            setMessage("Modifications enregistrées.");
-        } catch (err) {
-            setError(
-                err instanceof Error
-                    ? err.message
-                    : "Impossible d’enregistrer les modifications."
-            );
-        } finally {
-            submitting.current = false;
-            setIsSaving(false);
-        }
-    };
+                  <div id="avatars-panel" hidden={openSection !== "avatars"}>
+                    <div className="avatar-list" role="group" aria-labelledby="avatars-trigger">
+                      {avatars.map((avatar, index) => (
+                        <button type="button" key={avatar}
+                          onClick={() =>
+                            handleAvatarChange(avatar)
+                          }
+                          className={`settings-avatar ${selectedAvatar === avatar
+                            ? "selected"
+                            : ""}`
+                          }
+                          aria-label={`Choisir l’avatar ${index + 1}`} aria-pressed={selectedAvatar === avatar} disabled={isSaving}
+                        >
+                          <img src={avatar} alt="" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-    return (
-        <>
-            <Navbar />
+                <div className="collapse">
+                  <button type="button" id="informations-trigger" className="collapse-trigger" aria-expanded={openSection === "informations"} aria-controls="informations-panel"
+                    onClick={() =>
+                      setOpenSection((current) =>
+                        current === "informations"
+                          ? null
+                          : "informations")
+                    }
+                  >
+                    <span>Modifier mes informations</span>
+                    <span aria-hidden="true">
+                      {openSection === "informations" ? "−" : "+"}
+                    </span>
+                  </button>
 
-            <main className="edit-profile">
-                <h1>Modifier mon profil</h1>
+                  <div id="informations-panel" hidden={openSection !== "informations"}>
+                    <div className="profile-fields">
+                      <label htmlFor="pseudo">Pseudo</label>
+                      <input id="pseudo" name="pseudo" type="text" autoComplete="nickname" value={pseudo}
+                        onChange={(event) =>
+                          setPseudo(event.target.value)
+                        }
+                        disabled={isSaving} required
+                      />
 
-                {user ? (
-                    <>
-                        <div className="profile-avatar">
-                            <img src={selectedAvatar || defaultProfile} alt="Mon compagnon BADDIES" className="settings-avatar" />
-                        </div>
+                      <label htmlFor="email">Email</label>
+                      <input id="email" name="email" type="email" autoComplete="email" value={email}
+                        onChange={(event) =>
+                          setEmail(event.target.value)
+                        }
+                        disabled={isSaving} required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                        
-                    <form className="profile-form" onSubmit={handleSubmit} aria-busy={isSaving} >
-  <div className="collapseDiv">
-    <div className="collapse">
-      <button type="button" id="avatars-trigger" className="collapse-trigger" aria-expanded={openSection === "avatars"} aria-controls="avatars-panel" onClick={() => setOpenSection((current) => current === "avatars" ? null : "avatars" ) } >
-        <span>Choisir ma photo de profil</span>
-        <span aria-hidden="true">
-          {openSection === "avatars" ? "−" : "+"}
-        </span>
-      </button>
+              <div className="btn-container">
+                <button className="btn" type="submit" disabled={isSaving}>
+                  {isSaving ? "Enregistrement…" : "Enregistrer les modifications"}
+                </button>
+              </div>
 
-      <div id="avatars-panel" hidden={openSection !== "avatars"} >
-        <div className="avatar-list" role="group" aria-labelledby="avatars-trigger" >
-          {avatars.map((avatar, index) => (
-            <button type="button" key={avatar} onClick={() => handleAvatarChange(avatar)} className={`settings-avatar ${ selectedAvatar === avatar ? "selected" : "" }`} aria-label={`Choisir l’avatar ${index + 1}`} aria-pressed={selectedAvatar === avatar} disabled={isSaving} >
-              <img src={avatar} alt="" />
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+              {error && <p role="alert">{error}</p>}
+            </form>
 
-    <div className="collapse">
-      <button type="button" id="informations-trigger" className="collapse-trigger" aria-expanded={openSection === "informations"} aria-controls="informations-panel" onClick={() => setOpenSection((current) => current === "informations" ? null : "informations" ) } >
-        <span>Modifier mes informations</span>
-        <span aria-hidden="true">
-          {openSection === "informations" ? "−" : "+"}
-        </span>
-      </button>
+            {message && <p role="status">{message}</p>}
+          </>
+        ) : (
+          <p>Connecte-toi pour modifier ton profil.</p>
+        )}
 
-      <div id="informations-panel" hidden={openSection !== "informations"} >
-        <div className="profile-fields">
-          <label htmlFor="pseudo">Pseudo</label>
-          <input id="pseudo" name="pseudo" type="text" autoComplete="nickname" value={pseudo} onChange={(event) => setPseudo(event.target.value)} disabled={isSaving} required />
-
-          <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} disabled={isSaving} required />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div className="btn-container">
-    <button className="btn" type="submit" disabled={isSaving}>
-      {isSaving ? "Enregistrement…" : "Enregistrer les modifications"}
-    </button>
-  </div>
-
-  {error && <p role="alert">{error}</p>}
-                    </form>
-
-                        {message && <p role="status">{message}</p>}
-                    </>
-                ) : (
-                    <p>Connecte-toi pour modifier ton profil.</p>
-                )}
-
-            </main>
-        </>
-    );
+      </main>
+    </>
+  );
 }

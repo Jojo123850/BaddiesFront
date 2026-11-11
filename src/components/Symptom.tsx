@@ -10,8 +10,8 @@ export type Symptom = {
 export default function Symptom() {
     const { evaluation, setEvaluation } = useEvaluation();
     const [isOpen, setIsOpen] = useState(
-    evaluation.symptomes.length > 0 &&
-    !evaluation.symptomes.includes("aucun")
+        evaluation.symptomes.length > 0 &&
+        !evaluation.symptomes.includes("aucun")
     );
 
     const isYesSelected = isOpen;
@@ -51,7 +51,7 @@ export default function Symptom() {
         });
     };
 
-  
+
 
     return (
         <section aria-labelledby="symptoms-title">
@@ -59,14 +59,26 @@ export default function Symptom() {
                 Avez-vous également d'autres symptômes ?
             </h2>
 
-           <div className="settings-form-actions">
-            <button type="button" onClick={handleYes} className={`settings-save-btn ${isYesSelected ? "selected" : ""}`} aria-pressed={isYesSelected}>
-                Oui
-            </button>
+            <div className="settings-form-actions">
+                <button type="button" onClick={handleYes}
+                    className={`settings-save-btn ${isYesSelected
+                        ? "selected"
+                        : ""}`
+                    }
+                    aria-pressed={isYesSelected}
+                >
+                    Oui
+                </button>
 
-            <button type="button" onClick={handleNo} className={`settings-cancel-btn ${isNoSelected ? "selected" : ""}`} aria-pressed={isNoSelected}>
-                Non
-            </button>
+                <button type="button" onClick={handleNo}
+                    className={`settings-cancel-btn ${isNoSelected
+                        ? "selected"
+                        : ""}`
+                    }
+                    aria-pressed={isNoSelected}
+                >
+                    Non
+                </button>
             </div>
 
             {isOpen && (
@@ -75,9 +87,19 @@ export default function Symptom() {
                         .filter((item) => item.id !== "aucun")
                         .map((item) => (
                             <div key={item.id}>
-                                <input type="checkbox"id={`symptom-${item.id}`}   name="symptomes"value={item.id} checked={evaluation.symptomes.includes(item.id)} onChange={() => handleChange(item.id)} />
-                               
-                                <label htmlFor={`symptom-${item.id}`} className={evaluation.symptomes.includes(item.id) ? "selected" : ""}>
+                                <input type="checkbox" id={`symptom-${item.id}`} name="symptomes" value={item.id} checked={evaluation.symptomes.includes(item.id)}
+                                    onChange={() =>
+                                        handleChange(item.id)
+                                    }
+                                />
+
+                                <label htmlFor={`symptom-${item.id}`}
+                                    className={
+                                        evaluation.symptomes.includes(item.id)
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
                                     {item.label}
                                 </label>
                             </div>

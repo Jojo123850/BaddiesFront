@@ -32,48 +32,48 @@ const IntensityPain = () => {
 
         return undefined;
     };
-    
+
 
     const niveau = getIntensity(evaluation.intensiteValeur);
-    
-const startIncrementing = () => {
-    if (intervalRef.current !== null) return;
 
-    setEvaluation((prev) => ({
-        ...prev,
-        intensiteValeur:
-            prev.intensiteValeur === 10
-                ? 1
-                : Math.min((prev.intensiteValeur ?? 0) + 1, 10),
-        intensiteNiveau: null
-    }));
+    const startIncrementing = () => {
+        if (intervalRef.current !== null) return;
 
-    intervalRef.current = setInterval(() => {
-        setEvaluation((prev) => {
-            const current = prev.intensiteValeur ?? 0;
+        setEvaluation((prev) => ({
+            ...prev,
+            intensiteValeur:
+                prev.intensiteValeur === 10
+                    ? 1
+                    : Math.min((prev.intensiteValeur ?? 0) + 1, 10),
+            intensiteNiveau: null
+        }));
 
-            if (current >= 10) {
-                stopIncrementing();
-                return prev;
+        intervalRef.current = setInterval(() => {
+            setEvaluation((prev) => {
+                const current = prev.intensiteValeur ?? 0;
+
+                if (current >= 10) {
+                    stopIncrementing();
+                    return prev;
+                }
+
+                return {
+                    ...prev,
+                    intensiteValeur: current + 1,
+                    intensiteNiveau: null
+                };
+            });
+        }, 400);
+    };
+
+    useEffect(() => {
+        return () => {
+            if (intervalRef.current !== null) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
             }
-
-            return {
-                ...prev,
-                intensiteValeur: current + 1,
-                intensiteNiveau: null
-            };
-        });
-    }, 400);
-};
-
-useEffect(() => {
-  return () => {
-    if (intervalRef.current !== null) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-}, []);
+        };
+    }, []);
 
     const stopIncrementing = () => {
         if (intervalRef.current) {
@@ -85,60 +85,74 @@ useEffect(() => {
     const navigate = useNavigate();
 
     const handleContinue = () => {
-    if (evaluation.intensiteValeur === null || !niveau) return;
+        if (evaluation.intensiteValeur === null || !niveau) return;
 
-    setEvaluation(prev => ({
-        ...prev,
-        intensiteNiveau: niveau.id
-    }));
+        setEvaluation(prev => ({
+            ...prev,
+            intensiteNiveau: niveau.id
+        }));
 
-    navigate("/Zone");
-};
+        navigate("/Zone");
+    };
 
     return (
         <>
-        <div className="analyse-page">
+            <div className="analyse-page">
 
-            <h2 className="analyse">
-                Intensité de la douleur
-            </h2>
+                <h2 className="analyse">
+                    Intensité de la douleur
+                </h2>
 
-            <p className="analyse">
-                Quelle est l’intensité de votre douleur ?
-            </p>
+                <p className="analyse">
+                    Quelle est l’intensité de votre douleur ?
+                </p>
 
-            <p className="answerPain">
-                {niveau?.label}
-            </p>   
+                <p className="answerPain">
+                    {niveau?.label}
+                </p>
 
-             {evaluation.intensiteValeur === null &&  
-            < p className="analyseAlert"> 
-                Maintenez pour sélectionner votre niveau de douleur.
-            </p>} 
-            <p className="analyseAlert">
-                {evaluation.intensiteValeur === 10 
-                    ? "Intensité maximale. Appuyez à nouveau pour recommencer à la douleur légère."
-                    : ""}
-            </p>
-                    
+                {evaluation.intensiteValeur === null &&
+                    < p className="analyseAlert">
+                        Maintenez pour sélectionner votre niveau de douleur.
+                    </p>}
+                <p className="analyseAlert">
+                    {evaluation.intensiteValeur === 10
+                        ? "Intensité maximale. Appuyez à nouveau pour recommencer à la douleur légère."
+                        : ""}
+                </p>
 
-            <button  type="button" className="hand-circle" aria-label="Intensité de la douleur : maintenez pour augmenter"onPointerDown={startIncrementing} onPointerUp={stopIncrementing} onPointerLeave={stopIncrementing} onPointerCancel={stopIncrementing}  onKeyDown={(event) => { if ( (event.key === " " || event.key === "Enter") &&!event.repeat ) {event.preventDefault(); startIncrementing(); } }}  onKeyUp={(event) => { if (event.key === " " || event.key === "Enter") { event.preventDefault(); stopIncrementing(); } }} onBlur={stopIncrementing} >
-  
-    <Pointer  className="hand-icon" strokeWidth={1.8} aria-hidden="true" />
 
-        <span>
-            {evaluation.intensiteValeur === null
-            ? "Maintenir"
-            : `${evaluation.intensiteValeur}/10`}
-        </span>
-    </button>
-            <div className="btn-container">
-                <button disabled={evaluation.intensiteValeur === 0 || evaluation.intensiteValeur === null}  onClick=         {handleContinue}  className="btn" >
-                    Continuer à analyser
+                <button type="button" className="hand-circle" aria-label="Intensité de la douleur : maintenez pour augmenter" onPointerDown={startIncrementing} onPointerUp={stopIncrementing} onPointerLeave={stopIncrementing} onPointerCancel={stopIncrementing}
+                    onKeyDown={(event) => {
+                        if ((event.key === " " || event.key === "Enter") && !event.repeat) {
+                            event.preventDefault();
+                            startIncrementing();
+                        }
+                    }}
+                    onKeyUp={(event) => {
+                        if (event.key === " " || event.key === "Enter") {
+                            event.preventDefault();
+                            stopIncrementing();
+                        }
+                    }}
+                    onBlur={stopIncrementing}
+                >
+
+                    <Pointer className="hand-icon" strokeWidth={1.8} aria-hidden="true" />
+
+                    <span>
+                        {evaluation.intensiteValeur === null
+                            ? "Maintenir"
+                            : `${evaluation.intensiteValeur}/10`}
+                    </span>
                 </button>
+                <div className="btn-container">
+                    <button disabled={evaluation.intensiteValeur === 0 || evaluation.intensiteValeur === null} onClick={handleContinue} className="btn">
+                        Continuer à analyser
+                    </button>
+                </div>
             </div>
-        </div>
-     
+
         </>
     );
 };

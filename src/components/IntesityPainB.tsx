@@ -8,8 +8,8 @@ export default function IntensityPainB() {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    if (evaluation.intensiteNiveau === null) 
-        return;
+    if (evaluation.intensiteNiveau === null)
+      return;
     navigate("/Zone");
   };
 
@@ -25,14 +25,24 @@ export default function IntensityPainB() {
         Sélectionnez le niveau qui correspond à votre douleur.
       </p>
 
-      <div  className="intensity-btn"role="group" aria-label="Intensité de la douleur" aria-describedby="intensity-help" >
-     
+      <div className="intensity-btn" role="group" aria-label="Intensité de la douleur" aria-describedby="intensity-help">
+
         {db.evaluation_douleur.echelle_intensite.niveaux.map(
           (item) => {
             const selected = evaluation.intensiteNiveau === item.id;
 
             return (
-              <button key={item.id} type="button"  className={`btnIntensity${selected ? " selected" : ""}`} aria-pressed={selected} onClick={() => setEvaluation((prev) => ({ ...prev, intensiteNiveau: item.id, intensiteValeur: null, })) } >
+              <button key={item.id} type="button"
+                className={`btnIntensity${selected
+                  ? " selected"
+                  : ""}`
+                }
+                aria-pressed={selected}
+                onClick={() =>
+                  setEvaluation((prev) =>
+                    ({ ...prev, intensiteNiveau: item.id, intensiteValeur: null, }))
+                }
+              >
                 {item.label}
               </button>
             );
@@ -41,7 +51,7 @@ export default function IntensityPainB() {
       </div>
 
       <div className="btn-container">
-        <button  type="button" disabled={evaluation.intensiteNiveau === null}   onClick={handleContinue}   className="btn"  >
+        <button type="button" disabled={evaluation.intensiteNiveau === null} onClick={handleContinue} className="btn">
           Continuer à analyser
         </button>
       </div>
